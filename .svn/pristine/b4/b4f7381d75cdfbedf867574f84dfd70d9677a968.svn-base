@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>사용자 감사</title>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_05_01"></span><strong>사용자 감사</strong></h4>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_search"></span><strong>조회조건</strong></h4>
+					<div class="items" style="overflow: visible">
+						<!-- item contnets // -->
+						<div class="schwrap">
+							<ul>
+								<li>
+									<label>시간
+									<input id="frDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									   ~
+									<input id="toDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									</label>
+								</li>
+								<li>
+									<div class="selectWrap">사용자명
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schUserId" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="selectWrap">분류
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schCls" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="selectWrap">작업유형
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schActTp" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="selectWrap">작업결과
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schActResult" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div>
+							<button class="btn medium darkblue initBtn"><span class="iconBtn icon_reset"></span><strong>초기화</strong></button>
+							<button class="btn medium darkblue schBtn"><span class="iconBtn icon_btn_01"></span><strong>검색</strong></button>
+							</div>
+						</div>
+						<!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_list"></span><strong>조회목록</strong></h4>
+					<div class="items" style="height:708px"> 
+						<div class="tablewrap">
+							<table>
+								<thead class="tHead">
+								</thead>
+								<tbody class="tBody">
+								</tbody>
+							</table>
+						</div>
+						<div class="page_wrap">
+							<div class="page_nation">
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="13">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//Grid--> 
+	</div>
+</div>
+<script th:inline="javascript"> 
+	window.addEventListener('DOMContentLoaded', () => {
+		ncos.schMode = 'auto';
+		init();
+		//ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
+		document.querySelector('.initBtn').addEventListener('click',e => {
+			e.preventDefault();
+			ncos.schMode = 'auto';
+			ncos.initBtn = true;
+			gfn_initObj(document.querySelector('.schwrap'));
+			searchFunc();
+			ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
+	    });	    
+	    document.querySelector('.schBtn').addEventListener('click',e => {
+	    	e.preventDefault();
+	    	ncos.schMode = 'menual';
+	    	clearInterval(ncos.intervalFunc);
+	    	searchFunc(e.target);
+	    });
+		   
+	});
+
+    const init = () => {
+    	document.getElementById('frDt').value= gfn_getDiffDt(ncos.diffDay);
+    	document.getElementById('toDt').value= gfn_getTodayDt();
+    	gfn_getCodeUser().then((data) => {
+    		createMultiChk(document.getElementById('schUserId'),'UA', data.info);
+    		gfn_showChkVal(document.getElementById('schUserId'));
+    	});
+    	createMultiChk(document.getElementById('schCls'),'WOUI');
+    	createMultiChk(document.getElementById('schActTp'),'WOTY');
+    	createMultiChk(document.getElementById('schActResult'),'WKRE');
+    	const headColumns = [{data_id:"rn",label:"No.",width:"60px"}
+    	                    ,{data_id:"id",width:"0px"}
+                        	,{data_id:"collectionTime",label:"시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+                            ,{data_id:"username",label:"사용자" }
+		     	            ,{data_id:"workUiId",label: "분류",data_grpCd:"WOUI"}  
+				            ,{data_id:"workCodeId",label:"작업유형",data_grpCd:"WOTY"}  
+				            ,{data_id:"workContent",label:"작업내용"}  
+				            ,{data_id:"result",label:"작업결과",data_grpCd:"WKRE"}  
+				   
+				           ];
+	    gridInit(document.querySelector('.tablewrap'),headColumns);
+	    pageInit(document.querySelector(".page_nation"),searchFunc,page.halfDoubleRowPerPage);
+	    searchFunc();
+    }
+    
+    searchFunc = (invoker) => {
+    	console.log("userAudit searchFunc");
+    	pageSearch("/getUserAuditList",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc);
+    }
+
+</script>
+</th:block>
+</html>

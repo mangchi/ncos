@@ -1,0 +1,35 @@
+# Report Server Connection Config
+
+# conntype : jdbc, jndi
+# jdbc type : SQL_Server,  MySQL, Oracle, Tibero, DB2, Sybase, UserCustom
+
+# version SQL_Server 2000, 2005, 2008, 2012
+dataconnection.reuse.maxcount=20
+dataconnection.count=3
+
+dataconnection1.conntype=jdbc
+dataconnection1.type=Oracle
+dataconnection1.dbname=oracle1
+dataconnection1.version=
+dataconnection1.url=jdbc:oracle:thin:@localhost:1521:xe
+dataconnection1.user=user
+dataconnection1.password=password
+dataconnection1.encoding=
+dataconnection1.decoding=
+
+dataconnection2.conntype=jdbc
+dataconnection2.type=UserCustom
+dataconnection2.dbname=usercustom1
+dataconnection2.version=
+dataconnection2.driver=cubrid.jdbc.driver.CUBRIDDriver
+dataconnection2.url=
+dataconnection2.user=
+dataconnection2.password=
+dataconnection2.encoding=
+dataconnection2.decoding=
+
+dataconnection3.conntype=jndi
+dataconnection3.dbname=dbname
+dataconnection3.jndiname=jndiname
+dataconnection3.encoding=
+dataconnection3.decoding=

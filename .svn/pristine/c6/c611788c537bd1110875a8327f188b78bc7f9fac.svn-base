@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>보고서 관리</title>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_03_01"></span><strong>보고서 관리</strong></h4>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_search"></span><strong>조회조건</strong></h4>
+					<div class="items" style="overflow: visible"> 
+						<!-- item contnets // -->
+						<div class="schwrap">
+							<input id="paramId" type="hidden"></input>
+							<ul>
+							    <li>
+									<label>보고서 생성 시간
+									<input id="frDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									   ~
+									<input id="toDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									</label>
+								</li>
+								<li>
+									<label>보고서명
+										<input id="schReportTitle" type="text" class="form-control kor" placeholder="보고서명을 입력하세요">
+									</label>
+								</li>
+								<li>
+									<div class="selectWrap">사용자
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schAccountId" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<button class="btn medium darkblue schBtn"><span class="iconBtn icon_btn_01"></span><strong>검색</strong></button>
+						</div>
+						<!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_list"></span><strong>조회목록</strong></h4>
+					<div class="items"> 
+						<div class="tablewrap">
+							<table>
+								<thead class="tHead">
+								</thead>
+								<tbody class="tBody">	
+								</tbody>
+							</table>
+						</div>
+						<div class="page_wrap">
+							<div class="page_nation"></div>
+                        </div>
+						<div class="btnWrap">
+							<div class="left"><a href="javascript:;" class="btn medium darkblue delBtn"><span class="iconBtn icon_btn_04"></span><strong>삭제</strong></a> </div>
+							<div class="right"> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//Grid--> 
+	</div>
+</div>
+
+<script th:inline="javascript"> 
+	let paramId = /*[[${manageId}]]*/"";
+	window.addEventListener('DOMContentLoaded', () => {
+		   if(paramId != null && paramId != "") {
+			   document.getElementById('paramId').value = paramId;
+		   }
+		   init();
+		   //setInterval(searchFunc, ncos.interval);//50초
+		  
+		   
+	});
+    const init = () => {
+    	document.getElementById('frDt').value= gfn_getDiffDt(ncos.diffDay);
+    	document.getElementById('toDt').value= gfn_getTodayDt();
+    	createMultiChk(document.getElementById('schAccountId'),'UA');
+    	const headColumns = [{data_id:"id",width: "0px"}
+    	                    ,{data_id:"chk", width: "45px"}
+					    	,{data_id:"rn",label: "No."}
+					    	,{data_id:"createTime",label:"생성시간",data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+					        ,{data_id:"reportTitle",label: "보고서명"}
+					        ,{data_id:"scheduleTitle",label:"스케쥴명"}
+					        ,{data_id:"username",label:"사용자" }
+					        ,{data_id:"threatLevel",width: "0px"}
+					        ,{data_id:"assetLevel",width: "0px"}
+					        ,{data_id:"accountId",width: "0px"}
+					        ,{data_id:"reportType",width: "0px"}
+					        ,{data_id:"periodId",width: "0px"}
+					        ,{data_id:"clickCount",label:"다운로드 횟수"}
+					        ,{data_id:"detailBtn",label:"보고서",data_btnNm:"보기" }
+					        ];
+        gridInit(document.querySelector('.tablewrap'),headColumns);
+		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
+		searchFunc();
+		
+    }
+    
+    const searchFunc = (invoker) => {
+    	pageSearch("/getRptMngList",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,paramView);
+    }
+    
+    const paramView = () => {
+		console.log("paramView");
+		let manageId = document.getElementById('paramId').value;
+		if( manageId  != null && manageId != "") {
+			let trs = document.querySelector('.tBody').querySelectorAll('tr');
+			 
+			if(trs.length > 0){
+				trs[0].classList.add('trSelect');
+			    let selectedData = gridClickedData(document.querySelector('.tablewrap'));
+                detailFunc(selectedData.row); 
+			}
+		
+			
+		}
+	}
+    
+    detailFunc = (data) => {
+    	console.log("detailFunc data:",data);
+    	let param = { "id" : data.id
+    	            , "accountId" : data.accountId
+			        ,  "toDate" : data.createTime
+    			    , "periodId" : data.periodId
+    			    , "reportType" : data.reportType
+    			    , "threatLevel" : data.threatLevel
+    			    , "assetLevel" : data.assetLevel
+    			    , "username" : data.username
+    			
+    	};
+    	gfn_asyncJsonCall('/reportView','POST',param).then((data) => {
+    		let reportKey = data.reportKey;  
+    		window.open(encodeURI("/reportView?reportKey="+reportKey), "_blank", "menubar=no, toolbar=no");
+    		document.getElementById('paramId').value = '';
+    		gfn_asyncTranDataCall('/updateClickCount','POST',param,trncRptAfterFunc);
+
+	 	});
+    }
+    
+    
+    document.querySelector('.schBtn').addEventListener('click',(e) => {
+    	e.preventDefault();
+    	searchFunc();
+    });
+
+    document.querySelector('.delBtn').addEventListener('click',(e) => {
+    	e.preventDefault();
+    	let delData = gridCheckedData(document.querySelector('.tablewrap'));
+    	if(delData.list.length > 0){
+    		gfn_asyncTranDataCall('/deleteRptMng','POST',delData,trncRptAfterFunc,true);
+    	}
+    });
+    
+    const trncRptAfterFunc = () => {
+    	searchFunc();
+    }
+</script>
+</th:block>
+
+</html>

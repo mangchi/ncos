@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Server">
+  
+  <update id="saveShipStatus" parameterType="map">
+        INSERT INTO ship_status(SHIP_ID
+                              , UNIT_ID
+                              , DETECTION_TIME
+                              , SHIP_STATUS_ID
+                               )
+                        VALUES(#{shipId}
+                              ,#{unitId}
+                              ,SYSDATE()
+                              ,#{shipStatusId}
+                              )
+         ON DUPLICATE KEY UPDATE
+                          DETECTION_TIME = SYSDATE()
+                        , SHIP_STATUS_ID = #{shipStatusId}
+  </update>
+  
+  <update id="insertThreatInfo" parameterType="map">
+        INSERT INTO threat_info(UNIT_ID
+                              , SHIP_ID
+                              , DETECTION_TIME
+                              , SRC_IP
+                              , DST_IP
+                              , SRC_PORT
+                              , DST_PORT
+                              , PROTOCOL
+                              , PAYLOAD_SIZE
+                              , FRAGMENTATION
+                              , FRAGMENT_ID
+                              , DETECTION_THREAT_NAME
+                              , THREAT_DETECTION_METHOD
+                              , THREAT_IMPORTANCE
+                              , PAYLOAD)
+                        VALUES(#{unitId}
+                              ,#{shipId}
+                              ,FROM_UNIXTIME(#{detectionTime})
+                              ,#{srcIp}
+                              ,#{dstIp}
+                              ,#{srcPort}
+                              ,#{dstPort}
+                              ,#{protocol}
+                              ,#{payloadSize}
+                              ,#{fragmentation}
+                              ,#{fragmentId}
+                              ,#{detectionThreatName}
+                              ,#{threatDetectionMethod}
+                              ,#{threatImportance}
+                              ,#{payload}
+                              )
+  </update>
+  
+  <update id="insertTransmitData" parameterType="map">
+        INSERT INTO transmit_data(SRC_TIME
+                                , SRC_BYTES
+                                )
+                        VALUES(SYSDATE()
+                              ,#{srcBytes}
+                               )
+  </update>
+  
+   
+ 
+   
+</mapper>

@@ -1,0 +1,19 @@
+/*리포트 프로그래스*/
+.eform_progress {
+	background-repeat: no-repeat;
+	background-position: 50% 30%;
+	background-image: url(../img/efromProgress.gif);
+	opacity: unset;
+	background-color: gray;
+}
+
+.eform_paint_div {
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	bottom: 0px;
+	border: 1px solid silver;
+	background-color: rgb(241,241,241);
+	overflow: auto;
+	text-align: center;
+}

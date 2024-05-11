@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="footer">
+	<footer class="footbar bg-light">
+		<div class="footbar-nav">
+			<div class="foot-item">
+				<span th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('hmmNavy')}">&#8226; 접속계정 : <a href="javascript:modUser();"><strong class="user">
+						<!-- admin(관리자) -->
+				</strong></a></span>
+				<span th:if="${activeProfile.equals('navy') || activeProfile.equals('land')}">&#8226; 접속계정 : <strong class="user">
+						<!-- admin(관리자) -->
+				</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8226; 접속시간 : <strong
+					class="connectTime">
+						<!-- 02:36:27 -->
+				</strong></span>
+			</div>
+			<div class="foot-item equipStatus">
+				<span></span> <strong></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span></span>
+				<strong></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span></span> <strong></strong>
+			</div>
+		</div>
+		
+	</footer>
+	<!--이벤트알림1 modal popup//-->
+	<!-- <div class="dim-layer">
+		<div class="dimBg"></div>
+		<div id="notice1" class="pop-layer-rb"> 
+			<div class="Popup-title">
+				<h3><span class="iconWrapB icon_13_01"></span><strong><em>보고서 생성</em> 알림</strong></h3>
+				<button class="icon-close">닫기</button>
+			</div>
+			<div class="Popup-container" style="padding: 0"> 
+				<div class="Popup-contents2">
+					<p>(보고서)가 발행되었습니다.<br>제목 : 사이버 위협 주간보고서<br>2023-02-23 10:49</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<!--//modal popup-->
+
+	<!--이벤트알림2 modal popup//-->
+	<!-- <div class="dim-layer">
+		<div class="dimBg"></div>
+		<div id="notice2" class="pop-layer-rb"> 
+			<div class="Popup-title">
+				<h3><span class="iconWrapB icon_13_01"></span><strong><em>자산이상</em> 발생 알림</strong></h3>
+				<button class="icon-close">닫기</button>
+			</div>
+			<div class="Popup-container" style="padding: 0"> 
+				<div class="Popup-contents2 orange">
+					<p>(보고서)가 발행되었습니다.<br>제목 : 사이버 위협 주간보고서<br>2023-02-23 10:49</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<!--//modal popup-->
+
+	<!--이벤트알림3 modal popup//-->
+	<!-- <div class="dim-layer">
+		<div class="dimBg"></div>
+		<div id="notice3" class="pop-layer-rb"> 
+			<div class="Popup-title">
+				<h3><span class="iconWrapB icon_13_01"></span><strong><em>사이버 위협</em> 발생 알림</strong></h3>
+				<button class="icon-close">닫기</button>
+			</div>
+			<div class="Popup-container" style="padding: 0"> 
+				<div class="Popup-contents2 red">
+					<p>(보고서)가 발행되었습니다.<br>제목 : 사이버 위협 주간보고서<br>2023-02-23 10:49</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<!--//modal popup-->
+<script th:inline="javascript">
+window.addEventListener('DOMContentLoaded', (e) => {
+	watchEquipStatus();
+	setInterval(watchEquipStatus, ncos.interval);
+
+});
+
+const watchEquipStatus= () => {
+	
+	gfn_asyncJsonCall('/watchEquipStatus','GET').then((data) => {
+	 		let list = data['list'];
+	 		let equipStatus = document.querySelector('.equipStatus');
+	 		let spans = equipStatus.querySelectorAll('span');
+	 		let strongs = equipStatus.querySelectorAll('strong');
+	 		if(list != null && list != undefined && list.length > 0){
+	 			for(let key in list){
+	 				//style="color:#ff0000"
+	 				if(list[key].equipStatusId == '1'){
+	 					spans[key].style.color = "#ff0000";
+	 				}
+	 				else{
+	 					spans[key].style.color = "#66cc00";
+	 				}
+	 				spans[key].textContent = '●';
+	 				strongs[key].textContent = gfn_getCodeVal('NTEQ',list[key].id);
+	 			}
+	 		}
+
+	 });
+
+}
+
+const modUser = () => {
+	document.querySelector('#userReg').querySelector('.Popup-title').querySelector('strong').textContent = '사용자 수정';
+	document.querySelectorAll('.password').forEach(password => {
+		password.style.display = 'none';
+	});
+	document.querySelector('#userReg').querySelector('.accountActivation').style.display = 'none';
+	//document.querySelector('#userReg').querySelector('.authorization').style.display = 'none';
+	gfn_initObj(document.getElementById('userReg'));
+	createChk(document.getElementById('classId'),'URGR');
+	createChk(document.getElementById('affiliationId'),'COUT');
+	if(document.getElementById('authorization')){
+		createChk(document.getElementById('authorization'),'URAU');
+	}
+	
+	let data = {};
+	data.id = gfn_getStorageItem('accountId',false);
+	data.userId = gfn_getStorageItem('userId',false);
+	data.username = gfn_getStorageItem('username',false);
+	data.affiliationId = gfn_getStorageItem('affiliationId',false);
+	data.classId = gfn_getStorageItem('classId',false);
+	data.authorization = gfn_getStorageItem('auth',false);
+	data.phoneNo = gfn_getStorageItem('phoneNo',false);
+	
+	document.getElementById('accountId').value = data.id;
+	setCheckValue(classId.querySelectorAll('li'),classId.parentNode.querySelector('.selected-value'),data.classId);
+	setCheckValue(affiliationId.querySelectorAll('li'),affiliationId.parentNode.querySelector('.selected-value'),data.affiliationId);
+	if(document.getElementById('authorization')){
+		setCheckValue(authorization.querySelectorAll('li'),authorization.parentNode.querySelector('.selected-value'),data.authorization);
+	}
+	
+	setCheckValue(accountActivation.querySelectorAll('li'),accountActivation.parentNode.querySelector('.selected-value'),data.accountActivation=="true" ? 1 : 0);
+	let inputs = document.getElementById('userReg').getElementsByTagName('input');
+	
+	for (let input of inputs) {
+		if(input.type === 'text'){
+			input.value = data[input.id];
+		}
+	}
+
+	layerPopup('#userReg');
+}
+
+
+</script>
+</div>
+
+</html>

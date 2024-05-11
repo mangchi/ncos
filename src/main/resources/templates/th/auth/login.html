@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>현대상선</title>
+<script type="text/javascript" th:src="@{/js/cmmn.js}"></script>
+<script type="text/javascript" th:src="@{/js/input.js}"></script>
+<script type="text/javascript" th:src="@{/js/msg.js}" ></script>
+<script type="text/javascript" th:src="@{/js/crypto/ase.js}"></script>
+<script type="text/javascript" th:src="@{/js/crypto/core-min.js}"></script>
+<script type="text/javascript" th:src="@{/js/crypto/md5-min.js}"></script>
+<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+<link rel="stylesheet" href="/css/front-light.css" />
+
+<style>
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,input:-webkit-autofill:hover, input:-webkit-autofill:focus,textarea:-webkit-autofill,textarea:-webkit-autofill:hover,textarea:-webkit-autofill:focus,select:-webkit-autofill,select:-webkit-autofill:hover,select:-webkit-autofill:focus {-webkit-text-fill-color: #000;-webkit-box-shadow: 0 0 0px 1000px #fff inset;transition: background-color 5000s ease-in-out 0s;}
+input::placeholder {color: #ccc;font-weight: normal;}	
+
+/*로그인*/
+.wrap{display:block;padding:0;margin:0;border:none;width:100%;height:100%;position:relative;background:rgba(255,255,255,0.0) url("../img/login_bg.jpg") center center no-repeat;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover; }
+
+.login_wrap{display:inline-block; position: absolute;top: 50%; left: 50%; width:380px;height:500px; padding:40px 20px 20px 20px; background:rgba(255,255,255,1); border-radius: 30px; margin-top: -250px;margin-left: -190px; z-index:100;box-shadow: 0 0 10px 10px rgba(0,0,0,0.1)}
+.login_wrap .inner_box{width:100%;position: relative;}
+.login_wrap .inner_box .logo{display:block;padding-bottom:30px; text-align: center;color: #333;transform:rotate(-0.03deg);}
+.login_wrap .inner_box .logo h1{font-size: 32px; font-weight: 700; margin-bottom: 10px; color:#1e2335}
+.login_wrap .inner_box dl{display:block;padding:0px;}
+.login_wrap .inner_box dl dd{display:block;padding-bottom:10px;position:relative}
+.login_wrap .inner_box dl dd input[type="text"],
+.login_wrap .inner_box dl dd input[type="password"]{border:1px solid rgba(0,0,0,0.3);height:60px;border-radius:30px;line-height:27px;font-size:14px;font-weight:bold;width:100%;padding:10px 20px 10px 60px;-webkit-ime-mode:disable;-moz-ime-mode:disable;-ms-ime-mode:disable;ime-mode:disable;color: #000;}
+.login_wrap .inner_box dl dd input[type="checkbox"]{border:1px solid rgba(0,0,0,0.3);height:18px;width:18px;transform:rotate(-0.03deg); vertical-align: middle}
+
+.login_wrap .inner_box dl dd.input_id:before{content: ""; position:absolute; width: 60px; height: 60px; left: 0; top: 0;z-index: 100;background:url("../img/login_id.png") 20px center no-repeat}
+.login_wrap .inner_box dl dd.input_pw:before{content: ""; position:absolute; width: 60px; height: 60px; left: 0; top: 0;z-index: 100;background:url("../img/login_pw.png") 20px center no-repeat}	
+.login_wrap .inner_box dl dd label{color:#ccc;display:block;line-height:24px; color: #666;transform:rotate(-0.03deg); text-align: center}
+.login_wrap .inner_box dl dd label.infield{color:#ccc;font-size:14px;padding:0 20px 0 60px;line-height:60px;display:inline-block;text-align:left;font-weight:normal;width:100%;position:absolute;left:0px;top:0px;opacity:1;}
+.login_wrap .inner_box p.foot_logo{display:block;color:#999;font-size:14px;line-height:1.8;padding-top:10px;text-align: center}
+.login_wrap .inner_box p.foot_logo > img{width:100px}
+.login-btn1{display:inline-block;font-size: 16px; padding:0 10px 2px;height:60px;line-height:60px;border-radius:30px;background:#1e2335;color:#FFF;font-weight:bold;width:49%;text-align:center;cursor:pointer;transform:rotate(-0.03deg);}
+.caution{position:relative;text-align: center; padding: 20px 0; color: #999; line-height: 1.3;font-size: 13px; color: #666;transform:rotate(-0.03deg);}
+
+</style>
+</head>
+<body>
+<form name="form" id="form" th:action="@{/login}" method="post" th:object="${user}" style="height:100%;width:100%">
+	<div class="wrap">
+		<div class="login_wrap"> 
+			<!--로그인박스//-->
+			<div class="inner_box">
+				<div class="logo">
+					<h1>로그인</h1>
+					<p>아이디와 비밀번호를 입력하세요.</p>
+				</div>
+				<dl>
+					<dd class="input_id">
+						<input name="loginUserId" title="ID" class="input_text engNum" id="loginUserId" type="text" placeholder="아이디를 입력해주세요">
+					</dd>
+					<dd class="input_pw">
+						<input name="curPassword" title="password" class="input_text" id="curPassword" type="password" placeholder="비밀번호를 입력해주세요">
+					</dd>
+					<dd class="clfix">
+						<button type="button" title="로그인" class="login-btn1 fl login" >로그인</button> 
+						<button type="button" title="신규회원" class="login-btn1 fr regUser" >신규회원</button>
+					</dd>
+				</dl>
+				<p class="caution">본 시스템은 인가된 사용자만 사용할 수 있으며, 허가없이 사용할 경우 법적 제재를 받을 수 있습니다.</p>
+				<p class="foot_logo"><img src="../img/logo-secuaider.jpg" alt=""/></p>
+			</div>
+			<!--//로그인박스--> 
+		</div>
+		
+	</div>
+</form>
+<!--사용자 등록 modal popup//-->
+<form name="userForm" id="userForm" th:action="@{/userAdd}" method="post" th:object="${user}" style="height:100%;width:100%">
+<div class="dim-layer">
+	<div class="dimBg"></div>
+	<div id="regUserPop" class="pop-layer ssmall"> 
+		<!--Title-->
+		<div class="Popup-title">
+			<h3><span class="iconWrapB icon_04_01"></span><strong>사용자 등록</strong></h3>
+			<button class="icon-close">닫기</button>
+		</div>
+		<div class="Popup-container"> 
+			<!--Contens-->
+			<div class="Popup-contents">
+				<div class="assetWrap">
+					<ul>
+						<li>
+							<label>
+								<span>아이디</span>
+								<input th:field="*{userId}" type="text" class="form-control engNum" placeholder="아이디">
+								<input id="accountId" type="hidden">
+								<em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span>이름</span>
+								<input th:field="*{username}" type="text" class="form-control kor" placeholder="이름">
+							    <em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span>비밀번호</span>
+								<input th:field="*{password}" type="password" class="form-control" placeholder="비밀번호">
+							    <em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span>비밀번호 확인</span>
+								<input th:field="*{confirm}" type="password" class="form-control" placeholder="비밀번호">
+							    <em class="message"></em>
+							</label>
+						</li>
+						<li>
+						    <div class="selectWrap" style="z-index:600;">직위
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="classId" >
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap" >소속
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="affiliationId">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap">권한
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="authorization">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<label>
+								<span>연락처</span>
+								<input id="phoneNo" type="text" class="form-control number" placeholder="010883422334">
+							</label>
+						</li>
+						<!-- <li>
+							<label>
+								<span>메일주소</span>
+								<input id="email" type="text" class="form-control" placeholder="이메일주소">
+							</label>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="Popup-footer">
+			<a href="javascript:;" class="btn medium darkblue saveBtn"><span class="iconBtn icon_btn_09"></span><strong>확인</strong></a>
+			<a href="javascript:;" class="btn medium darkblue popClose"><span class="iconBtn icon_btn_08"></span><strong>취소</strong></a>
+		</div>
+	</div>
+</div>
+</form>
+<!--//modal popup--> 
+<!--message modal popup//-->
+<div class="dim-layer">
+	<div class="dimBg"></div>
+	<div id="messageBox" class="pop-layer ssmall"> 
+		<div class="Popup-title">
+			<h3><strong>메시지</strong></h3>
+			<button class="icon-close">닫기</button>
+		</div>
+		<div class="Popup-container"> 
+			<div class="Popup-contents">
+				<div class="messageContent"></div>
+			</div>
+		</div>
+		<div class="Popup-footer ac">
+			<a href="javascript:;" class="btn medium darkblue confirmBtn"><span class="iconBtn icon_btn_09"></span><strong>확인</strong></a>
+			<a href="javascript:;" class="btn medium darkblue cancelBtn" style="display:none;"><span class="iconBtn icon_btn_08"></span><strong>취소</strong></a>
+		</div>
+	</div>
+</div>
+<!--//modal popup--> 
+</body>
+<script th:inline="javascript"> 
+gfn_codes();
+let uiMode = /*[[${uiMode}]]*/"";
+window.addEventListener('DOMContentLoaded', function(){
+	try{
+		let errMsg = /*[[${errMsg}]]*/"";
+		if (errMsg != null && errMsg != "") {
+			msgCall(errMsg,false,false);
+
+		}
+		document.getElementById('userId').focus();
+		if (uiMode != null && uiMode != "") {
+			gfn_setStorage(ncos.uiMode, uiMode);
+		}
+	    if(localStorage.hasOwnProperty(ncos.storageKey)){gfn_clearStorage();}
+	    
+	    document.querySelector('#loginUserId').addEventListener("keyup", (e) => {
+			e.preventDefault();
+			const keyCode = e.keyCode;
+			if(keyCode == 13){ // Enter key
+				document.getElementById('password').focus();
+			}
+		});
+
+		document.querySelector('#curPassword').addEventListener("keyup", (e) => {
+			e.preventDefault();
+			const keyCode = e.keyCode;
+			if(keyCode == 13){ // Enter key
+				login();
+			}
+		});
+		
+		document.querySelector('.login').addEventListener("click", (e) => {
+			e.preventDefault();
+			login();
+		});
+		
+		document.querySelector('.regUser').addEventListener("click", (e) => {
+			e.preventDefault();
+		});
+		
+	 }catch(e){console.error(e);}
+	
+});
+
+const login = () => {
+	gfn_initObj(document.querySelector('.login_wrap'),true);
+	let param = gfn_formToJson(document.getElementById('form'));
+	let requiredParams = {loginUserId: "사용자 아이디"
+			             ,curPassword: "사용자 비밀번호"};
+
+	if(gfn_valid(document.querySelector('.login_wrap'),requiredParams)){
+		document.form.submit();		
+	} 
+}
+
+const selectBoxElements = document.querySelectorAll(".select");
+selectBoxElements.forEach(selectBoxElement => {
+	selectBoxElement.addEventListener("click", function (e) {
+		const targetElement = e.target;
+        const isOptionElement = targetElement.classList.contains("option");
+        if (isOptionElement) {
+			selectOption(targetElement);
+        }
+        toggleSelectBox(selectBoxElement);
+    });
+});
+
+document.querySelector('.regUser').addEventListener('click',(e) => {
+	e.preventDefault();
+	gfn_initObj(document.getElementById('regUserPop'));
+	createChk(document.getElementById('classId'),'URGR');
+	createChk(document.getElementById('affiliationId'),'COUT');
+	createChk(document.getElementById('authorization'),'URAU');
+
+	layerPopup('#regUserPop');
+	
+});
+
+let regUserPop = document.querySelector('#regUserPop');
+if(regUserPop){
+	regUserPop.querySelector('.saveBtn').addEventListener('click',e => {
+		e.preventDefault();
+		gfn_initObj(document.getElementById('regUserPop'),true);
+		let requiredParams = {username: "이름"
+				             ,userId: "아이디"
+				             ,password: "비밀번호"
+				             ,confirm: "비밀번호확인"
+				             ,classId: "직위"
+				             ,affiliationId: "소속"
+						     ,authorization: "권한"
+						     ,phoneNo: "연락처"
+						     };
+		gfn_asyncTranCall('/saveUserAccount','POST',requiredParams,regUserPop,trncAfterFunc,true);
+		
+	});
+}
+
+const trncAfterFunc = () => {
+	document.querySelector('#regUserPop').parentNode.style.display = 'none';
+	document.querySelector('#regUserPop').style.display = 'none';
+}
+
+
+</script>
+</html>

@@ -1,0 +1,54 @@
+rememberMe:
+  parameter: rememberMe
+  tokenValiditySeconds: 86400
+  alwaysRemember: No
+
+code:
+  codeKey: code
+  
+darkMode: dark
+whiteMode: white
+
+addr: 
+  navy: 127.0.0.1
+  land: lnsystem.iptime.org
+  
+cronFrmt: 0 0/1 * * * ?
+
+hmm:
+  server: 
+    host: 192.168.210.16
+    port: 8100
+  client:
+    connection:
+      poolSize: 1
+      
+ncos:
+  server: 
+    host: 192.168.210.16
+    port: 8111
+  client:
+    connection:
+      poolSize: 1
+  
+udp:
+  port: 8000
+
+navyPayload: /
+
+prodMode: Y
+
+ssoMode: N
+
+cryptoMode: N
+
+loginPort: 5173  #해군 로그인 관리 서버 포트
+
+
+sso:
+   landAuthUrl: http://10.10.50.7:80
+   navyAuthUrl: https://isign.ncos.mil.kr
+   connectionTimeout: 5000
+   soTimeout: 5000
+   checkServerUrl: /openapi/checkserver
+   agentId: 100

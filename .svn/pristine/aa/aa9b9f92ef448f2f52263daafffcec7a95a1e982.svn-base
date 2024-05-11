@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>기능 동작 전시</title>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_01_01"></span><strong>기능 동작 전시</strong></h4>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-3">
+				<div class="inner cscStatus">
+					<h4 class="item-title"><span class="iconWrapB icon_01_02"></span><strong></strong></h4>
+					<div class="items"> <!-- item contnets // -->
+						<div style="padding: 30px 0;text-align: center"><span class="btn xlarge" style="padding-left: 50px;padding-right: 50px"></span></div>
+						<!-- // item contnets --> </div>
+				</div>
+			</div>
+			<div class="item-box col-3">
+				<div class="inner cscStatus">
+					<h4 class="item-title"><span class="iconWrapB icon_01_02"></span><strong></strong></h4>
+					<div class="items"> <!-- item contnets // -->
+						<div style="padding: 30px 0;text-align: center"><span class="btn xlarge" style="padding-left: 50px;padding-right: 50px"></span></div>
+						<!-- // item contnets --> </div>
+				</div>
+			</div>
+			<div class="item-box col-3">
+				<div class="inner cscStatus">
+					<h4 class="item-title"><span class="iconWrapB icon_01_02"></span><strong></strong></h4>
+					<div class="items"> <!-- item contnets // -->
+						<div style="padding: 30px 0;text-align: center"><span class="btn xlarge" style="padding-left: 50px;padding-right: 50px"></span></div>
+						<!-- // item contnets --> </div>
+				</div>
+			</div>
+			<div class="item-box col-3">
+				<div class="inner cscStatus">
+					<h4 class="item-title"><span class="iconWrapB icon_01_02"></span><strong></strong></h4>
+					<div class="items"> <!-- item contnets // -->
+						<div style="padding: 30px 0;text-align: center"><span class="btn xlarge" style="padding-left: 50px;padding-right: 50px"></span></div>
+						<!-- // item contnets --> </div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_search"></span><strong>조회조건</strong></h4>
+					<div class="items" style="overflow: visible"> 
+						<!-- item contnets // -->
+						<div class="schwrap">
+							<ul>
+								<li>
+									<label>시간
+									<input id="frDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									   ~
+									<input id="toDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									</label>
+								</li>
+								<li>
+									<div  class="selectWrap">기능명
+									    <div class="multiselect">
+											<div class="selectBox">
+												<div class="selected"  style="width:200px;">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schCscName" class="checkboxes" style="display:none;width:200px;">
+												
+											</div>
+										</div> 
+									</div>
+								</li>
+								<li>
+								    <div class="selectWrap">상태
+										<div class="select">
+											<div class="selected">
+												<div data-value="" class="selected-value">전체</div>
+												<div class="arrow"></div>
+											</div>
+											<ul id="schStatus">
+											</ul>
+										</div>
+									</div>
+								</li>
+								<li>
+									<label>연관행위
+										<input type="text" id="schReason" class="form-control" placeholder="연관행위명을 입력해주세요">
+									</label>
+								</li>
+							</ul>
+							<div>
+								<button class="btn medium darkblue initBtn"><span class="iconBtn icon_reset"></span><strong>초기화</strong></button>
+								<button class="btn medium darkblue schBtn"><span class="iconBtn icon_btn_01"></span><strong>검색</strong></button>
+							</div>
+						</div>
+						<!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_list"></span><strong>조회목록</strong></h4>
+					<div class="items"> 
+						<div class="tablewrap">
+							<table>
+								<thead class="tHead">
+								</thead>
+								<tbody class="tBody">	
+								</tbody>
+							</table>
+						</div>
+						<div class="page_wrap">
+							<div class="page_nation">
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="9">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//Grid--> 
+	</div>
+</div>
+<script th:inline="javascript"> 
+	window.addEventListener('DOMContentLoaded', () => {
+		ncos.schMode = 'auto';
+		init();
+		ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
+		document.querySelector('.initBtn').addEventListener('click',e => {
+	    	e.preventDefault();
+			ncos.schMode = 'auto';
+			ncos.initBtn = true;
+			searchFunc();
+			ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
+	    });	    
+	    document.querySelector('.schBtn').addEventListener('click',e => {
+	    	e.preventDefault();
+	    	ncos.schMode = 'menual';
+	    	clearInterval(ncos.intervalFunc);
+	    	searchFunc();
+	    });
+		   
+	});
+	
+    const init = () => {
+    	document.getElementById('frDt').value= gfn_getDiffDt(ncos.diffDay);
+    	document.getElementById('toDt').value= gfn_getTodayDt();
+    	createMultiChk(document.getElementById('schCscName'),'FNCSC');
+    	createChk(document.getElementById('schStatus'),'FNST');
+    	const headColumns = [{data_id:"id",width: "0px"}
+					        ,{data_id:"collectionTime",label:"시간",data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+					        ,{data_id:"cscName",label:"기능명" ,data_grpCd:"FNCSC"}
+					        ,{data_id:"reason",label:"연관행위"}
+					        ,{data_id:"status",label:"상태", data_grpCd:"FNST"}
+					        ];
+        gridInit(document.querySelector('.tablewrap'),headColumns);
+		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
+		searchFunc();
+    }
+    
+    const searchFunc = (invoker) => {
+    	pageSearch("/getFuncList",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,searchAfterFunc);
+    }
+    
+    const searchAfterFunc = (appendData) => {
+    	console.log("appendData:",appendData);
+    	setStatus(appendData.cscStatus);
+    }
+    
+    const setStatus = (data) => {
+    	let cscStatus = document.querySelectorAll('.cscStatus');
+    	cscStatus.forEach((div,index) => {
+    		div.querySelector('.item-title').querySelector('strong').textContent = gfn_getCodeVal('FNCSC',data[index].cscId);
+    		let span = div.querySelector('.items').querySelector('span');
+    		span.classList.remove('green','red');
+    		if(data[index].status == '1'){//비정상
+				span.classList.add('red');
+			}
+			else{
+				span.classList.add('green');
+			}
+    		span.textContent = gfn_getCodeVal('FNST',data[index].status);
+    		
+    	});
+    }
+
+</script>
+</th:block>
+</html>

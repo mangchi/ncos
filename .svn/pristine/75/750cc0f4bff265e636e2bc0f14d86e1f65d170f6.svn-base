@@ -1,0 +1,51 @@
+msg.cache.expire=cacheStore에서 {0}가 삭제되었습니다.
+msg.session.expired=사용자 세션이 만료가 되었습니다.
+msg.success=정상 처리되었습니다.
+msg.fail=오류가 발생하였습니다.
+msg.pwdInit=사용자 비밀번호가 <br>{0}로 초기화되었습니다.
+msg.pwUnBlock=차단해제되었습니다.
+
+error.notNull={0}은/는 필수 입력 값입니다.
+error.userNotFound=존재하지 않는 사용자입니다.
+error.userNotMatch=아이디 또는 비밀번호가 맞지 않습니다.
+error.userLocked=잠긴 계정입니다.
+error.userDisable=비활성화된 계정입니다.
+error.userExpired=만료된 계정입니다.
+error.pwdExpired=비밀번호가 만료되었습니다.
+error.duplicatedLogin=중복 로그인 오류입니다.
+error.userLockedByError=비밀번호 오류 5회 이상으로 {0}분 동안 접속이 차단됩니다.
+error.passwordChgPerQuarter=분기에 최소 1번은 비밀번호를 변경해야 합니다.
+error.cache.key.null=cacheStore에 해당{0}값이 존재하지 않습니다.
+error.pwdInit=패스워드 초기화가 된 경우에는 패스워드를 변경해야 합니다.
+error.duplicatedSystemId=시스템 아이디가 이미 존재합니다.
+
+#Level1 
+error.userId.notNull=사용자 id는 필수 입력 값입니다.
+error.userId.duplicated=사용자 id는 존재합니다.
+error.password.notNull=비밀번호는 필수 입력 값입니다.
+error.confirm.notNull=비밀번호 확인은 필수 입력 값입니다.
+error.oldPw.notNull=현재 비밀번호는 필수 입력 값입니다.
+error.newPw.notNull=변경 비밀번호는 필수 입력 값입니다.
+error.newPwConfirm.notNull=변경 비밀번호 확인은 필수 입력 값입니다.
+error.username.notNull=사용자 이름은 필수 입력 값입니다.
+error.email.notNull=메일주소는 필수 입력 값입니다.
+error.phoneNo.notNull=연락처는 필수 입력 값입니다.
+error.authorization.notNull=사용자 권한은 필수 선택입니다.
+error.authority.notNull=사용자 권한은 필수 선택입니다.
+error.deptNm.notNull=부서는  필수 입력 값입니다.
+error.classId.notNull=직위는 필수 입력 값입니다.
+error.affiliationId.notNull=소속은 필수 입력 값입니다.
+error.militaryServiceNumber.notNull=군번은 필수 입력 값입니다.
+
+
+#Level12
+error.password.invalid1=비밀번호는 영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 9자 ~ 20자의 비밀번호여야 합니다.
+error.password.invalid2=비밀번호는 동일 문자나 숫자로 3회이상 연속되어서는 안됩니다.
+error.password.invalid3=비밀번호는 사용자 아이디를 포함할 수 없습니다.
+error.password.invalid4=비밀번호는 연속적인 3자리 이상 오름/내림 차순으로 구성되어서는 안됩니다.
+error.password.invalid5=현재 비밀번호가 맞지 않습니다.
+error.password.invalid6=변경 비밀번호와 변경 비밀번호 확인이 일지하지 않습니다.
+error.password.invalid7=기존비밀번호와 동일합니다.
+error.password.invalid8=비밀번호와 비밀번호 확인이 일치하지 않습니다.
+error.email.invalid=이메일 형식에 맞지 않습니다.
+

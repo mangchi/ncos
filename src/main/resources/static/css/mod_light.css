@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*color scheme 변수*/
+:root {
+  --bg:#F1F1F1;
+  --font-basic:#333;
+}
+
+/*light mode*/
+html[data-dark=false] 
+body {background-color:var(--bg); color:var(--font-basic);}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>자산상태전시</title>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_09_01"></span><strong>자산 상태 전시</strong></h4>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-2">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_09_02"></span><strong>자산 상태</strong></h4>
+					<div class="items"> <!-- item contnets // --><div class="dataNum ac" style="margin-top: 60px"></div><!-- // item contnets --> </div>
+				</div>
+			</div>
+			<div class="item-box col-2">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_09_03"></span><strong>자산 종류별 발생 현황</strong></h4>
+					<div class="items" style="overflow:hidden"> <!-- item contnets // --><span class="imgWrap" style="margin-top: 20px"><canvas id="donutChart" width="320" height="324"></canvas></span><!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+			<div class="item-box col-8">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_09_04"></span><strong>탐지 시간</strong></h4>
+					<div class="items"> <!-- item contnets // --><span class="imgWrap"><canvas id="lineChart" width="1603" height="330"></canvas></span><!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_search"></span><strong>조회조건</strong></h4>
+					<div class="items" style="overflow: visible"> <!--20230403수정-->
+						<!-- item contnets // -->
+						<div class="schwrap">
+							<ul>
+								<li>
+									<label>탐지시간
+										<input id="frDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control">
+										~
+										<input id="toDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control">
+									</label>
+									<div  class="selectWrap">관리자
+									    <div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schAdmin" class="checkboxes" style="display:none;">
+											</div>
+										</div> 
+									</div>
+								</li>
+								<li>
+									<div  class="selectWrap" style="z-index:200;">대분류
+									    <div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schLargeCategory" class="checkboxes" style="display:none;">
+											</div>
+										</div> 
+									</div>
+									<div class="selectWrap">기밀성 중요도
+									    <div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schConfidentialityLevel" class="checkboxes" style="display:none;">
+											</div>
+										</div> 
+									</div>
+								</li>
+								<li>
+									<div class="selectWrap" style="z-index:200;">소분류
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schSmallCategory" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+									<div class="selectWrap">무결성 중요도
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schIntegrityLevel" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<label>IP 주소
+										<input id="schIpAddress" type="text" class="form-control" placeholder="192.168.100.201">
+									</label>
+									<div class="selectWrap">가용성 중요도
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schAvailablityLevel" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+								    <div class="selectWrap" style="z-index:200" >구역
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schZoneId" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+									<div class="selectWrap">상태
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schStatus" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div>
+							<button class="btn medium darkblue initBtn"><span class="iconBtn icon_reset"></span><strong>초기화</strong></button>
+							<button class="btn medium darkblue schBtn"><span class="iconBtn icon_btn_01"></span><strong>검색</strong></button>
+							</div>
+						</div>
+						<!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_list"></span><strong>조회목록</strong></h4>
+					<div class="items" style="height:303px; overflow:hidden"> 
+						<!--table//-->
+						<div class="tablewrap">
+							<table>
+								<thead class="tHead">
+								</thead>
+								<tbody class="tBody">
+								</tbody>
+							</table>
+						</div>
+						<!--//table--> 
+						<!--pagination//-->
+						<div class="page_wrap">
+							<div class="page_nation">
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="4">
+							</div>
+						</div>
+						<!--//pagination--> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//Grid--> 
+	</div>
+</div>
+<script th:inline="javascript"> 
+	window.addEventListener('DOMContentLoaded', () => {
+		document.querySelector('#donutChart').style.width = '270px';
+		document.querySelector('#donutChart').style.height = '220px';
+		document.querySelector('#lineChart').style.width = '1000px';
+		document.querySelector('#lineChart').style.height = '200px';
+		if(document.body.clientWidth > 1920 ){
+			document.querySelector('#donutChart').style.width = '370px';
+			document.querySelector('#donutChart').style.height = '324px';
+			document.querySelector('#lineChart').style.width = '1603px';
+			document.querySelector('#lineChart').style.height = '376px';
+		}
+		ncos.schMode = 'auto';
+		init();
+		ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
+		document.querySelector('.initBtn').addEventListener('click',e => {
+			e.preventDefault();
+			ncos.initBtn = true;
+			ncos.schMode = 'auto';
+			searchFunc();
+			ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
+	    });	    
+	    document.querySelector('.schBtn').addEventListener('click',e => {
+	    	e.preventDefault();
+	    	ncos.schMode = 'menual';
+	    	clearInterval(ncos.intervalFunc);
+	    	searchFunc();
+	    });
+		   
+	});
+	let donutChart = null;
+    let lineChart = null;
+    
+    const init = () => {
+    	document.getElementById('frDt').value= gfn_getDiffDt(ncos.diffDay);
+    	document.getElementById('toDt').value= gfn_getTodayDt();
+    	createMultiChk(document.getElementById('schLargeCategory'),'ASLC');
+    	createMultiChk(document.getElementById('schSmallCategory'),'ASSC');
+    	createMultiChk(document.getElementById('schConfidentialityLevel'),'COIM');
+    	createMultiChk(document.getElementById('schIntegrityLevel'),'COIM');
+    	createMultiChk(document.getElementById('schAvailablityLevel'),'COIM');
+    	createMultiChk(document.getElementById('schStatus'),'ASST');
+    	gfn_getCodeManager().then((data) => {
+    		createMultiChk(document.getElementById('schAdmin'),'AD', data.info);
+    		//zoneData = data.info;
+    		gfn_showChkVal(document.getElementById('schAdmin'));
+    	});
+    	gfn_getCodeZone().then((data) => {
+    		createMultiChk(document.getElementById('schZoneId'),'ZNLS', data.zoneInfo);
+    		//zoneData = data.zoneInfo;
+    		gfn_showChkVal(document.getElementById('schZoneId'));
+    	});
+    	const headColumns = [{data_id:"rn",label:"No.",width:"60px"}
+					        ,{data_id:"id",width: "0px"}
+					        ,{data_id:"detectionTime",label: "탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+					        ,{data_id:"largeCategory",label:"대분류" ,data_grpCd:"ASLC"}
+					        ,{data_id:"smallCategory",label:"소분류", data_grpCd:"ASSC"}
+					        ,{data_id:"assetName",label:"자산명"}
+					        ,{data_id:"ipAddress",label:"IP주소"}
+					        ,{data_id:"zoneName",label:"구역"}
+					        ,{data_id:"manager",label:"관리자", }
+					        ,{data_id:"confidentialityLevel",label: "기밀성 중요도", data_grpCd:"COIMS",data_class:"threat" }
+					        ,{data_id:"integrityLevel",label: "무결성 중요도", data_grpCd:"COIMS" ,data_class:"threat"}
+					        ,{data_id:"availablityLevel",label: "가용성 중요도", data_grpCd:"COIMS",data_class:"threat"}
+					        ,{data_id:"assetStatus",label: "상태" ,data_grpCd:"ASST"}
+					        ,{data_id:"statusText",label: "상태 메시지"}
+					       ];
+        gridInit(document.querySelector('.tablewrap'),headColumns);
+		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
+		searchFunc();
+    }
+    
+    const searchFunc = (invoker) => {
+    	pageSearch("/getAssetDispList",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,searchAfterFunc);
+    }
+
+    const searchAfterFunc = (appendData) => {
+    	//console.log("appendData:",appendData);
+    	setStatus(appendData.assetStatus);
+    	drawDonutChart(appendData.assetAffair);
+    	drawLineChart(appendData.detectPriorList);
+    }
+    
+    const setStatus = (data) => {
+    	let dataNum = document.querySelector('.dataNum');
+    	dataNum.innerHTML = '';
+    	dataNum.append(data.assetThreatCnt+'/'+data.assetTotCnt);
+    
+    }
+    
+    const drawDonutChart = (chartData) => {
+		const labels = new Array();
+		const pcts = new Array();
+		//gfn_getCodeVal('ASLC','1')
+		let totCnt = 0;
+		for(let key in chartData){
+		   let item = chartData[key];
+		   //console.log("item::::",item);
+		   labels.push(gfn_getCodeVal('ASLC',item.largeCategory));
+		   totCnt += item.cnt;
+		}
+		for(let key in chartData){
+		   let item = chartData[key];
+		   pcts.push(item.cnt/totCnt*100);
+		}
+		//console.log("totCnt:",totCnt);
+		//labels.push(' 서버');
+		//labels.push(' 스위치');
+		//labels.push(' 방화벽');
+ 	    const dountData = {
+ 			   labels: labels,
+ 			   datasets: [{
+ 				   label: 'My First Dataset',
+ 			       data: pcts,
+ 			       backgroundColor: [
+ 			    	   '#80e080',
+ 			           '#4fc3f7',
+ 			           '#9575cd',
+ 			      	   '#c71585'
+ 			       ],
+ 			       hoverOffset: 4
+ 			   }]
+ 	    };
+ 	   
+ 	    const config = {
+ 	    		type: 'doughnut',
+ 			    data: dountData,
+ 			    options: {
+ 			    	responsive: false,
+ 			    	animation: {
+	        	         duration: 0
+	        	    },
+					plugins: {
+						legend: {
+							position: 'bottom',
+		       			    display: true,
+		       			    labels: {
+		       			    	usePointStyle: true,
+ 			                	color: 'black',
+ 			                	padding : 18,
+ 			                    font: {
+ 			                    	size: 17,
+ 		                        }
+ 			                 	// fill : true
+ 			                }
+		       			}
+ 	                }
+			    }
+ 	    };
+ 	    config.options.plugins.legend.labels.color = chartColor;
+    	if(donutChart!=null){
+    		donutChart.destroy();
+	    }
+    	donutChart = new Chart(document.getElementById('donutChart').getContext("2d"),config);	  
+
+    }
+    
+    const drawLineChart = (chartData) => {
+    	let lineLabels = new Array();
+    	let dataH = new Array();
+    	let dataM = new Array();
+    	let dataL = new Array();
+    	chartData.forEach((chartItem,index) => {
+    		if(chartItem.threat === 'H'){
+    			lineLabels.push(chartItem.hm);
+    			dataH.push(chartItem.cnt);
+    	    }
+    		else if(chartItem.threat === 'M'){
+    			dataM.push(chartItem.cnt);
+    		}
+            else if(chartItem.threat === 'L'){
+            	dataL.push(chartItem.cnt);
+    		}
+    	});
+    	
+
+    	const lineData = {labels: lineLabels,
+    			          datasets: [{ label: ' 상',
+    			                        data: dataH,
+    			                        fill: false,
+    			                        pointStyle: 'circle',
+    			                        pointRadius: 4,
+    			                        borderColor: 'rgb(255, 0, 0)',
+    			                        backgroundColor: 'rgb(255, 0, 0)',
+    			                        tension: 0.1
+    			                    },
+    			                    { label: ' 중',
+    			                        data: dataM,
+    			                        fill: false,
+    			                        pointStyle: 'circle',
+    			                        pointRadius: 4,
+    			                        borderColor: 'rgb(255, 165, 0)',
+    			                        backgroundColor: 'rgb(255, 165, 0)',
+    			                        tension: 0.1
+    			                    },
+    			                    { label: ' 하',
+    			                        data: dataL,
+    			                        fill: false,
+    			                        pointStyle: 'circle',
+    			                        pointRadius: 4,
+    			                        borderColor: 'rgb(255, 254, 2)',
+    			                        backgroundColor: 'rgb(255, 254, 2)',
+    			                        //pointBorderColor: 'rgb(75, 89, 192)',
+    			                        tension: 0.1
+    			                    }
+    			                    ]
+    	                 };
+    	
+    	const config = { type: 'line',
+    			         data: lineData,
+    			         options: { responsive: true,
+	    			        	   animation: {
+				        	         duration: 0
+				        	       },
+    			        	        scales: {
+    			        	                 x: {
+    			        	                	 ticks: {
+    			        	                         color: 'black',
+    			        	                	 },
+    			        	                	
+    			        	                 },
+    			        	                 y: {
+    			        	                	 ticks: {
+    			        	                         color: 'black',
+    			        	                     },
+    			        	                     grid: {
+    			        	                    	 color : 'rgb(90, 90, 90)',
+    			        	                         display: true,
+    			        	                         //drawOnChartArea: true,
+    			        	                         //drawTicks: true,
+    			        	                     }
+    			        	                 }
+    			        	             },
+    			        	             
+	    			        	    plugins: {legend: {
+	    	       			    		      position: 'bottom',
+	    	       			                  display: true,
+	    	       			                  labels: {
+	    	       			                	  usePointStyle: true,
+	    	       			                	  color: 'black',
+	    	       			                	  padding : 30,
+	    	       			                      font: {
+	                                                size: 15,
+	    	       		                          }
+	    	       			                	// fill : true
+	    	       			                  }
+	    	       			           }
+	    	       			      }
+    			         },
+    			        };
+    	config.options.scales.x.ticks.color = chartColor;
+     	config.options.scales.y.ticks.color = chartColor;
+     	config.options.plugins.legend.labels.color = chartColor;
+    	if(lineChart!=null){
+    		lineChart.destroy();
+	    }
+    	lineChart = new Chart(document.getElementById('lineChart').getContext("2d"),config);	  
+    }
+</script>
+</th:block>
+
+</html>

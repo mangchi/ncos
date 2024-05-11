@@ -1,0 +1,337 @@
+server:
+  port: 8080
+  # ssl:
+  #   enabled: true
+  #   key-store: /opt/homebrew/etc/nginx/ssl/minica.jks # \uc0dd\uc131\ud55c .jks \ud30c\uc77c \uc704\uce58
+  #   key-store-password: 992035 # .jks\ub97c \uc0dd\uc131\ud560 \ub54c \uc785\ub825\ud588\ub358 keystore \ube44\ubc00\ubc88\ud638
+  #   key-password: 992035 # .jks\ub97c \uc0dd\uc131\ud560 \ub54c \uc785\ub825\ud588\ub358 key \ube44\ubc00\ubc88\ud638
+  #   key-alias: localhost # .jks \ubcc4\uce6d
+  compression:
+    enabled: true
+    mime-types: application/json, application/xml,text/html,image/jpeg,image/png,text/css,application/javascript,video/mp4
+    min-response-size: 2048
+  servlet: 
+    session:
+      timeout: 3000s
+      persistent: false
+      cookie:
+        http-only: true
+       # name: NCOS_JSESSIONID
+
+spring.config.import: ncos.yml
+
+spring:
+  profiles:
+    active: lnsystem-navy #lnsystemHmmLand #lnsystemNavy # \ud65c\uc131\ud654\uc2dc\ud0ac \ud504\ub85c\ud544
+    group:
+      local: "local" 
+      dev: "dev" 
+      lnsystemNavy: "lnsystem-navy" 
+      lnsystemLand: "lnsystem-land" 
+      lnsystemHmmNavy: "lnsystem-hmm-navy" 
+      lnsystemHmmLand: "lnsystem-hmm-land" 
+      navy: "navy"
+      land: "land"
+      hmmNavy: "hmmNavy"
+      hmmLand: "hmmLand"
+
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: local 
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://localhost:3306/hmm
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /Users/donghokang/eclipse-workspace/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://192.168.0.7:3306/ncosdb
+    username: kdh
+    password: 992035
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: c:\\Temp\\upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+      
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: lnsystem-navy
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://lnsystem.iptime.org:4036/ncos_ship
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /home/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+    
+--- 
+
+spring: 
+  config: 
+    activate: 
+      on-profile: lnsystem-land
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://lnsystem.iptime.org:4036/ncos_land
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /home/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+    
+--- 
+
+spring: 
+  config: 
+    activate: 
+      on-profile: lnsystem-hmm-navy
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://lnsystem.iptime.org:4036/hmm_ship
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /home/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+    
+--- 
+
+spring: 
+  config: 
+    activate: 
+      on-profile: lnsystem-hmm-land
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://lnsystem.iptime.org:4036/hmm_land
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /home/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+    
+--- 
+
+spring: 
+  config: 
+    activate: 
+      on-profile: navy
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://localhost:3306/ncos
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /data/was/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: land
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://localhost:3306/ncos
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /data/was/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: hmmLand
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://localhost:3306/hmm
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /data/was/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: hmmNavy
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mariadb://localhost:3306/hmm
+    username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
+    password: ENC(Uz6jUJ5tezNSjJ+2AEFc6npsb+Ivt0gs)
+    driverClassName: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1 FROM DUAL
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  servlet:
+    multipart:
+      location: /data/was/ncos/upload
+      maxFileSize: 2048MB
+      maxRequestSize: 4096MB
+
+---
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    view-names: th/*
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  
+mybatis:
+  mapper-locations: /mapper/**/*.xml
+  type-aliases-package: mil.ln.ncos.cmmn,mil.ln.ncos.**.vo
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: "NULL"
+      
+logging:
+  config: classpath:log4j2.yml
+  
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+#
+#vm argument
+#add last line in tomcat/conf/catalina.properties 
+# ship : tcpClient or udpClient = true and others false
+# land : tcpServer or udpServer = true and others false
+# tcpServer=false
+# udpServer=true
+# tcpClient=false
+# udpClient=false
+#
+#

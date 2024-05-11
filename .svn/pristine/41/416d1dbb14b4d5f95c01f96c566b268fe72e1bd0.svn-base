@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Net">
+  
+   <select id="selectNetEquipList" parameterType="HashMap" resultType="CmmnMap">
+	   SELECT  ASSET_ID
+	   <!--      , CONCAT(ASSET_NAME,'(',CODE_KR,')') ASSET_NM-->
+	         , ASSET_NAME
+	         , CODE_KR
+	   FROM network_asset_info A
+	   LEFT JOIN code_info B
+	   ON A.SMALL_CATEGORY = B.CODE
+	   AND MAINGROUP = 'AS'
+	   AND SUBGROUP = 'SC'
+	   ORDER BY ASSET_ID 
+  </select>
+  
+  
+  <select id="selectTopoList" parameterType="HashMap" resultType="CmmnMap">
+	    SELECT LINK_ID  
+	      , UPPER_LINK_ID  
+          , A.ASSET_ID 
+          , B.ASSET_NAME
+          , C.CODE
+          , C.CODE_KR
+          , LINK_TYPE
+          , B.LARGE_CATEGORY
+       FROM link_info A
+       INNER JOIN network_asset_info B 
+       ON A.ASSET_ID = B.ASSET_ID
+       INNER JOIN  code_info C
+       ON  B.SMALL_CATEGORY = C.CODE
+       AND C.MAINGROUP = 'AS'
+       AND C.SUBGROUP = 'SC'    
+       ORDER BY LINK_ID 
+
+  </select>
+  
+   <select id="selectErrorAssetList" parameterType="map" resultType="CmmnMap">
+
+         SELECT A.LINK_ID
+		      , A.UPPER_LINK_ID
+		      , A.ASSET_ID
+		      , A.LINK_TYPE
+              , B.ASSET_NAME
+              , B.LARGE_CATEGORY
+              , C.A_GRADE,C.REASON_NAME,D.S_GRADE, D.S_DETECTION_THREAT_NAME
+              , E.D_GRADE,E.D_DETECTION_THREAT_NAME
+              , CASE WHEN B.SYSTEM_ID IS NULL AND D.SRC_IP IS NULL AND E.DST_IP IS NULL THEN 'N' ELSE 'Y' END IS_PROBLEM
+		  FROM link_info A
+		INNER JOIN network_asset_info B
+		  ON A.ASSET_ID = B.ASSET_ID
+		LEFT JOIN
+	    (SELECT A.SYSTEM_ID,0 A_GRADE, statusText REASON_NAME
+		FROM asset_status_info A
+		LEFT JOIN reason_v B
+		ON    A.REASON_ID = B.ID
+		WHERE (A.SYSTEM_ID,A.STATUS_ID)
+		IN (
+		SELECT  SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
+		FROM asset_status_info
+		WHERE ASSET_STATUS != 2
+		GROUP BY SYSTEM_ID)
+		AND A.ASSET_STATUS != 2) C
+		ON B.SYSTEM_ID = C.SYSTEM_ID
+		LEFT JOIN
+		(SELECT A.SRC_IP, A.THREAT_IMPORTANCE S_GRADE, A.DETECTION_THREAT_NAME S_DETECTION_THREAT_NAME
+		FROM threat_info A
+		WHERE (A.SRC_IP,A.THREAT_ID)
+		IN (
+		    SELECT  SRC_IP, MAX(THREAT_ID) THREAT_ID
+		     FROM threat_info A 
+		     WHERE NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
+		     GROUP BY SRC_IP
+		)) D
+		ON B.IP_ADDRESS = D.SRC_IP
+		LEFT JOIN
+		(SELECT A.DST_IP, A.THREAT_IMPORTANCE D_GRADE, A.DETECTION_THREAT_NAME D_DETECTION_THREAT_NAME
+		FROM threat_info A
+		WHERE (A.DST_IP,A.THREAT_ID)
+		IN (
+		    SELECT  DST_IP, MAX(THREAT_ID) THREAT_ID
+		     FROM threat_info A 
+		     WHERE NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
+		     GROUP BY DST_IP
+		)) E
+		ON B.IP_ADDRESS = E.DST_IP
+		ORDER BY LINK_ID
+
+
+  </select>
+  
+  
+  
+
+   
+</mapper>

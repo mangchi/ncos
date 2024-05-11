@@ -1,0 +1,43 @@
+package mil.ln.ncos.train.service;
+
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+
+import lombok.RequiredArgsConstructor;
+import mil.ln.ncos.dao.DAO;
+
+
+@RequiredArgsConstructor
+@Service
+public class TrainServiceImpl implements TrainService {
+    
+	@Value("${spring.profiles.active}")
+	private String activeProfile;
+	private final DAO dao;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getTrainList(Map<String, Object> map) throws Exception {
+		return (List<Map<String,Object>>)dao.selectPage("Train.selectTrainCount","Train.selectTrainList",map);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int execTrain(Map<String, Object> map) throws Exception {
+		return 1;
+	}
+
+	@Override
+	public Map<String, Object> getTrainInfo() throws Exception {
+		return (Map<String, Object>)dao.selectOptionalObject("Train.selectTrainInfo",null).orElseGet(() -> null);
+	}
+
+	
+
+
+}

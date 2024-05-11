@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>육상메인화면</title>
+<script type="text/javascript" src="/js/d3.js"></script>
+<script type="text/javascript" src="/js/topojson.js"></script>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-3">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_07_01"></span><strong>함정별 위협 상태</strong></h4>
+					<div class="items">
+					 <!--트리메뉴 들어가는 자리 시작-->
+					<div class="treeBox">
+					</div>
+				    <!--트리메뉴 들어가는 자리 끝-->
+					</div>
+				</div>
+			</div>
+			<div class="item-box col-6">
+				<div class="inner"> 
+				    <div id="map-wrapper" class="map-wrapper" style="width: 600px; height: 600px;"></div>
+				</div>
+			</div>
+			<div class="item-box col-3">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_07_02"></span><strong>함정별 자산 상태</strong></h4>
+					<div class="items"> 
+					<!--트리메뉴 들어가는 자리 시작-->
+					<div class="treeBoxAsset">
+					</div>
+				    <!--트리메뉴 들어가는 자리 끝-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_07_03"></span><strong>위협 뱔생 목록</strong></h4>
+					<div class="items"> 
+						<!--table//-->
+						<div class="tablewrap">
+							<table>
+								<thead class="tHead">
+								</thead>
+								<tbody class="tBody">
+								</tbody>
+							</table>
+						</div>
+						<!--//table--> 
+						<!--pagination//-->
+						<div class="page_wrap">
+							<div class="page_nation"></div>
+						</div>
+						<!--//pagination--> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//Grid--> 
+	</div>
+</div>
+<script th:inline="javascript"> 
+	let xyList = new Array();
+	let xy = { id : 'xy1'
+	         , lat : 37.34  //dataCoordX 126.58 
+	         , lon : 126.58 // dataCoordY 37.34
+	};
+	xyList.push(xy);
+	window.addEventListener('DOMContentLoaded', () => {
+		init();
+		//setInterval(searchFunc, ncos.interval);//50초
+		   
+	});
+	
+	const init = () => {
+	    	const headColumns = [{id:"idx",label:"NO",width:"0px"}
+	                            ,{id:"detectDt",label:"탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+			     	            ,{id:"unitId",label:"부대명",data_grpCd:"002"}  
+					            ,{id:"shipId",label:"함명"}  
+					            ,{id:"sendIp",label:"송신IP"}
+					            ,{id:"recvIp",label:"수신IP"}
+					            ,{id:"sendPort",label:"송신Port"}
+					            ,{id:"recvPort",label:"수신Port"}
+					            ,{id:"detectWay",label:"탐지방식", data_cellType:"tdCCell"}
+					            ,{id:"detectThreatNm",label:"탐지 위험명", data_cellType:"tdCCell"}
+					            ,{id:"detectResult",label:"정오탐판정", data_cellType:"tdCCell"}
+					            ,{id:"threatPriority",label: "위협중요도", data_cellType:"tdCCell", data_grpCd:"001", data_class:"threat"}
+					            ,{id:"detailBtn",label: "상세보기", data_cellType:"tdCCell" , data_btnNm:"상세보기"}
+					           ];
+		    gridInit(document.querySelector('.tablewrap'),headColumns);
+		    pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
+		    treeInit(document.querySelector('.treeBox'));
+		    treeInit(document.querySelector('.treeBoxAsset'));
+		    searchFunc();
+		    fetch("/json/world.topo.json")
+			.then(response => {
+				
+			    return response.json();
+			})
+			.then(jsondata => {
+				//console.log("jsondata:",jsondata.objects.World_Countries__Generalized_);
+				drawMap(jsondata,xyList);
+			});
+
+	}
+	
+	const searchFunc = (invoker) => {
+    	pageSearch("/landIntro",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,searchAfterFunc);
+    }
+    
+    const searchAfterFunc = (appendData) => {
+    	let vesselThreatList = appendData.vesselThreatList;
+    	let treejs1 = createInitTree(document.querySelector('.treeBox'),list,false);
+		if(vesselThreatList != null && vesselThreatList.length > 0){
+			createTreeNoChk(vesselThreatList,treejs1);
+		}
+		let vesselAssetList = appendData.vesselAssetList;
+    	let treejs2 = createInitTree(document.querySelector('.treeBoxAsset'),list,false);
+		if(vesselAssetList != null && vesselAssetList.length > 0){
+			createTreeNoChk(vesselAssetList,treejs2);
+		}
+		
+		
+ 	  
+    }
+    
+    
+    const detailFunc = (data) => {
+    	console.log("detailFunc data:",data);
+    	layerPopup('#whiteList');
+ 	  
+    }
+
+    
+    const drawMap = (data,obj) =>{
+    	
+        const geojson = topojson.feature(data, data.objects.World_Countries__Generalized_);
+        const center = d3.geoCentroid(geojson);
+
+        let centered = undefined;
+
+        // 현재의 브라우저의 크기 계산
+        const divWidth = document.getElementById("map-wrapper").clientWidth;
+        const width = divWidth;
+        const height = width * 1;
+
+        // 지도를 그리기 위한 svg 생성
+        const svg = d3
+        .select('.map-wrapper')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .style("font", "14px times");
+        
+        const background = svg.append('rect')
+        .attr('width', width)
+        .attr('height', height)
+        .attr("fill-opacity","0");
+
+         // 지도가 그려지는 그래픽 노드(g) 생성
+        const g = svg.append('g');
+         
+        const effectLayer = g.append('g').classed('effect-layer', true);
+         // 지도가 그려지는 그래픽 노드
+        const mapLayer = g.append('g').classed('map-layer', true);
+         // 선박이 그려지는 그래픽 노드
+        const shipLayer = g.append('g').classed('ship-layer', true);
+         // 지도의 출력 방법을 선택(메로카토르)
+        let projection = d3.geoMercator()
+        .scale(1)
+        .translate([0, 0]); 
+        // d3.geoMercator() 
+        //.translate([width / 2, height / 2])
+        //.scale(0.1);
+
+         // svg 그림의 크기에 따라 출력될 지도의 크기를 다시 계산
+        const path = d3.geoPath().projection(projection);
+        const bounds = path.bounds(geojson);
+        const widthScale = (bounds[1][0] - bounds[0][0]) / width; 
+        const heightScale = (bounds[1][1] - bounds[0][1]) / height; 
+        const scale = 0.95 / Math.max(widthScale, heightScale);
+        const xoffset = width/2 - scale * (bounds[1][0] + bounds[0][0]) /2 + 0; 
+        const yoffset = height/2 - scale * (bounds[1][1] + bounds[0][1])/2 + 0; 
+        const offset = [xoffset, yoffset];
+        console.log("scale:",scale);
+        console.log("offset:",offset);
+        projection.scale(scale).translate(offset);
+        //projection.scale(300).translate([300,400]);
+         
+        const color = d3.scaleLinear()
+        .domain([1, 20])
+        .clamp(true)
+    // .range(['#E5F0E6', '#E5F0E6']); 
+       .range(['#595959', '#595959']); 
+
+        mapLayer
+        .selectAll('path')
+        .data(geojson.features)  //data.objects["municipalities-geo"]).features
+        .enter().append('path') 
+        .attr('d', path)
+        .attr('vector-effect', 'non-scaling-stroke');
+
+         
+         shipLayer
+         .selectAll('svg')
+         .data(obj)
+         .enter()  
+         .append("circle")
+         .attr("cx", (d)=> projection([d.lon, d.lat])[0])
+         .attr("cy", (d)=> { let cy = projection([d.lon, d.lat])[1];  if(isNaN(cy)){cy = 0}; console.log("cy:",cy); return cy;})
+         .attr("r", (d)=> '0.02em')
+ 	     .on('mouseover', (d,i) => {
+ 	    	 console.log("collect:",i);
+ 	    	 document.querySelector('.ship-info').querySelector(".collectionDt").innerHTML = i.collectionDt;
+ 	    	 document.querySelector('.ship-info').querySelector(".collectionPos").innerHTML = i.collectionPos;
+ 	    	 document.querySelector('.ship-info').querySelector(".lon").innerHTML = i.lon;
+ 	    	 document.querySelector('.ship-info').querySelector(".lat").innerHTML = i.lat;
+   
+ 	      })
+ 	      .on('mouseout', (d,i) => {
+ 	    	 document.querySelector('.ship-info').querySelector(".collectionDt").innerHTML = "";
+ 	    	 document.querySelector('.ship-info').querySelector(".collectionPos").innerHTML = "";
+ 	    	 document.querySelector('.ship-info').querySelector(".lon").innerHTML = "";
+ 	    	 document.querySelector('.ship-info').querySelector(".lat").innerHTML = "";
+ 	      })
+          .attr("fill-opacity","0.9")
+ 	      .style("fill","orange")
+          .style("opacity", 0.9);
+         
+         
+          svg.call(d3.zoom().on("zoom", function (e) {
+        	   // console.log("e.transform:",e);
+         	   if(e.transform.k < 0.4){
+         		   return;
+         	   }
+         	   mapLayer.attr("transform", d3.zoomTransform(this));
+         	   console.log("x:",e.transform.x);
+            console.log("y:",e.transform.y);
+            console.log("k:",e.transform.k);	     
+            if(e.transform.k > 1){
+          		//d3.selectAll('circle').attr('transform', 'translate('+ e.transform.x + ',' + e.transform.y + ')'); 
+            }else if(e.transform.k < 1){
+          		//d3.selectAll('circle').attr('transform', 'translate('+ -e.transform.x + ',' + -e.transform.y + ')'); 
+            }	      
+            shipLayer.attr("transform", d3.zoomTransform(this));
+ 		  }))
+ 		   .on("wheel", event => event.preventDefault());
+           /*
+           x: -16609.020568696513
+           y: -7669.948043621154
+           k: 33.72181660173691
+           */
+          
+           //d3.geoMercator().scale(0.5).translate([0, 0]); 
+          //svg.call(zoom.transform, d3.zoomIdentity);
+    }
+</script>
+</th:block>
+</html>

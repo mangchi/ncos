@@ -1,0 +1,48 @@
+package mil.ln.ncos.client.service;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import mil.ln.ncos.dao.DAO;
+
+@Service
+@RequiredArgsConstructor
+public class UdpOutboundService {
+	
+	private final DAO dao;
+	
+	@Value("${spring.profiles.active}") 
+	private String activeProfile;
+
+	@Value("${prodMode}") 
+	private String prodMode;
+	
+	private final TcpOutboudService messageService;
+
+
+	public void send(int messageType){
+		if(prodMode.equals("Y") && activeProfile.indexOf("land") == -1 && activeProfile.indexOf("Land") == -1) {
+			try {
+			if(activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1) {
+				switch(messageType) {
+					case 1: messageService.sendHeartBeat();
+					        break;
+					case 2: messageService.sendThreatInfo();
+					        break;
+					case 3: messageService.sendAssertInfo();
+						    break;
+					default:break;
+				}
+			}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+    	}
+    	
+    }
+
+}

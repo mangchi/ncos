@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Asset">
+  
+  <select id="selectAssetCount" parameterType="map" resultType="long">
+        SELECT COUNT(1) 
+         FROM network_asset_info A
+         INNER JOIN asset_status_info C ON A.system_id = C.system_id
+         LEFT JOIN zone_location B
+         ON A.ZONE_ID = B.ZONE_ID
+         <include refid="whereAssetList"></include>
+  </select>
+
+  <select id="selectAssetList" parameterType="map" resultType="CmmnMap">
+
+     	SELECT  RN
+     	      , A.ASSET_ID ID
+     	      , B.LARGE_CATEGORY
+     	      , B.SMALL_CATEGORY
+     	      , B.SYSTEM_ID
+     	      , B.ASSET_NAME
+     	      , B.IP_ADDRESS
+     	      , A.ZONE_ID
+     	      , A.ZONE_NAME
+     	      , B.MANAGER
+     	      , B.CONFIDENTIALITY_LEVEL
+     	      , B.INTEGRITY_LEVEL
+     	      , B.AVAILABILITY_LEVEL
+     	      , B.ASSET_REG_TIME
+     	      , A.DETECTION_TIME
+     	      , A.ASSET_STATUS
+     	      , IF(A.ASSET_STATUS = 1, (SELECT V.statusText FROM reason_v V WHERE V.statusCode = A.reason_id AND V.systemId = A.system_id), NULL) AS STATUS_TEXT
+        FROM ( SELECT A.ASSET_ID
+                    , B.ZONE_ID
+                    , B.ZONE_NAME
+                    , C.DETECTION_TIME
+                    , C.ASSET_STATUS
+                    , C.reason_id
+                    , A.system_id
+                    , ROW_NUMBER() OVER (ORDER BY C.DETECTION_TIME DESC,A.ASSET_ID DESC) AS RN
+               FROM  network_asset_info A
+               INNER JOIN asset_status_info C 
+               ON A.system_id = C.system_id
+               LEFT JOIN zone_location B
+               ON A.ZONE_ID = B.ZONE_ID
+               <include refid="whereAssetList"></include>
+               LIMIT #{startRow},#{rowPerPage}) A
+        STRAIGHT_JOIN network_asset_info B
+        ON (A.ASSET_ID = B.ASSET_ID)
+        ORDER BY RN
+  </select>
+  
+  <sql id="whereAssetList">
+         <where>
+			 <choose>
+				 <when test='schMode != null and schMode.equals("menual")'>
+			         <if test='frDt != null and !frDt.equals("")'>
+						         AND C.DETECTION_TIME <![CDATA[>=]]> #{frDt}
+			         </if>
+			         <if test='toDt != null and !toDt.equals("")'>
+						         AND C.DETECTION_TIME <![CDATA[<=]]> #{toDt}
+			         </if>
+			          <if test='schLargeCategory != null and !schLargeCategory.equals("")'>
+			          AND A.LARGE_CATEGORY IN 
+			          <foreach collection="schLargeCategory" item="item" open="(" close=")" separator="," index="idx">
+			         #{item}
+			          </foreach> 
+			          </if>
+			          <if test='schSmallCategory != null and !schSmallCategory.equals("")'>
+			          AND A.SMALL_CATEGORY IN 
+			          <foreach collection="schSmallCategory" item="item" open="(" close=")" separator="," index="idx">
+			         #{item}
+			          </foreach> 
+			          </if>
+			          <if test='schAssetName != null and !schAssetName.equals("")'>
+			          AND A.ASSET_NAME LIKE CONCAT('%',#{schAssetName},'%')
+			          </if>
+			          <if test='schIpAddress != null and !schIpAddress.equals("")'>
+			          AND A.IP_ADDRESS LIKE CONCAT('%',#{schIpAddress},'%')
+			          </if>
+			           <if test='schZoneId != null and !schZoneId.equals("")'>
+			           AND B.ZONE_ID IN 
+			          <foreach collection="schZoneId" item="item" open="(" close=")" separator="," index="idx">
+			          #{item}
+			          </foreach> 
+			          </if>
+			          <if test='schAdmin != null and !schAdmin.equals("")'>
+			           AND A.MANAGER IN 
+			          <foreach collection="schAdmin" item="item" open="(" close=")" separator="," index="idx">
+			          #{item}
+			          </foreach> 
+			          </if>
+			           <if test='schStatus != null and !schStatus.equals("")'>
+			           AND C.ASSET_STATUS IN 
+			          <foreach collection="schStatus" item="item" open="(" close=")" separator="," index="idx">
+			          #{item}
+			          </foreach> 
+			          </if>
+			           <if test='schConfidentialityLevel != null and !schConfidentialityLevel.equals("")'>
+			           AND A.CONFIDENTIALITY_LEVEL IN 
+			          <foreach collection="schConfidentialityLevel" item="item" open="(" close=")" separator="," index="idx">
+			          #{item}
+			          </foreach> 
+			          </if>
+			           <if test='schIntegrityLevel != null and !schIntegrityLevel.equals("")'>
+			           AND A.INTEGRITY_LEVEL IN 
+			          <foreach collection="schIntegrityLevel" item="item" open="(" close=")" separator="," index="idx">
+			          #{item}
+			          </foreach> 
+			          </if>
+			           <if test='schAvailablityLevel != null and !schAvailablityLevel.equals("")'>
+			           AND A.AVAILABILITY_LEVEL IN 
+			          <foreach collection="schAvailablityLevel" item="item" open="(" close=")" separator="," index="idx">
+			          #{item}
+			          </foreach> 
+			          </if>
+				 </when>
+				 <otherwise>
+		         	AND C.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR)
+		         	AND ASSET_STATUS = 1
+		         </otherwise>
+			 </choose>  
+         </where>
+  </sql>
+  
+  <select id="selectAssetDispoCount" parameterType="map" resultType="long">
+        SELECT SUM(A.CNT)
+        FROM 
+        (SELECT COUNT(1) CNT
+		FROM asset_status_info 
+		WHERE ASSET_STATUS != 2
+		AND DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR)
+		UNION ALL 
+		SELECT COUNT(1) CNT
+		FROM threat_info
+		WHERE DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR) ) A
+  </select>
+  
+  
+  
+  <select id="selectAssetDispoList" parameterType="map" resultType="CmmnMap">
+
+        SELECT * FROM 
+			(
+			 SELECT A.*
+			     , ROW_NUMBER() OVER (ORDER BY A.DETECTION_TIME DESC,ID DESC) AS RN
+			FROM 
+				(SELECT A.STATUS_ID ID
+				     , A.DETECTION_TIME
+				     , '자산상태 이상' EVENT_TP
+				     , A.ASSET_STATUS IMP_CD
+				     , B.CODE_KR IMP_NM
+				     , C.statusText DETAIL_INFO
+				     , 'AS' TP
+				     , D.ASSET_ID
+				     , D.ZONE_ID
+				FROM asset_status_info A
+				LEFT JOIN code_info B
+				ON    A.ASSET_STATUS = B.CODE
+				AND   B.MAINGROUP = 'AS'
+				AND   B.SUBGROUP = 'ST'
+				LEFT JOIN reason_v C
+				ON    A.SYSTEM_ID = C.systemId AND A.REASON_ID = C.statusCode
+				LEFT JOIN network_asset_info D
+				ON A.SYSTEM_ID = D.SYSTEM_ID
+				WHERE A.ASSET_STATUS != 2
+				AND   A.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR)
+				UNION ALL 
+				SELECT A.THREAT_ID
+				     , A.DETECTION_TIME
+				     , '위협탐지'
+				     , A.THREAT_IMPORTANCE
+				     , B.CODE_KR
+				     , A.DETECTION_THREAT_NAME 
+				     , 'TH' 
+				     , CONCAT(C.ASSET_ID,'-',D.ASSET_ID) 
+				     , CONCAT(C.ZONE_ID,'-',D.ZONE_ID) 
+				FROM threat_info A
+				LEFT JOIN code_info B
+				ON    A.THREAT_IMPORTANCE = B.CODE
+				AND   B.MAINGROUP = 'TH'
+				AND   B.SUBGROUP = 'IM' 
+				LEFT JOIN network_asset_info C
+				ON A.SRC_IP = C.IP_ADDRESS
+				LEFT JOIN network_asset_info D
+				ON A.DST_IP = D.IP_ADDRESS
+				WHERE   A.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR)) A
+            LIMIT #{startRow},#{rowPerPage}) A
+        ORDER BY RN
+
+  </select>
+  
+  <select id="selectAssetDispoZoneList" parameterType="map" resultType="CmmnMap">
+  
+       SELECT A.ZONE_ID
+             ,A.ASSET_ID,A.ASSET_NAME,A.LARGE_CATEGORY
+             ,B.A_GRADE,B.statusText REASON_NAME,C.S_GRADE, C.S_DETECTION_THREAT_NAME
+             ,D.D_GRADE,D.D_DETECTION_THREAT_NAME
+             , CASE WHEN B.SYSTEM_ID IS NULL AND C.SRC_IP IS NULL AND D.DST_IP IS NULL THEN 'N' ELSE 'Y' END IS_PROBLEM
+		  FROM network_asset_info A
+		LEFT JOIN
+	    (SELECT A.SYSTEM_ID,0 A_GRADE, B.STATUSTEXT 
+		FROM asset_status_info A
+		LEFT JOIN reason_v B
+		ON    A.REASON_ID = B.ID
+		WHERE (A.SYSTEM_ID,A.STATUS_ID)
+		IN (
+		SELECT  SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
+		FROM asset_status_info
+		WHERE ASSET_STATUS != 2
+		GROUP BY SYSTEM_ID)
+		AND A.ASSET_STATUS != 2) B
+		ON A.SYSTEM_ID = B.SYSTEM_ID
+		LEFT JOIN
+		(SELECT A.SRC_IP, A.THREAT_IMPORTANCE S_GRADE, A.DETECTION_THREAT_NAME S_DETECTION_THREAT_NAME
+		FROM threat_info A
+		WHERE (A.SRC_IP,A.THREAT_ID)
+		IN (
+		    SELECT  SRC_IP, MAX(THREAT_ID) THREAT_ID
+		     FROM threat_info A 
+		     WHERE NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
+		     GROUP BY SRC_IP
+		)) C
+		ON A.IP_ADDRESS = C.SRC_IP
+		LEFT JOIN
+		(SELECT A.DST_IP, A.THREAT_IMPORTANCE D_GRADE, A.DETECTION_THREAT_NAME D_DETECTION_THREAT_NAME
+		FROM threat_info A
+		WHERE (A.DST_IP,A.THREAT_ID)
+		IN (
+		    SELECT  DST_IP, MAX(THREAT_ID) THREAT_ID
+		     FROM threat_info A 
+		     WHERE NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
+		     GROUP BY DST_IP
+		)) D
+		ON A.IP_ADDRESS = D.DST_IP
+		ORDER BY ZONE_ID,LARGE_CATEGORY,ASSET_ID
+
+  </select> 
+  
+  <select id="selectAssetDispoZoneGroup" parameterType="map" resultType="CmmnMap">
+  
+      	SELECT A.ZONE_ID,A.ZONE_NAME
+      	     , A.START_X,A.START_Y
+      	     , A.END_X, A.END_Y
+      	     , IFNULL(B.IS_PROBLEM,0) IS_PROBLEM
+		  FROM zone_location A
+		 LEFT JOIN (
+		SELECT ZONE_ID , MAX(IS_PROBLEM) IS_PROBLEM
+		FROM
+		(SELECT A.ZONE_ID
+		     , CASE WHEN B.SYSTEM_ID IS NULL AND C.SRC_IP IS NULL AND D.DST_IP IS NULL THEN 0 ELSE 1 END IS_PROBLEM
+		  FROM network_asset_info A
+		LEFT JOIN
+	    (SELECT A.SYSTEM_ID,0 A_GRADE, statusText 
+		FROM asset_status_info A
+		LEFT JOIN reason_v B
+		ON    A.REASON_ID = B.ID
+		WHERE (A.SYSTEM_ID,A.STATUS_ID)
+		IN (
+		SELECT  SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
+		FROM asset_status_info
+		WHERE ASSET_STATUS != 2
+		GROUP BY SYSTEM_ID)
+		AND A.ASSET_STATUS != 2) B
+		ON A.SYSTEM_ID = B.SYSTEM_ID
+		LEFT JOIN
+		(SELECT A.SRC_IP, A.THREAT_IMPORTANCE S_GRADE, A.DETECTION_THREAT_NAME S_DETECTION_THREAT_NAME
+		FROM threat_info A
+		WHERE (A.SRC_IP,A.THREAT_ID)
+		IN (
+		    SELECT  SRC_IP, MAX(THREAT_ID) THREAT_ID
+		     FROM threat_info A 
+		     WHERE NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
+		     GROUP BY SRC_IP
+		)) C
+		ON A.IP_ADDRESS = C.SRC_IP
+		LEFT JOIN
+		(SELECT A.DST_IP, A.THREAT_IMPORTANCE D_GRADE, A.DETECTION_THREAT_NAME D_DETECTION_THREAT_NAME
+		FROM threat_info A
+		WHERE (A.DST_IP,A.THREAT_ID)
+		IN (
+		    SELECT  DST_IP, MAX(THREAT_ID) THREAT_ID
+		     FROM threat_info A 
+		     WHERE NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
+		     GROUP BY DST_IP
+		)) D
+		ON A.IP_ADDRESS = D.DST_IP) A
+		GROUP BY A.ZONE_ID) B
+		ON A.ZONE_ID = B.ZONE_ID
+
+  </select>
+  
+ 
+  
+  
+  <select id="selectAssetStatus" parameterType="map" resultType="CmmnMap">
+        SELECT (SELECT COUNT(1)
+				FROM asset_status_info A 
+				INNER JOIN   
+				(SELECT SYSTEM_ID,MAX(DETECTION_TIME) DETECTION_TIME
+				FROM asset_status_info 
+				GROUP BY SYSTEM_ID) B
+				ON A.SYSTEM_ID = B.SYSTEM_ID
+				AND A.DETECTION_TIME = B.DETECTION_TIME
+				AND ASSET_STATUS != 2) AS ASSET_THREAT_CNT
+              ,(SELECT COUNT(1) FROM network_asset_info) AS ASSET_TOT_CNT
+  </select>
+  
+  <select id="selectAssetAffair" parameterType="map" resultType="CmmnMap">
+     SELECT LARGE_CATEGORY,SUM(1) CNT
+			FROM (SELECT A.SYSTEM_ID
+				  FROM asset_status_info A 
+			      INNER JOIN   
+				  (SELECT SYSTEM_ID,MAX(DETECTION_TIME) DETECTION_TIME
+				  FROM asset_status_info 
+				  GROUP BY SYSTEM_ID) B
+				  ON A.SYSTEM_ID = B.SYSTEM_ID
+				  AND A.DETECTION_TIME = B.DETECTION_TIME
+				  AND ASSET_STATUS != 2) ASI
+			LEFT JOIN network_asset_info NSI
+			ON ASI.SYSTEM_ID = NSI.SYSTEM_ID
+			GROUP BY NSI.LARGE_CATEGORY
+
+  </select>
+  
+  <select id="selectSystemIdCount" parameterType="map" resultType="long">
+        SELECT COUNT(1) 
+		FROM network_asset_info
+	    WHERE SYSTEM_ID = #{systemId}
+	    <if test='assetId != null and !assetId.equals("")'>
+         AND ASSET_ID != #{assetId}
+        </if>
+  </select>
+  
+   <select id="selectZoneLocationList" parameterType="map" resultType="CmmnMap">
+        SELECT ZONE_ID ID
+             , ZONE_NAME
+             , START_X
+             , START_Y
+             , END_X
+             , END_Y
+             , CASE WHEN  (SELECT COUNT(1) FROM network_asset_info a WHERE a.ZONE_ID = t.ZONE_ID) > 0 THEN 'N' ELSE 'Y' END DEL_YN
+        FROM zone_location t
+  </select>
+  
+  <update id="insertAsset" parameterType="map">
+        INSERT INTO network_asset_info(SYSTEM_ID
+                                     , ZONE_ID
+                                     , LAST_UPDATER
+                                     , ASSET_REG_TIME
+                                     , ASSET_NAME
+                                     , IP_ADDRESS
+                                     , MANAGER
+                                     , CONFIDENTIALITY_LEVEL
+                                     , INTEGRITY_LEVEL
+                                     , AVAILABILITY_LEVEL
+                                     , LARGE_CATEGORY
+                                     , SMALL_CATEGORY)
+                               VALUES(#{systemId}
+                                     ,#{zoneId}
+                                     ,#{lastUpdater}
+                                     ,SYSDATE()
+                                     ,#{assetName}
+                                     ,#{ipAddress}
+                                     ,#{manager}
+                                     ,#{confidentialityLevel}
+                                     ,#{integrityLevel}
+                                     ,#{availabilityLevel}
+                                     ,#{largeCategory}
+                                     ,#{smallCategory}
+                                     )
+  </update>
+  
+   <update id="updateAsset" parameterType="map">
+        UPDATE network_asset_info
+                             SET SYSTEM_ID = #{systemId}
+                               , ZONE_ID = #{zoneId}
+                               , LAST_UPDATER = #{lastUpdater}
+                               , ASSET_UPDATE_TIME = SYSDATE()
+                               , ASSET_NAME = #{assetName}
+                               , IP_ADDRESS = #{ipAddress}
+                               , MANAGER = #{manager}
+                               , CONFIDENTIALITY_LEVEL = #{confidentialityLevel}
+                               , INTEGRITY_LEVEL = #{integrityLevel}
+                               , AVAILABILITY_LEVEL = #{availabilityLevel} 
+                               , LARGE_CATEGORY = #{largeCategory} 
+                               , SMALL_CATEGORY = #{smallCategory} 
+        WHERE ASSET_ID = #{assetId}
+  </update>
+  
+  <delete id="deleteAsset" parameterType="map">
+        DELETE FROM network_asset_info
+         WHERE ASSET_ID IN
+         <foreach collection="list" item="row" open="(" close=")" separator=",">
+	         <foreach collection="row" item="col" index="key">
+		         <if test='key.equals("id")'>
+		            #{col} 
+		         </if>
+		     </foreach> 
+         </foreach>     
+  </delete>
+  
+   <update id="updateZoneLocation" parameterType="map">
+        UPDATE zone_location 
+                         SET ZONE_NAME = #{zoneName}
+                           , START_X = #{startX, jdbcType=NUMERIC}
+                           , START_Y = #{startY, jdbcType=NUMERIC}
+                           , END_X = #{endX, jdbcType=NUMERIC}
+                           , END_Y = #{endY, jdbcType=NUMERIC}
+        WHERE ZONE_ID = #{id}
+ </update>
+ 
+ <update id="insertZoneLocation" parameterType="map">
+        INSERT INTO zone_location(ZONE_NAME
+                                , START_X
+                                , START_Y
+                                , END_X
+                                , END_Y)
+                          VALUES(#{zoneName}
+                                ,#{startX, jdbcType=NUMERIC}
+                                ,#{startY, jdbcType=NUMERIC}
+                                ,#{endX, jdbcType=NUMERIC}
+                                ,#{endY, jdbcType=NUMERIC}
+                                )
+ </update>
+  
+  <delete id="deleteZoneLocation" parameterType="map">
+        DELETE FROM zone_location 
+        WHERE ZONE_ID NOT IN
+        (SELECT ZONE_ID FROM network_asset_info GROUP BY ZONE_ID)
+  </delete>
+  
+ 
+   
+</mapper>

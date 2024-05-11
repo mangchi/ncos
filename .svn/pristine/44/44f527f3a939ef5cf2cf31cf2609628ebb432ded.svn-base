@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>선박 상태 전시</title>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_01_01"></span><strong>선박 상태 전시</strong></h4>
+					<div class="items" style="min-height: 723px"> 
+					<div class="shipConditionDisplay">
+							<ul class="clfix">
+							</ul>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<script th:inline="javascript"> 
+	window.addEventListener('DOMContentLoaded', () => {
+		ncos.schMode = 'auto';
+		init();
+		ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//5초
+ 
+	});
+	
+    const init = () => {
+    	searchFunc();
+    }
+    
+    const searchFunc = () => {
+    	gfn_asyncJsonCall('/getShipStatusList','GET').then((data) => {
+    		let list = data['list'];
+    		let ul = document.querySelector('.clfix');
+    		while(ul.hasChildNodes())
+			{
+    			ul.removeChild( ul.firstChild );       
+			}
+    		if(list != null){
+    			for(let key in list){
+    				let item = list[key];
+    				let li = document.createElement('li');
+    				let div = document.createElement('div');
+    				let span = document.createElement('span');
+    				span.classList.add('iconShip');
+    				let p = document.createElement('p');
+    				if(item.shipStatusId == '2'){
+    					div.classList.add('normal','merchant');
+    				}
+    				else{
+    					div.classList.add('abnormal','merchant');
+    				}
+    				p.textContent = gfn_getCodeVal('COSH',item.shipId);
+    				div.appendChild(span);
+    				div.appendChild(p);
+    				li.appendChild(div);
+    				ul.appendChild(li);
+    			}
+    		}
+    		
+    	});
+    }
+
+    
+</script>
+</th:block>
+</html>

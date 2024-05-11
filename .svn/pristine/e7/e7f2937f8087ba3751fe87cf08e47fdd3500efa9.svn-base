@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="menu">
+ <div class="sidebar">
+	<div class="sidebar-inner">
+		<ul class="sidebar-menu">
+		    <li class="nav-item"><a class="nav-link" href="javascript:pageFunc('/');"><span class="iconWrapT favorite icon_favorite_00"></span> <span class="tooltip">홈으로 가기</span></a>
+		    </li>
+			<!-- 
+			<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
+			 -->
+			<li class="nav-item"><a class="nav-link" href="javascript:pageFunc('/threatDisp');"><span class="iconWrapT favorite icon_snb_02_02"></span> <span class="tooltip">사이버 위협 전시</span></a>			 
+			</li>			 
+			<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
+			<a class="nav-link" href="javascript:pageFunc('/assetDisp');"><span class="iconWrapT favorite icon_snb_02_03"></span> <span class="tooltip">자산 상태 전시</span></a>
+			</li>
+			<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
+			<a class="nav-link" href="javascript:pageFunc('/assetDispo');"><span class="iconWrapT favorite icon_snb_02_07"></span> <span class="tooltip">함내 자산위치 전시</span></a>
+			</li>
+			<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}" class="nav-item">
+			<a class="nav-link" href="javascript:pageFunc('/netTopo');;"><span class="iconWrapT favorite icon_snb_02_08"></span> <span class="tooltip">네트워크 토폴로지 전시</span></a>
+			</li>
+			<li th:if="${activeProfile.equals('land') ||activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmLand') || activeProfile.equals('local')}" class="nav-item">
+			<a class="nav-link" href="javascript:pageFunc('/userAudit');"><span class="iconWrapT favorite icon_snb_02_05"></span> <span class="tooltip">사용자 행위 정보 전시</span></a>
+			</li>
+			<!-- 
+			<li class="nav-item"><a class="nav-link" href="javascript:pageFunc('/rptFrmMng');"><span class="iconWrapT favorite icon_favorite_03"></span> <span class="tooltip">보고서 서식 관리</span></a>
+			</li>
+			 -->
+			<li class="nav-item"><a class="nav-link" href="javascript:pageFunc('/rptMng');"><span class="iconWrapT favorite icon_snb_02_10"></span> <span class="tooltip">보고서 관리</span></a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+</th:block>
+</html>

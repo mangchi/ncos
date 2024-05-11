@@ -1,0 +1,1065 @@
+﻿@CHARSET "UTF-8";
+
+/* 
+웹 접근성 관련 주석처리(focus rect)
+input:focus, button:focus, select:focus{
+	outline: none;
+}
+*/
+
+
+/*뷰어 메뉴*/
+.report_menu_div {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 65px;
+	overflow: visible;
+	background-color: #fff;
+	background-position: 5px 50%;
+	background-repeat: no-repeat;
+	-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+	-moz-user-select: none; /* mozilla browsers */
+	-khtml-user-select: none; /* webkit (konqueror) browsers */
+	-ms-user-select: none; /* IE10+ */
+}
+
+/*리포트 배경*/
+.report_paint_div {
+	position: absolute;
+	top: 65px;
+	width: 100%;
+	bottom: 0px;
+	border: 1px solid silver;
+	background-color: #eee;
+	overflow: auto;
+	text-align: center;
+}
+
+/*리포트 프로그래스*/
+.report_progress {
+	background-repeat: no-repeat;
+	background-position: 50% 30%;
+	background-image: url(../img/deploying.gif);
+}
+
+.report_progress_msg{
+	position:absolute;
+	left:0px;
+	right:0px;
+	top:32%;
+	bottom:0px;
+	overflow:hidden;
+	text-align: center;
+	font-size:13pt;
+	color:gray;
+}
+
+.report_menu_table {
+	position: absolute;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	border: 1px solid silver;
+	text-align: right;
+}
+
+.report_menu_table_td {
+	border: 0px solid silver;
+	text-align: left;
+}
+
+.report_menu_table_td_div {
+	position: relative;
+	height: 30px;
+	width: 100%;
+	font-size: 10pt;
+}
+
+
+/*메뉴에 존재하는 버튼 공통 디자인*/
+.report_menu_button {
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	background-size: contain;
+	border: 0px solid #FFFFFF;
+	background-color: transparent;
+	cursor: pointer;
+}
+/*마우스 오버 됐을 때 디자인*/
+.report_menu_button:hover{
+	background-repeat: no-repeat;
+}
+
+/*저장 버튼*/
+.report_menu_save_button {
+	left: 7px;
+}
+
+.report_menu_save_button:hover {
+/*	
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_save_button_svg {
+	background-image: url(../img/save.svg);
+}
+
+.report_menu_save_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/save.svg);
+}
+
+.report_menu_save_button_svg:hover {
+	background-image: url(../img/over/save.svg);
+}
+
+.report_menu_save_button_png {
+	background-image: url(../img/PNG/save.png);
+}
+
+.report_menu_save_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/save.png);
+}
+
+.report_menu_save_button_png:hover {
+	background-image: url(../img/PNG/over/save.png);
+}
+
+/*프린트 버튼*/
+.report_menu_print_button {
+	/*left:55px;*/
+	left: 234px;
+}
+
+.report_menu_print_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_print_button_svg {
+	background-image: url(../img/print.svg);
+}
+
+.report_menu_print_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/print.svg);
+}
+
+.report_menu_print_button_svg:hover {
+	background-image: url(../img/over/print.svg);
+}
+
+.report_menu_print_button_png {
+	background-image: url(../img/PNG/print.png);
+}
+
+.report_menu_print_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/print.png);
+}
+
+.report_menu_print_button_png:hover {
+	background-image: url(../img/PNG/over/print.png);
+}
+
+/*첫페이지 이동 버튼*/
+.report_menu_leftEnd_button {
+	/*left:85px;*/
+	left: 320px;
+}
+
+.report_menu_leftEnd_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_leftEnd_button_svg {
+	background-image: url(../img/leftEnd.svg);
+}
+
+.report_menu_leftEnd_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/leftEnd.svg);
+}
+
+.report_menu_leftEnd_button_svg:hover {
+	background-image: url(../img/over/leftEnd.svg);
+}
+
+.report_menu_leftEnd_button_png {
+	background-image: url(../img/PNG/leftEnd.png);
+}
+
+.report_menu_leftEnd_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/leftEnd.png);
+}
+
+.report_menu_leftEnd_button_png:hover {
+	background-image: url(../img/PNG/over/leftEnd.png);
+}
+
+/*이전페이지 이동 버튼*/
+.report_menu_left_button {
+	left: 358px;
+}
+
+.report_menu_left_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_left_button_svg {
+	background-image: url(../img/left.svg);
+}
+
+.report_menu_left_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/left.svg);
+}
+
+.report_menu_left_button_svg:hover {
+	background-image: url(../img/over/left.svg);
+}
+
+.report_menu_left_button_png {
+	background-image: url(../img/PNG/left.png);
+}
+
+.report_menu_left_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/left.png);
+}
+
+.report_menu_left_button_png:hover {
+	background-image: url(../img/PNG/over/left.png);
+}
+
+/*다음 페이지 이동 버튼*/
+.report_menu_right_button {
+	/*left:240px;*/
+	left: 502px;
+}
+
+.report_menu_right_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_right_button_svg {
+	background-image: url(../img/right.svg);
+}
+
+.report_menu_right_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/right.svg);
+}
+
+.report_menu_right_button_svg:hover {
+	background-image: url(../img/over/right.svg);
+}
+
+.report_menu_right_button_png {
+	background-image: url(../img/PNG/right.png);
+}
+
+.report_menu_right_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/right.png);
+}
+
+.report_menu_right_button_png:hover {
+	background-image: url(../img/PNG/over/right.png);
+}
+
+/*마지막 페이지 이동 버튼*/
+.report_menu_rightEnd_button {
+	/*left:265px;*/
+	left: 540px;
+}
+
+.report_menu_rightEnd_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_rightEnd_button_svg {
+	background-image: url(../img/rightEnd.svg);
+}
+
+.report_menu_rightEnd_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/rightEnd.svg);
+}
+
+.report_menu_rightEnd_button_svg:hover {
+	background-image: url(../img/over/rightEnd.svg);
+}
+
+.report_menu_rightEnd_button_png {
+	background-image: url(../img/PNG/rightEnd.png);
+}
+
+.report_menu_rightEnd_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/rightEnd.png);
+}
+
+.report_menu_rightEnd_button_png:hover {
+	background-image: url(../img/PNG/over/rightEnd.png);
+}
+
+/*pdf 다운로드 버튼*/
+.report_menu_pdf_button {
+	/*left:480px;*/
+	left: 50px;
+}
+
+.report_menu_pdf_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_pdf_button_svg {
+	background-image: url(../img/pdf.svg);
+}
+
+.report_menu_pdf_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/pdf.svg);
+}
+
+.report_menu_pdf_button_svg:hover {
+	background-image: url(../img/over/pdf.svg);
+}
+
+.report_menu_pdf_button_png {
+	background-image: url(../img/PNG/pdf.png);
+}
+
+.report_menu_pdf_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/pdf.png);
+}
+
+.report_menu_pdf_button_png:hover {
+	background-image: url(../img/PNG/over/pdf.png);
+}
+
+/*엑셀 다운로드 버튼*/
+.report_menu_excel_button {
+	/*left:505px;*/
+	left: 90px;
+}
+
+.report_menu_excel_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_excel_button_svg {
+	background-image: url(../img/excel.svg);
+}
+
+.report_menu_excel_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/excel.svg);
+}
+
+.report_menu_excel_button_svg:hover {
+	background-image: url(../img/over/excel.svg);
+}
+
+.report_menu_excel_button_png {
+	background-image: url(../img/PNG/excel.png);
+}
+
+.report_menu_excel_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/excel.png);
+}
+
+.report_menu_excel_button_png:hover {
+	background-image: url(../img/PNG/over/excel.png);
+}
+
+/*한글 다운로드 버튼*/
+.report_menu_hwp_button {
+	/*left:530px;*/
+	left: 130px;
+}
+
+.report_menu_hwp_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_hwp_button_svg {
+	background-image: url(../img/hwp.svg);
+}
+
+.report_menu_hwp_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/hwp.svg);
+}
+
+.report_menu_hwp_button_svg:hover {
+	background-image: url(../img/over/hwp.svg);
+}
+
+.report_menu_hwp_button_png {
+	background-image: url(../img/PNG/hwp.png);
+}
+
+.report_menu_hwp_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/hwp.png);
+}
+
+.report_menu_hwp_button_png:hover {
+	background-image: url(../img/PNG/over/hwp.png);
+}
+
+/*DOC 다운로드 버튼*/
+.report_menu_doc_button {
+	/*left:530px;*/
+	left: 170px;
+	display:none;
+}
+
+.report_menu_doc_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_doc_button_svg {
+	background-image: url(../img/doc.svg);
+}
+
+.report_menu_doc_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/doc.svg);
+}
+
+.report_menu_doc_button_svg:hover {
+	background-image: url(../img/over/pdf.svg);
+}
+
+.report_menu_doc_button_png {
+	background-image: url(../img/PNG/doc.png);
+}
+
+.report_menu_doc_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/doc.png);
+}
+
+.report_menu_doc_button_png:hover {
+	background-image: url(../img/PNG/over/pdf.png);
+}
+
+
+/*리포트 정보 버튼*/
+.report_menu_reportInfo_button {
+	/*left:555px;*/
+	left: 765px;
+}
+
+.report_menu_reportInfo_button:hover {
+	/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_reportInfo_button_svg {
+	background-image: url(../img/info.svg);
+}
+
+.report_menu_reportInfo_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/info.svg);
+}
+
+.report_menu_reportInfo_button_svg:hover {
+	background-image: url(../img/over/info.svg);
+}
+
+.report_menu_reportInfo_button_png {
+	background-image: url(../img/PNG/info.png);
+}
+
+.report_menu_reportInfo_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/info.png);
+}
+
+.report_menu_reportInfo_button_png:hover {
+	background-image: url(../img/PNG/over/info.png);
+}
+
+/*리포트 닫기 버튼*/
+.report_menu_close_button {
+	right: 10px;
+}
+
+.report_menu_close_button:hover {
+/*
+	width: 37px;
+	height: 37px;
+	*/
+}
+
+.report_menu_close_button_svg {
+	background-image: url(../img/close.svg);
+}
+
+.report_menu_close_button_svg_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/close.svg);
+}
+
+.report_menu_close_button_svg:hover {
+	background-image: url(../img/over/close.svg);
+}
+
+.report_menu_close_button_png {
+	background-image: url(../img/PNG/close.png);
+}
+
+.report_menu_close_button_png_dis {
+	cursor:not-allowed;
+	background-image: url(../img/dis/PNG/close.png);
+}
+
+.report_menu_close_button_png:hover {
+	background-image: url(../img/PNG/over/close.png);
+}
+
+/*현재 페이지 입력창*/
+.report_menu_pageCount_input {
+	position: absolute;
+	/*left:135px;*/
+	left: 400px;
+	width: 46px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #ccc;
+	border-right-width: 0px !important;
+	border-right-style: none !important;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 12px;
+}
+
+/*총 페이지 표시 라벨*/
+.report_menu_pageCount_span {
+	position: absolute;
+	/*left:185px;*/
+	left: 445px;
+	width: 50px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #ccc;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 12px;
+}
+
+/*화면비율 선택 콤보창*/
+.report_menu_zoom_combo {
+	position: absolute;
+	/*left:315px;*/
+	left: 600px;
+	height: 30px !important;
+	line-height: 30px;
+	width: 150px;
+}
+
+.report_menu_zoom_combo_option {
+	
+}
+
+/*뷰어의 모든 안내창을 감싸고 있는 DIV*/
+.report_popup_view {
+	position:relative;
+	left:0px;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	zoom:1;
+	z-index:300;
+}
+
+
+/*뷰어 내부 안내창 공통 스타일*/
+.report_view_box {
+	background-color: #FDFDFD;
+	font-size: 8pt;
+	font-family: 나눔고딕;
+	border: 2px solid gray;
+}
+
+/*뷰어 내부 안내창 공통 버튼 스타일*/
+.report_view_button {
+	position: absolute;
+	background-color: RGB(89, 89, 89);
+	border: 1px solid darkolivegreen;
+	color: white;
+	font-weight: weight;
+}
+
+/*리포트 정보창 위치 정보*/
+.report_info_view_position {
+	position: absolute;
+	right: 23px;
+	top: 80px;
+	width: 440px;
+	height: 260px;
+	z-index:500;
+}
+
+/*인쇄창 위치 정보*/
+.report_print_view_position {
+	position: absolute;
+	left: 15px;
+	top: 80px;
+	width: 350px;
+	height: 300px;
+}
+
+/*저장옵션 창 위치 정보*/
+.report_save_view_position {
+	position: absolute;
+	left: 15px;
+	top: 80px;
+	width: 350px;
+	height: 400px;
+}
+
+/*한글 저장 옵션 창 위치 정보*/
+.report_saveHWP_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 260px;
+	height: 500px;
+}
+
+/*RTF 저장 옵션 창 위치 정보*/
+.report_saveRTF_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 260px;
+}
+
+/*엑셀 저장 옵션 창 위치 정보*/
+.report_saveExcel_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 300px;
+	height: 620px;
+}
+/*html 저장 옵션 창 위치 정보*/
+.report_saveHtml_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 360px;
+}
+/*PDF 저장 옵션 창 위치 정보*/
+.report_savePDF_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 180px;
+}
+
+/*JPG 저장 옵션 창 위치 정보*/
+.report_saveJPG_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 180px;
+}
+
+
+/*TIF 저장 옵션 창 위치 정보*/
+.report_saveTIF_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 200px;
+}
+
+/*PPT 저장 옵션 창 위치 정보*/
+.report_savePPT_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 120px;
+}
+
+/*PPTX 저장 옵션 창 위치 정보*/
+.report_savePPTX_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 240px;
+}
+
+
+/*EXCELDATA Only 저장 옵션 창 위치 정보*/
+.report_saveEXCELDATA_view_position {
+	position: absolute;
+	left: 370px;
+	top: 80px;
+	width: 280px;
+	height: 120px;
+}
+
+/*pdf reader9버전 사용 안내창 위치 정보*/
+.report_Ex_reader9 {
+	position: absolute;
+	left: 70px;
+	top: 80px;
+	width: 350px;
+	height: 250px;
+}
+
+/*pdf reader 가 없을 경우 안내창 위치 정보*/
+.report_Ex_NOTReader {
+	position: absolute;
+	left: 70px;
+	top: 80px;
+	width: 350px;
+	height: 250px;
+}
+
+/*팝업 인쇄 안내창 위치 정보*/
+.report_Ex_popPrint {
+	position: absolute;
+	left: 70px;
+	top: 80px;
+	width: 350px;
+	height: 150px;
+}
+
+/*제한된 프린트 안내창 위치 정보*/
+.report_Ex_limitPrint {
+	position: absolute;
+	left: 70px;
+	top: 80px;
+	width: 350px;
+	height: 150px;
+}
+
+/*HTML 인쇄 안내창 위치 정보*/
+.report_Ex_popHTMLPrint {
+	position: absolute;
+	left: 70px;
+	top: 80px;
+	width: 370px;
+	height: 150px;
+}
+
+.report_view_cliplogo {
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-image: url(../img/cliplogo.png);
+}
+
+.report_view_cliplogo_eform{
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-image: url(../img/cliplogoeform.png);
+}
+
+.report_menu_progress {
+	position: absolute;
+	top: 6px;
+	right: 0px;
+	width: 16px;
+	height: 16px;
+}
+
+.mobile_menu_div {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 50px;
+	overflow: visible;
+	background-color: #fff;
+}
+
+.mobile_paint_div {
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	bottom: 0px;
+	border: 1px solid silver;
+	background-color: #EEE;
+	overflow:scroll;
+	text-align: center;
+	-webkit-overflow-scrolling: touch;
+}
+
+.mobile_menu_table_td_div {
+	position: relative;
+	height: 40px;
+	width: 100%;
+	font-size: 10pt;
+}
+
+.mobile_menu_button {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background-size: contain;
+	border: 0px none;
+	background-color: transparent;
+}
+
+.mobile_input_table {
+	position: absolute;
+	left: 145px;
+	height: 40px;
+	width: 140px;
+}
+
+.mobile_input_table_td_input {
+	background-color: #FFFFFF;
+	width: 60px;
+}
+
+.mobile_input_table_td {
+	width: 80px;
+}
+
+.mobile_menu_print_button {
+	left: 15px;
+	background-image: url(../img/over/save.svg);
+}
+.mobile_menu_dis_print_button {
+	left: 15px;
+	cursor:not-allowed;
+	background-image: url(../img/dis/save.svg);
+}
+
+.mobile_menu_leftEnd_button {
+	left: 95px;
+	background-image: url(../img/over/leftEnd.svg);
+}
+
+.mobile_menu_dis_leftEnd_button {
+	left: 95px;
+	cursor:not-allowed;
+	background-image: url(../img/dis/leftEnd.svg);
+}
+
+.mobile_menu_left_button {
+	left: 145px;
+	background-image: url(../img/over/left.svg);
+}
+
+.mobile_menu_dis_left_button {
+	left: 145px;
+	cursor:not-allowed;
+	background-image: url(../img/dis/left.svg);
+}
+
+.mobile_menu_right_button {
+	left: 345px;
+	background-image: url(../img/over/right.svg);
+}
+
+.mobile_menu_dis_right_button{
+	left: 345px;
+	cursor:not-allowed;
+	background-image: url(../img/dis/right.svg);
+}
+
+.mobile_menu_rightEnd_button {
+	left: 395px;
+	background-image: url(../img/over/rightEnd.svg);
+}
+
+.mobile_menu_dis_rightEnd_button {
+	left: 395px;
+	cursor:not-allowed;
+	background-image: url(../img/dis/rightEnd.svg);
+}
+
+.mobile_menu_close_button {
+	right: 25px;
+	background-image: url(../img/over/close.svg);
+}
+
+.mobile_menu_dis_close_button {
+	right: 25px;
+	cursor:not-allowed;
+	background-image: url(../img/dis/close.svg);
+}
+
+.mobile_menu_zoom_combo {
+	position: absolute;
+	left: 455px;
+	height: 40px;
+	width: 150px;
+	font-size: 14pt;
+}
+
+.mobile_menu_pageCount_input {
+	position: relative;
+	left: 0px;
+	width: 55px;
+	height: 30px;
+	line-height: 30px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border: 0px none;
+	background: transparent;
+	font-size: 14pt;
+}
+
+.mobile_menu_pageCount_span {
+	position: relative;
+	left: 0px;
+	width: 75px;
+	height: 30px;
+	height: 30px;
+	line-height: 30px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border: 0px none;
+	background: transparent;
+	font-size: 14pt;
+}
+
+.mobile_menu_progress {
+	position: absolute;
+	right: 5px;
+	width: 16px;
+	height: 16px;
+}
+
+.mRe_focus:focus{
+	filter:alpha(opacity=100) !important; 
+	opacity:100 !important;
+}
+
+
+/*사인컨트롤 전체 배경*/
+.report_sign_div{
+	border:3px RGB(53,105,180) solid;
+	background-image:url(../img/tile.jpg);
+	background-repeat:repeat;
+}
+
+/*사인컨트롤 그리는 영역*/
+.report_sign_paint{
+	position:absolute;
+	left:25px;
+	top:25px;
+	right:25px;
+	bottom:85px;
+	background-color:white;
+	border:2px darkgray solid;
+	border-radius: 4px;
+}
+
+/*사인컨트롤 메뉴*/
+.report_sign_menu{
+	position:absolute;
+	left:0px;
+	bottom:25px;
+	right:0px;
+	height:35px;
+}
+
+/*사인컨트롤 버튼 공통*/
+.report_sign_button{
+	width:100px;
+	height:35px;
+	border-radius: 4px;
+	color:white;
+	font-size:10pt;
+	font-weight:bold;
+}
+
+/*사인컨트롤 버튼 확인*/
+.report_sign_save{
+	border:1px RGB(33,133,218) solid;
+	background-color:RGB(33,133,218);
+}
+
+/*사인컨트롤 버튼 초기화*/
+.report_sign_reset{
+	border:1px RGB(33,133,218) solid;
+	background-color:RGB(33,133,218);
+}
+
+/*사인컨트롤 버튼 취소*/
+.report_sign_cancel{
+	border:1px RGB(69,89,100) solid;
+	background-color:RGB(69,89,100);
+}
+
+.report_text_renA{
+	 text-rendering: geometricPrecision;
+}
+
+
+.report_pageMoveLeft{
+	position:absolute;
+	left:10px;
+	width:50px;
+	height:50px;
+	background-image:url(../img/eform/shiftLeft.png);
+	border-radius:100%;
+	opacity:0.65;
+	z-index:500;
+}
+
+.report_pageMoveRight{
+	position:absolute;
+	right:10px;
+	width:50px;
+	height:50px;
+	background-image:url(../img/eform/shiftRight.png);
+	border-radius:100%;
+	opacity:0.65;
+	z-index:500;
+}

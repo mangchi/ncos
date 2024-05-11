@@ -1,0 +1,534 @@
+	<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header">
+<header class="navbar bg-light">
+<div class="navbar-nav">
+	<div class="nav-item"> <a href="#totalMenu" class="nav-link" onClick="getShow();"><span class="iconWrapT hambuger icon_total_menu"></span></a>
+		<h1><a href="javascript:pageFunc('/');">
+		<span class="iconWrapT icon_sub_top"></span>
+		<strong th:if="${activeProfile.equals('land') || activeProfile.equals('lnsysteLand')}" >육상 사이버부대 원격관제 체계</strong>
+        <strong th:if="${activeProfile.equals('navy') || activeProfile.equals('lnsystemNavy')}" >함정 사이버방호 체계</strong>
+        <strong th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmLand')}" >SecuAider v1.5</strong>
+        <strong th:if="${activeProfile.equals('hmmNavy') || activeProfile.equals('lnsystemHmmNavy')}" >SecuAider v1.5</strong>
+        <strong th:if="${activeProfile.equals('local')}" >함정 사이버방호 체계</strong>
+		</a>
+		</h1>
+	</div>
+	<div class="snbMenuWrap" id="mainSnbMenu">
+		<a href="javascript:;" class="btn_snbClose" onClick="getHide();"><span class="icon_snbClose"></span></a>
+		<div class="snbMenu">
+			<ul class="menu">
+				<li class="list">
+					<a href="javascript:;"><span class="iconWrapSnb icon_snb_01_02"></span><strong>관제정보</strong><span class="arrow"></span></a>
+					<ul class="items">
+						<li><a href="javascript:pageFunc('/threatDisp');"><span class="iconWrapSnb icon_snb_02_02"></span><strong class="threatDisp">사이버 위협 전시</strong></a></li>
+						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('lnsystemNavy')
+						|| activeProfile.equals('lnsystemLand') || activeProfile.equals('local')}">
+						<a href="javascript:pageFunc('/assetDisp');"><span class="iconWrapSnb icon_snb_02_03"></span><strong class="assetDisp">자산상태 전시</strong></a>
+						</li>
+						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
+						<a href="javascript:pageFunc('/funcDisp');"><span class="iconWrapSnb icon_snb_02_04"></span><strong class="funcDisp">기능 동작 전시</strong></a>
+						</li>
+						<li th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmLand') || activeProfile.equals('local')}">
+						<a href="javascript:pageFunc('/funcDisp');"><span class="iconWrapSnb icon_snb_02_04"></span><strong class="funcDisp">선박 상태 전시</strong></a>
+						</li>
+						<li><a href="javascript:pageFunc('/userAudit');"><span class="iconWrapSnb icon_snb_02_05"></span><strong class="userAudit">사용자 행위 정보 전시</strong></a></li>
+						<li th:if="${activeProfile.equals('local')}" >
+						<a href="javascript:pageFunc('/landMain');"><span class="iconWrapSnb icon_snb_02_06"></span><strong class="landMain">네트워크 정비상태 전시</strong></a>
+						</li>
+					    <li th:if="${activeProfile.equals('navy') || activeProfile.equals('lnsystemNavy')
+						|| activeProfile.equals('lnsystemLand') || activeProfile.equals('local')}">
+						<a href="javascript:pageFunc('/assetDispo');"><span class="iconWrapSnb icon_snb_02_07"></span><strong class="assetDispo">함내 자산위치 전시</strong></a>
+						</li>
+						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
+						<a href="javascript:pageFunc('/netTopo');"><span class="iconWrapSnb icon_snb_02_08"></span><strong class="netTopo">네트워크 토플로지 전시</strong></a>
+						</li>
+
+
+					</ul>
+				</li>
+				<li th:if="${activeProfile.equals('hmmNavy')|| activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('lnsystemHmmLand') || activeProfile.equals('local')}" class="list">
+					<a href="javascript:;"><span class="iconWrapSnb icon_snb_01_02"></span><strong>환경설정</strong><span class="arrow"></span></a>
+					<ul class="items">
+					    <li>
+						<a href="javascript:pageFunc('/assetMng');"><span class="iconWrapSnb icon_snb_02_08"></span><strong class="assetMng">자산관리</strong></a>
+						</li>
+						<li>
+						<a href="javascript:pageFunc('/envConf');"><span class="iconWrapSnb icon_snb_02_07"></span><strong class="envConf">시스템설정</strong></a></li>
+						<li>
+						<a href="javascript:pageFunc('/userList');"><span class="iconWrapSnb icon_snb_02_07"></span><strong class="userList">사용자관리</strong></a></li>
+					</ul>
+				</li>
+				<li class="list">
+					<a href="javascript:;"><span class="iconWrapSnb icon_snb_01_03"></span><strong>관제보고서</strong><span class="arrow"></span></a>
+					<ul class="items">
+						<li><a href="javascript:pageFunc('/rptFrmMng');"><span class="iconWrapSnb icon_snb_02_09"></span><strong class="rptFrmMng">보고서 서식 관리</strong></a></li>
+						<li><a href="javascript:pageFunc('/rptSchlMng');"><span class="iconWrapSnb icon_snb_02_10"></span><strong class="rptSchlMng">보고서 스케줄 관리</strong></a></li>
+						<li><a href="javascript:pageFunc('/rptMng');"><span class="iconWrapSnb icon_snb_02_10"></span><strong class="rptMng">보고서 관리</strong></a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<form name="sessionFrm" method="post">
+			    <input id="id" name="id" type="hidden" value="">
+			</form>
+		</div>
+	</div>
+	<div id="actTouch" style="display:none;"></div>
+	<div class="nav-item"> <span class="timer"></span> <a href="javascript:logout();" class="btn small red">로그아웃</a>&nbsp;&nbsp;<a href="https://act.ncos.mil.kr" class="btn small blue">체계관리</a></div>
+</div>
+<div class="navbar-location">
+	<ul class="navigation">
+	<!-- 	<li>Main</li>
+		<li>Sub</li>
+		<li>Page</li> -->
+	</ul>
+</div>
+</header>
+<script th:inline="javascript">
+	let list = document.querySelectorAll('.list');
+	let sessionTime = 0;
+	let loginInterval = null;
+	let rHour = "";
+	let rMinute = "";
+	let rSecond = "";
+	let AudioContext;
+	let audioContext;
+	let alarmAssetCnt = 0;
+	let alarmThreatCnt = 0;
+	let audio = document.createElement("AUDIO");
+	window.addEventListener('beforeunload', (e) => {
+    	e.preventDefault();
+    	//gfn_removeStorage(ncos.storageKey);
+    	//logout();
+   	});
+	window.addEventListener('load', (e) => {
+
+		document.body.appendChild(audio);
+		audio.src = "/js/beep.wav";
+
+		let sessionData = /*[[${sessionData}]]*/"";
+
+		try {
+			ncos.watchFunc = setInterval(watchSystem, ncos.interval);
+			if (sessionData != null && sessionData != "") {
+				watchSystem();
+				gfn_setStorage(ncos.storageKey, CryptoJS.AES.encrypt(sessionData, ncos.cryptKey));
+				gfn_setStorageItem("curUrl",'/');
+				//console.log("userId:",gfn_getStorageItem('userId',false));
+				//console.log("sessionTm:",gfn_getStorageItem('sessionTm',false));
+				sessionTime = gfn_getStorageItem('sessionTm',false);
+				if(sessionTime > -1){
+					setTimer();
+				}
+
+				let auth = gfn_getCodeVal('URAU',gfn_getStorageItem('auth',false));
+				document.getElementById("id").value = gfn_getStorageItem('userId',false);
+				document.querySelector('.footbar-nav').querySelector('.user').textContent = gfn_getStorageItem('username',false)+'('+auth+')';
+				document.querySelector('.footbar-nav').querySelector('.connectTime').textContent = gfn_getStorageItem('connectTime',false);
+			}
+			else{
+				sessionData = gfn_getStorage(ncos.storageKey);
+				//console.log("userId:",gfn_getStorageItem('userId',false));
+				if(sessionData === null || sessionData === undefined){
+					logout();
+				}
+				else{
+					sessionTime = gfn_getStorageItem('sessionTm',false);
+					if(sessionTime > -1){
+						setTimer();
+					}
+					let auth = gfn_getCodeVal('URAU',gfn_getStorageItem('auth',false));
+					document.getElementById("id").value = gfn_getStorageItem('userId',false);
+					document.querySelector('.footbar-nav').querySelector('.user').textContent = gfn_getStorageItem('username',false)+'('+auth+')';
+					document.querySelector('.footbar-nav').querySelector('.connectTime').textContent = gfn_getStorageItem('connectTime',false);
+
+				}
+			}
+			gfn_actTouch();//SW접근관리(아우토) 접속으로 인해 추가.
+			navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
+		        AudioContext = window.AudioContext || window.webkitAudioContext;
+		        audioContext = new AudioContext();
+		    }).catch(e => {
+		        console.error(`Audio permissions denied: ${e}`);
+		    });
+		} catch (e) {
+			console.error(e);
+		}
+		let naviUl = document.querySelector('.navigation');
+		naviUl.innerHTML = '';
+		let mainLi = document.createElement('LI');
+		mainLi.append('메인');
+		naviUl.appendChild(mainLi);
+		if(gfn_nullValue(gfn_getStorage('curUrl')) != '' && gfn_nullValue(gfn_getStorage('curUrl')) != '/'){
+			if(gfn_getStorage('curUrl') === '/rptSchlMng' || gfn_getStorage('curUrl') === '/rptFrmMng' || gfn_getStorage('curUrl') === '/rptMng'){
+				let subLi = document.createElement('LI');
+				subLi.append('관제보고서');
+				naviUl.appendChild(subLi);
+			}
+			else if(gfn_getStorage('curUrl') === '/assetMng' || gfn_getStorage('curUrl') === '/envConf' || gfn_getStorage('curUrl') === '/userList'){
+				let subLi = document.createElement('LI');
+				subLi.append('환경설정');
+				naviUl.appendChild(subLi);
+			}
+			else{
+				let subLi = document.createElement('LI');
+				subLi.append('관제정보');
+				naviUl.appendChild(subLi);
+			}
+
+			let menuCls = gfn_getStorage('curUrl').replace('/','.');
+			let menuNm = '';
+			if(document.querySelector(menuCls)){
+				menuNm = document.querySelector(menuCls).innerHTML;
+			}
+			else{
+				menuNm = '메인';
+			}
+			//console.log("menuNm:",menuNm);
+			let menuLi = document.createElement('LI');
+			menuLi.append(menuNm);
+			naviUl.appendChild(menuLi);
+
+		}
+
+	});
+
+	const watchSystem= () => {
+		//console.log("watchSystem");
+		let alarmStatus = gfn_getStorageItem('alarmStatus',false);
+		//console.log("alarmStatus:",alarmStatus);
+		let param = {sch:"watchList"};
+		if(alarmStatus === '') {
+			param.login = 'Y';
+		}
+		//let sound = new Audio('/js/beep.wav');
+    	gfn_asyncJsonCall('/watchList','POST',param).then((data) => {
+    		//console.log("watchList data:",data);
+   	 		let alarmThreatCount = data['alarmThreatCount'];
+	   	 	if(alarmThreatCount != null && alarmThreatCount != undefined && alarmThreatCount != ''){
+	   	 	    alarmThreatCount = parseInt(alarmThreatCount);
+	   	 	    if(alarmThreatCount > alarmThreatCnt){
+	   	 	        let promise = audio.play();
+		   	 	    if (promise !== undefined) {
+			   	 	    promise.then(_ => {
+			   	 	      // Autoplay started!
+			   	 	    }).catch(error => {
+			   	 	      // Autoplay was prevented.
+			   	 	      // Show a "Play" button so that user can start playback.
+			   	 	    });
+		   	 	    }
+	   	 	    	//audio.play();
+	   	 	        alarmThreatCnt = alarmThreatCount;
+	   	 	    }
+	   	 	}
+	   	    let alarmAssetCount = data['alarmAssetCount'];
+	   	    if(alarmAssetCount != null && alarmAssetCount != undefined && alarmAssetCount != ''){
+	   	    	alarmAssetCount = parseInt(alarmAssetCount);
+	   	        if(alarmAssetCount > alarmAssetCnt){
+	   	 	    	let promise = audio.play();
+		   	 	    if (promise !== undefined) {
+			   	 	    promise.then(_ => {
+			   	 	      // Autoplay started!
+			   	 	    }).catch(error => {
+			   	 	      // Autoplay was prevented.
+			   	 	      // Show a "Play" button so that user can start playback.
+			   	 	    });
+		   	 	    }
+	   	 	        alarmAssetCnt = alarmAssetCount;
+	   	 	    }
+
+	   	    }
+
+   	 	    let assetData = data['warningAssetList'];
+   	 	    if(assetData != null && assetData != undefined && assetData.length > 0){
+   	 	    	//let assetMsgCnt = document.querySelectorAll('.asettMsg').length;
+	   	 	    for(let key in assetData){
+	 				//console.log("assetData:",assetData[key]);
+	 			    //threatMsgCnt ++;
+	 		     	let notice2 = document.createElement('DIV');
+	 		        notice2.classList.add('pop-layer-rb','assetMsg');
+	 		        let popupTitle = document.createElement('DIV');
+	 		        popupTitle.classList.add('Popup-title');
+	 		        let h3 = document.createElement('h3');
+	 		        let span = document.createElement('span');
+	 		        span.classList.add('iconWrapB','icon_13_01');
+	 		        let strong = document.createElement('strong');
+	 		        let em = document.createElement('em');
+	 		        em.textContent = '자산이상';
+	 		        strong.appendChild(em);
+	 		        strong.append(' 발생 알림');
+	 		        h3.appendChild(span);
+	 		        h3.appendChild(strong);
+	 		        let button = document.createElement('button');
+	 		        button.classList.add('icon-close');
+	 		        button.textContent = '닫기';
+	 		        popupTitle.appendChild(h3);
+	 		        popupTitle.appendChild(button);
+	 		        let popupContainer = document.createElement('DIV');
+	 		        popupContainer.classList.add('Popup-container');
+	 		        popupContainer.setAttribute("style","padding:0;");
+	 		        let popupContainer2 = document.createElement('DIV');
+	 		        popupContainer2.classList.add('Popup-contents2','orange');
+	 		        popupContainer.appendChild(popupContainer2);
+	 		        let anch = document.createElement('a');
+	 		        anch.setAttribute("href","javascript:void(0)");
+   	 		        anch.setAttribute("onclick","watchPage('asset','"+assetData[key].assetId+"')");
+
+	 		        let p = document.createElement('p');
+	 		       // p.append(gfn_getCodeVal('COUT', data[key].unitId)+'('+gfn_getCodeVal('COSH', data[key].shipId)+')');
+	 		        //let br1 = document.createElement('br');
+	 		        //p.appendChild(br1);
+	 		        p.append('발생시간: '+gfn_dateFrmt(assetData[key].detectionTime,'yy-mm-dd hh:mi:ss'));
+	 		        let br2 = document.createElement('br');
+	 		        p.appendChild(br2);
+	 		        p.append('자산명: '+gfn_getCodeVal('ASSC',assetData[key].smallCategory));
+	 		        anch.appendChild(p);
+	 		        popupContainer2.appendChild(anch);
+	 		        notice2.appendChild(popupTitle);
+	 		        notice2.appendChild(popupContainer);
+		   	 		notice2.querySelector('.icon-close').addEventListener('click',() => {
+		   	 			notice2.remove();
+		   	 		});
+		   	     	notice2.setAttribute("style","bottom: 0px; right: 0px; display:block;")
+	 		        //notice2.setAttribute("style","bottom: 0px; right: 0px; display:block; z-index:"+100+threatMsgCnt+";")
+	 		        document.body.appendChild(notice2);
+	 			}
+   	 	    }
+   	 	    let reportData = data['reportList'];
+	 	    //console.log("reportData:",reportData);
+	        if(reportData != null && reportData != undefined && reportData.length > 0){
+	        	for(let key in reportData){
+			     	let notice1 = document.createElement('DIV');
+			        notice1.classList.add('pop-layer-rb','reportMsg');
+			        let popupTitle = document.createElement('DIV');
+			        popupTitle.classList.add('Popup-title');
+			        let h3 = document.createElement('h3');
+			        let span = document.createElement('span');
+			        span.classList.add('iconWrapB','icon_13_01');
+			        let strong = document.createElement('strong');
+			        let em = document.createElement('em');
+			        em.textContent = '보고서 생성';
+			        strong.appendChild(em);
+			        strong.append(' 알림');
+			        h3.appendChild(span);
+			        h3.appendChild(strong);
+			        let button = document.createElement('button');
+			        button.classList.add('icon-close');
+			        button.textContent = '닫기';
+			        popupTitle.appendChild(h3);
+			        popupTitle.appendChild(button);
+			        let popupContainer = document.createElement('DIV');
+			        popupContainer.classList.add('Popup-container');
+			        popupContainer.setAttribute("style","padding:0;");
+			        let popupContainer2 = document.createElement('DIV');
+			        popupContainer2.classList.add('Popup-contents2','orange');
+			        popupContainer.appendChild(popupContainer2);
+			        let anch = document.createElement('a');
+   	 		        anch.setAttribute("href","javascript:void(0)");
+   	 		        anch.setAttribute("onclick","watchPage('report','"+reportData[key].manageId+"')");
+			        let p = document.createElement('p');
+			        p.append('(보고서)가 발행되었습니다.');
+			        let br1 = document.createElement('br');
+			        p.appendChild(br1);
+			        p.append('제목: '+reportData[key].reportTitle);
+			        let br2 = document.createElement('br');
+			        p.appendChild(br2);
+			        p.append(gfn_dateFrmt(reportData[key].createTime,'yy-mm-dd hh:mi:ss'));
+			        anch.appendChild(p);
+			        popupContainer2.appendChild(anch);
+			        notice1.appendChild(popupTitle);
+			        notice1.appendChild(popupContainer);
+	   	 		    notice1.querySelector('.icon-close').addEventListener('click',() => {
+	   	 			     notice1.remove();
+		   	 		});
+		   	     	notice1.setAttribute("style","bottom: 0px; right: 0px; display:block;");
+				    document.body.appendChild(notice1);
+		        }
+	        }
+
+
+            return data['warningThreatList'];
+   	 	}).then((data) => {
+   	 		//console.log("warningThreatList:",data);
+   	 		if(data != null && data != undefined && data.length > 0){
+   	 			let threatMsgs = document.querySelectorAll('.threatMsg');
+   	 			if(threatMsgs){
+   	 				threatMsgs.forEach((threatMsg) => {
+   	 					threatMsg.remove();
+   	 				});
+   	 			}
+   	 			//console.log("threatMsgCnt:",threatMsgCnt);
+   	 			for(let key in data){
+   	 				//console.log(data[key]);
+   	 			    //threatMsgCnt ++;
+   	 		     	let notice3 = document.createElement('DIV');
+   	 		     	//let id = 'notice3-'+threatMsgCnt;
+   	 		        //notice3.setAttribute('id',id);
+   	 		        notice3.classList.add('pop-layer-rb','threatMsg');
+   	 		        let popupTitle = document.createElement('DIV');
+   	 		        popupTitle.classList.add('Popup-title');
+   	 		        let h3 = document.createElement('h3');
+   	 		        let span = document.createElement('span');
+   	 		        span.classList.add('iconWrapB','icon_13_01');
+   	 		        let strong = document.createElement('strong');
+   	 		        let em = document.createElement('em');
+   	 		        em.textContent = '사이버 위협';
+   	 		        strong.appendChild(em);
+   	 		        strong.append(' 발생 알림');
+   	 		        h3.appendChild(span);
+   	 		        h3.appendChild(strong);
+   	 		        let button = document.createElement('button');
+   	 		        button.classList.add('icon-close');
+   	 		        button.textContent = '닫기';
+   	 		        popupTitle.appendChild(h3);
+   	 		        popupTitle.appendChild(button);
+   	 		        let popupContainer = document.createElement('DIV');
+   	 		        popupContainer.classList.add('Popup-container');
+   	 		        popupContainer.setAttribute("style","padding:0;");
+   	 		        let popupContainer2 = document.createElement('DIV');
+   	 		        popupContainer2.classList.add('Popup-contents2','red');
+   	 		        popupContainer.appendChild(popupContainer2);
+   	 		        let anch = document.createElement('a');
+   	 		        anch.setAttribute("href","javascript:void(0)");
+   	 		        anch.setAttribute("onclick","watchPage('threat','"+data[key].threatId+"')");
+
+   	 		        let p = document.createElement('p');
+   	 		        p.append(gfn_getCodeVal('COUT', data[key].unitId)+'('+gfn_getCodeVal('COSH', data[key].shipId)+')');
+   	 		        let br1 = document.createElement('br');
+   	 		        p.appendChild(br1);
+   	 		       // console.log('발생시간: '+gfn_dateFrmt(data[key].detectionTime,'yy-mm-dd hh:mi:ss'));
+   	 		        p.append('발생시간: '+gfn_dateFrmt(data[key].detectionTime,'yy-mm-dd hh:mi:ss'));
+   	 		        let br2 = document.createElement('br');
+   	 		        p.appendChild(br2);
+   	 		        p.append('탐지 위협: '+data[key].detectionThreatName);
+   	 		        anch.appendChild(p);
+   	 		        popupContainer2.appendChild(anch);
+   	 		        notice3.appendChild(popupTitle);
+   	 		        notice3.appendChild(popupContainer);
+		   	 		notice3.querySelector('.icon-close').addEventListener('click',() => {
+		   	 			notice3.remove();
+		   	 		});
+		   	 	    notice3.setAttribute("style","bottom: 0px; right: 0px; display:block;")
+   	 		        //notice3.setAttribute("style","bottom: 0px; right: 0px; display:block; z-index:"+100+threatMsgCnt+";")
+   	 		        document.body.appendChild(notice3);
+   	 			}
+   	 		}
+   	 	});
+
+	}
+	const watchPage = (mode,id) => {
+		if(mode === 'threat'){
+			let param = {"eventId" : "2"};
+			gfn_asyncTranDataCall('/saveAlarmCheck','POST',param,() => {
+				pageFunc("/threatDisp?id="+id);
+			});
+		}
+		else if(mode === 'report'){
+			pageFunc("/rptMng?id="+id);
+		}
+		else{
+			let param = {"eventId" : "1"};
+			gfn_asyncTranDataCall('/saveAlarmCheck','POST',param,() => {
+				pageFunc("/assetDisp?id="+id);
+			});
+
+		}
+
+	};
+
+	const setTimer = (sTm) => {
+		if(sTm != undefined){
+			sessionTime = sTm;
+		}
+		let timer = document.querySelector('.timer');
+		rMinute = parseInt(sessionTime / 60);
+	    rMinute = rMinute % 60;
+	    rSecond = sessionTime % 60;
+		if(sessionTime >= 0){
+			while (rMinute.length < 2) {
+		        rMinute = "0" + rMinute;
+		    }
+		    while (rSecond.length < 2) {
+		        rSecond = "0" + rSecond;
+		    }
+			timer.textContent = '세션종료'+' 00:'+rMinute+':'+rSecond;
+			sessionTime--;
+			loginInterval = setTimeout("setTimer()", 1000);
+		}
+		else{
+			clearInterval(loginInterval);
+			msgCall("로그아웃 되었습니다.",true,false,logout);
+		}
+	}
+
+	const getShow = () => {
+		document.getElementById("mainSnbMenu").style.display = "block";
+	}
+
+	const getHide = () => {
+		document.getElementById("mainSnbMenu").style.display = "none";
+	}
+	function accordion(e){
+		e.stopPropagation();
+		if (this.classList.contains('active')) {
+			this.classList.remove('active');
+	    } else if (this.parentElement.parentElement.classList.contains('active')) {
+	    	this.classList.add('active');
+	    } else {
+	    	for (i = 0; i < list.length; i++) {
+	    		list[i].classList.remove('active');
+	        }
+	        this.classList.add('active');
+
+	    }
+	}
+	for (i = 0; i < list.length; i++) {
+		list[i].addEventListener('click', accordion);
+	}
+
+
+	const pageFunc = (url,method) => {
+		let sessionData = gfn_getStorage(ncos.storageKey);
+		if(sessionData === null || sessionData === undefined){
+			console.log("session is null..");
+			msgCall(msg.expired,false,logout);
+		    return;
+		}
+		if(gfn_nullValue(gfn_getStorage('curUrl')) === ''){
+			gfn_setStorage('preUrl', '/');;
+		}
+		else{
+			if(gfn_getStorage('preUrl') != url){
+				gfn_setStorage('preUrl', gfn_getStorage('curUrl'));;
+			}
+
+		}
+		location.href = url;
+
+		if(url.indexOf('?') > -1){
+			let urls = url.split('?');
+
+			gfn_setStorage('curUrl', urls[0]);
+		}
+		else{
+			gfn_setStorage('curUrl', url);
+		}
+
+	}
+
+	const logout = () => {
+		//console.log("logout");
+		try{
+			gfn_removeStorage(ncos.codeKey);
+			gfn_removeStorage(ncos.storageKey);
+			location.href = "/logout";
+		}catch(e){
+			console.error("logout error:",e);
+		}
+
+	}
+
+</script>
+</div>
+</html>

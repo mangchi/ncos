@@ -1,0 +1,378 @@
+@CHARSET "UTF-8";
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: gray;
+}
+
+/* 
+사용자 정의 css 파일입니다.
+기본적으로 제공하는 css 파일의 내용을 복사하여 오버라이딩 하여 사용합니다.
+*/
+
+/*예제 뷰어 메뉴*/
+/*
+.report_menu_div {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 65px;
+	overflow: visible;
+	background-color: red;
+	background-position: 5px 50%;
+	background-repeat: no-repeat;
+	-webkit-user-select: none; 
+	-moz-user-select: none; 
+	-khtml-user-select: none; 
+	-ms-user-select: none;
+}
+*/
+
+/*
+필수 항목을 체크하지 않았을 때 필수 항목이 들어간 컨트롤에 아래의 스타일을 적용합니다.
+*/
+.eForm_NecessaryCheck{
+	background-color : rgba(255,165,0, 0.5) !important;
+}
+
+/*
+필수 항목이 입력된 상태거나 필수항목이 아닌  컨트롤에 아래의 스타일을 적용합니다.
+*/
+.eForm_inputDefault_bg{
+	/*
+	background-color : rgba(255, 255, 0, 0.5);
+	*/
+}
+
+/*
+컨트롤이 비활성화 상태일 때 아래의 스타일을 적용합니다.
+*/
+.eForm_inputDisabled{
+	/*
+	background-color : rgba(128,0,128, 0.5);
+	*/
+}
+
+/*
+입력 컨트롤에 포커스가 들어왔을 때 아래의 스타일을 적용합니다.
+*/
+.eform_textarea:focus{
+	border:2pt solid Orange;
+	outline: none;
+}
+
+.eform_control_focus{
+	border:2pt solid Orange;
+	box-sizing: border-box;
+}
+
+/*
+목차에 관련된 스타일을 적용합니다.
+*/
+/*
+.eform_toc_menu_top {
+	position: absolute;
+	left: 10px;
+	top: 55px;
+	height: 50px;
+	width: 250px;
+	background-color: rgba(243, 243, 243, 0.95);
+	border-bottom: 2px solid rgb(212, 212, 212);
+	box-sizing: border-box;
+	border-radius: 10px 10px 0px 0px;
+}
+
+.eform_toc_menu_top_text {
+	position: absolute;
+	left: 5px;
+	top: 15px;
+	font-family: 나눔고딕;
+	font-size: 13pt;
+	color: rgb(115, 197, 215);
+	font-weight: bold;
+}
+
+.eform_toc_menu_top_close {
+	position: absolute;
+	right: 10px;
+	top: 17px;
+	width: 19px;
+	height: 19px;
+	background-image: url(../img/eform/list_close.png);
+	background-size: contain;
+	cursor: pointer;
+}
+
+.eform_toc_menu_body {
+	position: absolute;
+	left: 10px;
+	top: 105px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 250px;
+	bottom: 35px;
+	background-color: rgba(243, 243, 243, 0.95);
+	box-sizing: border-box;
+}
+
+.eform_toc_list_depth {
+	position: relative;
+	left: 0px;
+	right: 0px;
+	height: 30px;
+	border-bottom: 1px solid rgb(212, 212, 212);
+}
+
+.eform_toc_nec_list_depth {
+	position: relative;
+	left: 0px;
+	right: 0px;
+	height: 30px;
+	border-bottom: 1px solid rgb(212, 212, 212);
+	background-image:url(../img/eform/nec_check.png);
+	background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position : 5px center;
+}
+
+.eform_toc_list_depth_text{
+	position: absolute;
+	font-family : 나눔고딕;
+	font-weight: bold;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow:hidden;
+	cursor: pointer;
+}
+
+.eform_toc_list_depth_pageNumber{
+	position: absolute;
+	font-family : 나눔고딕;
+	white-space: nowrap;
+	overflow:hidden;
+	font-size: 10pt;
+	top:7px;
+	right:0px;
+	width:30px;
+	text-align: center;
+}
+
+.eform_toc_list_depth1_text {
+	font-size: 12pt;
+	color: rgb(215, 172, 135);
+    top: 5px;
+    bottom: 0px;
+	
+}
+
+.eform_toc_list_depth2_text {
+	font-size: 12pt;
+	color: rgb(100, 100, 100);
+    top: 5px;
+    bottom: 0px;
+}
+
+.eform_toc_list_depth3_text {
+	font-size: 11pt;
+	color: rgb(100, 100, 100);
+    top: 7px;
+    bottom: 0px;
+}
+
+.eform_toc_menu_bottom {
+	position: absolute;
+	left: 10px;
+	bottom: 25px;
+	height: 10px;
+	width: 250px;
+	background-color: rgba(243, 243, 243, 0.95);
+	box-sizing: border-box;
+	border-radius: 0px 0px 10px 10px;
+}
+*/
+
+.report_displayNone{
+	position:absolute !important;
+	width:1px !important;
+	height:1px !important;
+	visibility: hidden !important;
+	opacity:0 !important;
+}
+
+/*
+사용자 정의 프로그래스 createUserProgress 함수를 사용하였을 때 동작합니다.
+*/
+.user_progress{
+	background-position: 50% 50%;
+	background-image: url(../img/efromProgress.gif);
+	opacity: 0.5;
+	background-color:gray;
+}
+
+/*
+* 체크박스 및 라디오박스 비활성화 상태일 때 스타일 적용
+*/
+.eForm_selectDisabled{
+	/*
+	color : gray !important;
+	fill : gray !important;
+	*/
+}
+.eForm_selectBorderDisabled{
+	/*
+	border : 0.75pt solid gray !important;
+	*/
+}
+
+.eForm_selectbox_option{
+	/*
+	font-size:8pt;
+	*/
+}
+
+/* 다중(하단) 서명창사용 시 창이 활성화 됐을 때 컨트롤 스타일 적용*/
+
+.eForm_multiSign_focus{
+	/*
+	background-color: rgba(10, 10, 10, 0.3);
+	*/
+}
+
+.svg_rect_normal {
+	fill:rgba(0,0,0,0);
+    stroke:gray;
+      stroke-width:3px;
+      stroke-dasharray:7,7;
+}
+
+.svg_rect_Necessary_checked{
+	fill:rgba(0,0,0,0);
+    stroke:gray;
+      stroke-width:3px;
+      stroke-dasharray:7,7;
+}
+
+.svg_rect_Necessary {
+   animation-name: Necessary; 
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+   animation-timing-function: linear;
+    animation-delay: 0s;
+    fill:rgba(0,0,0,0);
+    stroke:red;
+      stroke-width:3px;
+      stroke-dasharray:7,7;
+}
+
+@keyframes Necessary {
+    from {
+      stroke:red;
+      stroke-width:3px;
+      stroke-dasharray:7,7;
+      }
+    to {
+       stroke-width:0px;
+      }
+}
+
+.svg_path {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 0;
+    animation: pathdash 1s linear;
+  }
+  
+  @keyframes pathdash {
+    from {
+      stroke-dashoffset: 800;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+
+
+.eform_image_pointer{
+	position: absolute;
+	width: 50px;
+	height:50px;
+	display:none;
+	background-image: url(../img/eform/navi/finger.gif);
+	background-repeat: no-repeat;   
+    background-size: contain;
+}
+
+.eform_image_pointerRect{
+	position: absolute;
+	display:none;
+	box-sizing : border-box;
+	border : 2pt Orange solid;
+}
+
+.eform_easyInput_popup_bg{
+	position: absolute;
+	left: 0px;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	background-color:rgba(128,128,128,0.6);	
+	z-index: 600;
+}
+
+.eform_easyInput_popup_head{
+	position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    height: 25px;
+    background-color: rgb(192,192,192);
+    font-size: 12pt;
+    font-weight: bold;
+    border-radius: 3px;
+}
+.eform_easyInput_popup_body{
+	top:180px;
+	bottom:180px;
+	position: absolute;
+    background-color: white;
+}
+
+.eform_easyInput_popup_canvas{
+	position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 40px;
+    bottom: 0px;
+    overflow: auto;
+}
+
+.eform_easyInput_popup_button{
+	position: absolute;
+    left: 5px;
+    height: 40px;
+    width: 99%;
+    background-color: black;
+    color: white;
+    font-size: 15pt;
+    font-weight: bold;
+    text-align: center;
+    z-index: 2;
+}
+
+.eform_easyInput_popup_scoll_button{
+	position: absolute;
+    width: 35px;
+    right: 3px;
+    background-color: white;
+    border: 1px solid silver;
+    z-index: 1;
+}
+
+.eform_thumbnail_default{
+    outline: none;
+}
+
+.eform_thumbnail_focus{
+    border:1px solid !important;
+    box-sizing:border-box;
+    outline: none;
+}
+

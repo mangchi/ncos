@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{th/cmmn/layout}">
+<head>
+<title>자산관리</title>
+</head>
+<th:block layout:fragment="content">
+<div class="container-wide">
+	<div class="container">
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_08_01"></span><strong>자산관리</strong></h4>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_search"></span><strong>조회조건</strong></h4>
+					<div class="items" style="overflow: visible">
+						<!-- item contnets // -->
+						<div class="schwrap">
+							<ul>
+								<li>
+									<div class="selectWrap">대분류
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schLargeCategory" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="selectWrap">소분류
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schSmallCategory" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<label>자산명
+										<input type="text" class="form-control" id="schAssetName" placeholder="자산명을 입력하세요">
+									</label>
+								</li>
+								<li>
+									 <div class="selectWrap">구역
+										<div class="multiselect">
+											<div class="selectBox">
+												<div class="selected">
+													<div class="selected-value">전체</div>
+													<div class="arrow"></div>
+												</div>
+												<div class="overSelect"></div>
+											</div>
+											<div id="schZoneId" class="checkboxes" style="display:none;">
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<label>등록시간
+									<input id="frDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									   ~
+									<input id="toDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									</label>
+								</li>
+							</ul>
+							<button class="btn medium darkblue schBtn"><span class="iconBtn icon_btn_01"></span><strong>검색</strong></button>
+						</div>
+						<!-- // item contnets --> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="item-box col-12">
+				<div class="inner">
+					<h4 class="item-title"><span class="iconWrapB icon_list"></span><strong>조회목록</strong></h4>
+					<div class="items"> 
+						<!--table//-->
+						<div class="tablewrap">
+							<table>
+								<thead class="tHead">
+								</thead>
+								<tbody class="tBody">
+								</tbody>
+							</table>
+						</div>
+						<!--//table--> 
+						<!--pagination//-->
+						<div class="page_wrap">
+							<div class="page_nation">
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="10">
+							</div>
+					    </div>
+						<!--//pagination--> 
+						<!--button area//-->
+						<div class="btnWrap">
+							<div class="left"> <a href="#assetPop" class="btn medium darkblue addBtn"><span class="iconBtn icon_btn_02"></span><strong>추가</strong></a> <a href="#assetPop" class="btn medium darkblue modBtn"><span class="iconBtn icon_btn_03"></span><strong>수정</strong></a> <a href="javascript:;" class="btn medium darkblue delBtn"><span class="iconBtn icon_btn_04"></span><strong>삭제</strong></a> </div>
+							<div class="right"> </div>
+						</div>
+						<!--//button area--> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//Grid--> 
+	</div>
+</div>
+
+<!--자산등록/수정 modal popup//-->
+<div class="dim-layer">
+	<div class="dimBg"></div>
+	<div id="assetPop" class="pop-layer ssmall"> 
+		<!--Title-->
+		<div class="Popup-title">
+			<h3><span class="iconWrapB icon_08_01"></span><strong></strong></h3>
+			<button class="icon-close">닫기</button>
+		</div>
+		<div class="Popup-container"> 
+			<!--Contens-->
+			<div class="Popup-contents">
+				<div class="assetWrap">
+				    <input type="hidden" id="assetId">
+				    <h4>자산정보</h4>
+					<ul>
+						<li>
+						    <div class="selectWrap">대분류
+								<div class="select">
+									<div class="selected">
+										<div class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="largeCategory">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap">소분류
+								<div class="select">
+									<div class="selected">
+										<div class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="smallCategory">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap">구역
+								<div class="select">
+									<div class="selected">
+										<div class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="zoneId">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<label>
+								<span class="required">* 시스템ID</span>
+								<input type="text" id="systemId" class="form-control" placeholder="1">
+								<em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span class="required">* 자산명</span>
+								<input type="text" id="assetName" class="form-control" placeholder="방화벽">
+								<em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span class="required">* IP주소</span>
+								<input type="text" id="ipAddress" class="form-control" placeholder="192.168.0.120">
+								<em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span class="required">* 관리자</span>
+								<input type="text" id="manager" class="form-control" placeholder="홍길동">
+								<em class="message"></em>
+							</label>
+						</li>
+						<li>
+						    <div class="selectWrap">기밀성중요도
+								<div class="select">
+									<div class="selected">
+										<div class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="confidentialityLevel">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						     <div class="selectWrap">무결성중요도
+								<div class="select">
+									<div class="selected">
+										<div class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="integrityLevel">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap">가용성중요도
+								<div class="select">
+									<div class="selected">
+										<div class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="availabilityLevel">
+									</ul>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="Popup-footer">
+			<a href="javascript:;" class="btn medium darkblue saveBtn"><span class="iconBtn icon_btn_02"></span><strong>확인</strong></a>
+			<a href="javascript:;" class="btn medium darkblue popClose"><span class="iconBtn icon_btn_04"></span><strong>닫기</strong></a>
+		</div>
+	</div>
+</div>
+<!--//modal popup--> 	
+<script th:inline="javascript"> 
+    let zoneData = null;
+	window.addEventListener('DOMContentLoaded', () => {
+		init();
+		//setInterval(searchFunc, ncos.interval);
+	});
+    const init = () => {
+    	document.getElementById('frDt').value= gfn_getDiffDt(ncos.diffDay);
+    	document.getElementById('toDt').value= gfn_getTodayDt();
+    	createMultiChk(document.getElementById('schLargeCategory'),'ASLC');
+    	createMultiChk(document.getElementById('schSmallCategory'),'ASSC');
+    	gfn_getCodeZone().then((data) => {
+    		createMultiChk(document.getElementById('schZoneId'),'ZNLS', data.zoneInfo);
+    		zoneData = data.zoneInfo;
+    		gfn_showChkVal(document.getElementById('schZoneId'));
+    	});
+    	
+    	const headColumns = [{data_id:"chk",width: "45px"}
+    		                ,{data_id:"rn",label:"No.",width:"60px"}
+    	                    ,{data_id:"id",width: "0px"}
+					        ,{data_id:"largeCategory",label:"대분류" ,data_grpCd:"ASLC"}
+					        ,{data_id:"smallCategory",label:"소분류" ,data_grpCd:"ASSC"}
+					        ,{data_id:"assetName",label:"자산명"}
+					        ,{data_id:"ipAddress",label:"IP주소"}
+					        ,{data_id:"systemId",label:"시스템ID",width: "0px"}
+					        ,{data_id:"zoneId",label:"구역ID",width: "0px"}
+					        ,{data_id:"zoneName",label:"구역"}
+					        ,{data_id:"manager",label:"관리자", }
+					        ,{data_id:"confidentialityLevel",label: "기밀성 중요도", data_grpCd:"COIM",data_class:"threat" }
+					        ,{data_id:"integrityLevel",label: "무결성 중요도", data_grpCd:"COIM" ,data_class:"threat"}
+					        ,{data_id:"availabilityLevel",label: "가용성 중요도", data_grpCd:"COIM",data_class:"threat"}
+					        ,{data_id:"systemId",label: "시스템 ID"}
+					        ,{data_id:"assetRegTime",label: "등록시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+					       ];
+		gridInit(document.querySelector('.tablewrap'),headColumns);
+		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
+		searchFunc();
+    }
+    
+    document.querySelector('.schBtn').addEventListener('click',(e) => {
+    	e.preventDefault();
+    	searchFunc();
+    });
+    
+    document.querySelector('.addBtn').addEventListener('click',(e) => {
+    	document.querySelector('.Popup-title').querySelector('strong').textContent = '자산 등록';
+    });
+    
+    document.querySelector('.modBtn').addEventListener('click',(e) => {
+    	e.preventDefault();
+    	document.querySelector('.Popup-title').querySelector('strong').textContent = '자산 수정';
+    	let modData = gridClickedData(document.querySelector('.tablewrap'));
+    	console.log("modData:",modData.row);
+    	let obj = new Object();
+    	let isEmpty = Object.entries(modData.row).length === 0;
+    	if(!isEmpty){
+    		setLayerData(e.target,modData.row);
+    		let href = null;
+    		if(e.target.tagName === 'STRONG'){
+    			href = e.target.parentElement.getAttribute('href');
+    		}
+    		else if(e.target.tagName === 'SPAN'){
+    			href = e.target.parentElement.getAttribute('href');
+    		}
+    		else{
+    			href = e.target.getAttribute('href');
+    		}
+    		layerPopup(href);
+    	}
+    	
+    });
+    
+    const setLayerData = (target,data)=> {
+    	gfn_initObj(document.getElementById('assetPop'));
+    	createChk(document.getElementById('largeCategory'),'ASLC');
+    	createChk(document.getElementById('smallCategory'),'ASSC');
+        createChk(document.getElementById('zoneId'),'ZNLS',null, zoneData);
+    	createChk(document.getElementById('confidentialityLevel'),'COIM');
+		createChk(document.getElementById('integrityLevel'),'COIM');
+		createChk(document.getElementById('availabilityLevel'),'COIM');
+    	if(target.parentNode.classList.contains('modBtn') || target.classList.contains('modBtn')){
+    		document.getElementById('assetId').value = data.id;
+    		let largeCategory = document.getElementById('largeCategory');
+    		let smallCategory = document.getElementById('smallCategory');
+    		let zoneId = document.getElementById('zoneId');
+    		let confidentialityLevel = document.getElementById('confidentialityLevel');
+    		let integrityLevel = document.getElementById('integrityLevel');
+    		let availabilityLevel = document.getElementById('availabilityLevel');
+    		setCheckValue(largeCategory.querySelectorAll('li'),largeCategory.parentNode.querySelector('.selected-value'),data.largeCategory);
+    		setCheckValue(smallCategory.querySelectorAll('li'),smallCategory.parentNode.querySelector('.selected-value'),data.smallCategory);
+    		setCheckValue(zoneId.querySelectorAll('li'),zoneId.parentNode.querySelector('.selected-value'),data.zoneId);
+    		setCheckValue(confidentialityLevel.querySelectorAll('li'),confidentialityLevel.parentNode.querySelector('.selected-value'),data.confidentialityLevel);
+    		setCheckValue(integrityLevel.querySelectorAll('li'),integrityLevel.parentNode.querySelector('.selected-value'),data.integrityLevel);
+    		setCheckValue(availabilityLevel.querySelectorAll('li'),availabilityLevel.parentNode.querySelector('.selected-value'),data.availabilityLevel);
+    		
+    		let inputs = document.getElementById('assetPop').getElementsByTagName('input');
+    		for (let input of inputs) {
+    			if(input.type === 'text'){
+    				input.value = data[input.id];
+    			}
+    			if(input.type === 'checkbox'){
+    				if(input.parentNode.tagName === 'DIV'){
+    					document.getElementById(''+input.id).checked = data[input.id];
+    				}
+    			}
+    		}
+    		
+    	} 
+    	
+    }
+    
+    
+    document.querySelector('.delBtn').addEventListener('click',(e) => {
+    	e.preventDefault();
+    	let delData = gridCheckedData(document.querySelector('.tablewrap'));
+    	if(delData.list.length > 0){
+    		gfn_asyncTranDataCall('/deleteAsset','POST',delData,trncAssetAfterFunc,true);
+    	}
+    });
+    
+    document.querySelector('.saveBtn').addEventListener('click',(e) => {
+    	e.preventDefault();
+    	let requiredParams = {assetName : "자산명"
+    		                , ipAddress : "IP주소"
+    		                , manager : "관리자"
+					        , largeCategory : "대분류"
+					        , smallCategory : "소분류"
+					        , zoneId : "구역"
+					        , confidentialityLevel : "기밀성 중요도"
+					        , integrityLevel : "무결성 중요도"
+					        , availabilityLevel : "가용성 중요도"
+                             };
+    	gfn_asyncTranCall('/saveAsset','POST',requiredParams,document.getElementById('assetPop'),trncAssetAfterFunc,true);
+
+    });
+    
+    const trncAssetAfterFunc = () => {
+    	document.getElementById('assetPop').querySelector('.popClose').click();
+    	searchFunc();
+    }
+
+    const searchFunc = (invoker) => {
+    	pageSearch("/getAssetList",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,searchAfterFunc);
+    	
+    }
+    
+    const searchAfterFunc = (appendData) => {
+    }
+    
+</script>
+</th:block>
+</html>

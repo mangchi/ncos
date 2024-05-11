@@ -1,0 +1,1979 @@
+﻿@CHARSET "UTF-8";
+
+/* 
+웹 접근성 관련 주석처리(focus rect)
+input:focus, button:focus, select:focus{
+	outline: none;
+}
+*/
+
+/*뷰어 메뉴*/
+.report_head_div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+	border-bottom: 1px solid #dddee0;
+	font-size: 12px;
+	overflow: visible;
+	background-color: #323232;
+	background-position: 5px 50%;
+	background-repeat: no-repeat;
+	-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+	-moz-user-select: none; /* mozilla browsers */
+	-khtml-user-select: none; /* webkit (konqueror) browsers */
+	-ms-user-select: none; /* IE10+ */ 
+}
+
+/*뷰어 메뉴*/
+.report_memo_head_div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+	border-bottom: 1px solid #dddee0;
+	font-size: 12px;
+	overflow: visible;
+	z-index: 50;
+	background-color: #323232;
+	background-position: 5px 50%;
+	background-repeat: no-repeat;
+	-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+	-moz-user-select: none; /* mozilla browsers */
+	-khtml-user-select: none; /* webkit (konqueror) browsers */
+	-ms-user-select: none; /* IE10+ */ 
+	display: none;
+}
+
+/*뷰어 메뉴 center*/
+.report_head_center_div {
+	position: absolute;
+	top: 0px;
+	width: 496px;
+	bottom: 0px;
+	border: 0px;
+	left: 50%; 
+	-ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+
+}
+
+
+
+/*리포트 배경*/
+.report_body_div {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	font-size: 12px;
+	border: 1px solid silver;
+	background-color: #F0F0F0;	
+	overflow: auto;
+	text-align: center;
+	scroll-behavior: smooth;
+}
+ 
+ 
+ 
+/*page를 감싸는 div*/
+.report_page_div {
+	position: relative;
+	font-size: 12px;
+	border: 1px solid silver;
+	background-color: #F0F0F0;
+	width: 100%;
+	height: 1122px;
+	overflow:visible;
+	border: 0px;
+	text-align: center;
+	margin-bottom: 7px;
+}
+ 
+ 
+/*리포트 썸네일 전체 DIV*/
+.report_thumbnail_full_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	bottom: 5px;
+	width:0px;
+	font-size: 12px;
+	border: 1px solid silver;
+	background-color: #eee;
+	overflow: hidden;
+	text-align: center;
+	z-index: 50;
+	display:none;
+}
+
+/*리포트 썸네일 DIV*/
+.report_thumbnail_frame_div {
+	position: absolute;
+	top:34px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	border: 1px solid silver;
+	background-color: #fff;
+	overflow-x: hidden;
+	text-align: center;
+	overflow-y: scroll;
+}
+
+
+/*검색 기능  전체 DIV*/
+.report_searchword_full_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 0px;	
+	width:0px;
+	height:40px;
+	font-size: 12px;
+	border: 1px solid silver;
+	background-color: #eee;
+	overflow: hidden;
+	text-align: center;
+	z-index: 50;
+	display:none;
+}
+
+/*검색기능 DIV*/
+.report_searchword_frame_div {
+	position: absolute;
+	top:40px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	border: 1px solid silver;
+	background-color: #fff;
+	overflow-x: hidden;
+	text-align: center;
+	overflow-y: scroll;
+	display:none;
+}
+
+/*리포트 썸네일 전체  DIV*/
+.report_toc_full_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	bottom: 5px;
+	width:0px;
+	font-size: 12px;
+	border: 1px solid silver;
+	background-color: #eee;
+	overflow: hidden;
+	text-align: center;
+	z-index: 50;
+	display:none;
+}
+
+
+/*리포트 썸네일 DIV*/
+.report_toc_frame_div {
+	position: absolute;
+	top:34px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	border: 1px solid silver;
+	background-color: #eee;
+	overflow-x: hidden;
+	text-align: center;
+	overflow-y: scroll;
+}
+
+
+/*리포트 썸네일 toggle DIV*/
+.report_thumbnail_toggle_frame_div {
+	position: absolute;
+	top: 55px;
+	left: 5px;
+	width: 30px;
+	bottom: 5px;
+	background-color: #eee;
+	opacity: 0.9;  
+	overflow: hidden;
+	text-align: center;
+	display: none;
+	z-index: 50;
+}
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_thumbnail_title_div {
+	position: relative;
+	top: 0px;
+	width: 100%;
+	height: 34px;
+	background-color: #F0F0F0;
+}
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_toc_title_div {
+	position: relative;
+	top: 0px;
+	width: 100%;
+	height: 34px;
+	background-color: #F0F0F0;
+}
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_searchword_div {
+	position: relative;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #323232;
+}
+
+/*리포트 썸네일 toggle DIV*/
+.report_sidemenu_toggle_frame_div {
+	position: absolute;
+	top: 55px;
+	left: 5px;
+	width: 30px;
+	bottom: 5px;
+	background-color: transparent;
+	overflow: hidden;
+	text-align: center;
+	display: none;
+	z-index: 50;
+}
+
+/*리포트 썸네일 toggle DIV*/
+.report_toc_toggle_frame_div {
+	position: absolute;
+	top: 55px;
+	left: 5px;
+	width: 30px;
+	bottom: 5px;
+	background-color: #eee;
+	opacity: 0.9;  
+	overflow: hidden;
+	text-align: center;
+	display: none;
+	z-index: 50;
+}
+
+
+/*리포트 썸네일 전체  DIV*/
+.report_speech_bubble_full_frame {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	width:0px;
+	height: 70%;
+	font-size: 12px;
+	border: 1px solid silver;
+	background-color: #eee;
+	overflow-x: hidden;
+	text-align: center;
+	overflow-y: auto;
+	z-index: 50;
+	display:none;
+}
+
+
+/*리포트 썸네일 DIV*/
+.report_speech_bubble_frame_div {
+	position: absolute;
+	top:34px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	border: 1px solid silver;
+	background-color: white;
+	overflow-x: hidden;
+	text-align: center;
+}
+
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_speech_bubble_title_div {
+	position: relative;
+	top: 0px;
+	width: 100%;
+	height: 34px;
+	background-color: #F0F0F0;
+}
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_speech_bubble_detail_title_div {
+	position: relative;
+	top: 0px;
+	width: 100%;
+	height: 24px;
+	background-color: #F0F0F0;
+}
+
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_speech_bubble_detail_frame_div {
+	position: absolute;
+	left: 3px;
+	right: 3px;
+	height: 120px;
+	background-color: #F0F0F0;
+}
+
+
+/*리포트 썸네일 타이틀 DIV*/
+.report_speech_bubble_detail_div {
+	position: absolute;
+	top: 24px;
+	width: 100%;
+	height: 86px;
+	background-color: #F0F0F0;
+}
+
+
+
+
+
+/*리포트 프린트 메인옵션*/
+.report_print_main_option_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	right: 70%;
+	bottom: 10%;
+	font-size: 12px;
+	border: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 100;
+}
+
+
+/*리포트 프린트 메인옵션*/
+.report_print_main_option_frame_cover_div {
+	position: absolute;
+    top: 0px;
+    bottom: 20%;
+    left: 0px;
+    right: 0px;
+    overflow: auto;
+}
+
+/*리포트 프린트 메인옵션*/
+.report_print_main_option_frame_div_vertical {
+	left: 0px;
+	right: 50%;
+	bottom: 30%;
+}
+
+/*리포트 프린트 메인옵션 select DIV*/
+.report_print_main_option_select_div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 120px;
+	background-color: #FBFBFB;
+	border-bottom: 0px;
+	overflow: auto;
+	text-align: center;
+}
+
+
+/*리포트 프린트 서브옵션 정보안내*/
+.report_print_sub_option_info_div { 
+	position: absolute;
+	top: 0px; 
+	left: 0px;
+	right: 0px;
+	bottom: 20%;
+	background-color: #FBFBFB;
+	border-bottom: 0px;
+	overflow: auto;
+	text-align: center;
+} 
+
+
+/*리포트 프린트 메인옵션 select */
+
+.report_print_main_option_select {
+	width:100%;
+	height:100%;
+	border: 0px;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	appearance: none;
+	-webkit-appearance: none;  
+    -moz-appearance: none;
+    -o-appearance:none;
+}
+
+
+/*리포트 프린트 메인옵션 toggle 버튼 */
+.print_main_option_toggle_button {
+	position: absolute;
+	top: 5%;
+	right: 5%;
+	width: 15%;
+	height: 15%;
+}
+
+/*리포트 프린트 메인옵션 저장버튼 */
+.print_main_option_save_button {
+	position: absolute;
+	bottom: 5%;
+	right: 51%;
+	width: 20%;
+	height: 7%;
+	background-color: #768DB6;
+    border: 1px solid #6D7B9C;
+    color: #FFFFFF;
+    display:none;
+}
+
+/*리포트 프린트 메인옵션 인쇄버튼 */
+.print_main_option_print_button {
+	position: absolute;
+	bottom: 5%;
+	right: 51%;
+	width: 20%;
+	height: 7%;
+	background-color: #768DB6;
+    border: 1px solid #6D7B9C;
+    color: #FFFFFF;
+}
+
+/*리포트 프린트 메인옵션 취소버튼 */
+.print_main_option_cancel_button {
+	position: absolute;
+	bottom: 5%;
+	left: 51%;
+	width: 20%;
+	height: 7%;
+}
+
+/*리포트 프린트 메인옵션 취소버튼 */
+.print_main_option_ok_button {
+	position: absolute;
+	bottom: 5%;
+	left: 40%;
+	width: 20%;
+	height: 7%;
+	display:none;
+}
+
+
+/*리포트 프린트 메인옵션 인쇄범위 DIV*/
+.report_print_main_option_range_div {
+	position: absolute;
+	top: 120px;
+	left: 0px;
+	right: 0px;
+	height: 240px;
+	border-bottom: 0px;
+	background-color: #FBFBFB;
+	overflow: auto;
+	text-align: center;
+}
+
+
+/*리포트 프린트 서브옵션  DIV*/
+.report_print_sub_option_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 30%;
+	right: 40%;
+	bottom: 10%;
+	font-size: 12px;
+	border: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 100;
+}
+
+/*리포트 프린트 서브옵션  DIV*/
+.report_print_html_manual_frame {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	font-size: 12px;
+	border: 0px solid #DCDCDC;
+	filter:alpha(opacity=0);
+	background-color: rgba(60, 60, 60, 0);
+	overflow: hidden;
+	text-align: center;
+	z-index: 500;
+}
+ 
+ /*리포트 프린트 서브옵션  DIV*/
+.report_print_html_manual_shadow_div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	font-size: 12px;
+	border: 0px solid #DCDCDC;
+	filter:alpha(opacity=50);
+	background-color: rgba(60, 60, 60, 0.5);
+	overflow: hidden;
+	text-align: center;
+	z-index: 500;
+}
+ 
+ /*리포트 프린트 서브옵션  DIV*/
+.report_print_html_manual_div {
+	position: absolute;
+	top: 50px;
+	left: 20%;
+	right: 20%;
+	bottom: 50px;
+	font-size: 12px;
+	border: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 500;
+}
+ 
+  /*리포트 프린트 서브옵션  DIV*/
+.report_print_html_manual_detail_frame {
+	position: relative;
+	font-size: 12px;
+	width:100%;
+	border: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 500;
+}
+
+  /*리포트 프린트 서브옵션  DIV*/
+.report_print_html_manual_title_frame {
+	position: relative;
+	font-size: 12px;
+	width:100%;
+	height:40px;
+	border: 1px solid #DCDCDC;
+	background-color: #EBEBEB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 500;
+}
+
+  /*리포트 프린트 서브옵션  DIV*/
+.report_print_html_manual_detail_cover_div {
+	position: absolute;
+	top: 40px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	border: 0px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align: center;
+	z-index: 500;
+}
+
+/*리포트 print 설명서 종료 버튼*/
+.report_print_html_manual_close_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 5px;
+	top: 0px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/frameClose.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+/*리포트  print 설명서 종료 버튼*/
+.report_print_html_manual_close_button_lowie{
+	background-image: url(../img/report/lowIE/frameClose.png);
+}
+
+
+
+/*리포트 프린트 서브옵션  DIV*/
+.report_print_sub_option_frame_div_vertical {
+	left: 50%;
+	right: 0px;
+	bottom: 30%;
+}
+
+/*리포트 다운로드 메인옵션*/
+.report_download_main_option_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	right: 70%;
+	bottom: 10%;
+	font-size: 12px;
+	border: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 100;
+}
+
+/*리포트 다운로드 메인옵션*/
+.report_download_main_option_frame_cover_div {
+    position: absolute;
+    top: 0px;
+    bottom: 20%;
+    left: 0px;
+    right: 0px;
+    overflow: auto;
+}
+
+/*리포트 다운로드 메인옵션*/
+.report_download_main_option_frame_div_vertical {
+	left: 0px;
+	right: 50%;
+	bottom: 30%;
+}
+
+/*리포트 다운로드 메인옵션 select DIV*/
+.report_download_main_option_select_div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 120px;
+	background-color: #FBFBFB;
+	border-bottom: 1px solid #DCDCDC;
+	overflow: auto;
+	text-align: center;
+}
+
+
+/*리포트 다운로드 메인옵션 method title DIV*/
+.report_download_main_option_method_title_div {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #DCDCDC;
+}
+
+/*리포트 다운로드 메인옵션 method title DIV*/
+.report_print_main_option_method_title_div {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #DCDCDC;
+}
+
+/*리포트 다운로드 서브옵션 info title DIV*/
+.report_print_sub_option_info_title_div {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #DCDCDC;
+}
+
+/*리포트 다운로드 서브옵션 info title DIV*/
+.report_print_sub_option_info_contents_div {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 10px;
+	right: 10px;
+}
+
+/*리포트 다운로드 메인옵션 파일 이름 title DIV*/
+.report_download_main_option_file_name_title_div {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #DCDCDC;
+}
+
+/*리포트 다운로드 메인옵션 파일 이름 title DIV*/
+.report_download_main_option_range_title_div {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #DCDCDC;
+}
+
+/*리포트 프린트 메인옵션 인쇄범위 title DIV*/
+.report_print_main_option_range_title_div {	
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #DCDCDC;
+}
+
+
+
+
+
+.report_download_cell_size_ratio_div {
+	position: absolute;
+	background-color: #EBEBEB;
+	border-top: 1px solid #DCDCDC;
+	border-bottom: 1px solid #DCDCDC;
+	top: 345px;
+	left: 0px;
+	right: 0px;	
+	height: 100px;
+	text-align: left;
+	
+}
+
+/*리포트 다운로드 메인옵션 select */
+.report_download_main_option_select {	
+	width:100%;
+	height:100%;
+	border: 0px;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	appearance: none;
+	-webkit-appearance: none;  
+    -moz-appearance: none;
+    -o-appearance:none;
+	
+}
+
+/*리포트 프린트 메인옵션 select 커버 div */
+.report_print_main_option_select_cover_div {
+	border:1px solid #B2B9C7;
+	
+	position: absolute;
+	top: 60px;
+	left: 5%;
+	width: 90%;
+	height: 40px;
+	background: url(../img/report/select_arrow.png) no-repeat;
+	background-position: right center;
+	background-size: 40px;
+	-moz-border-radius: 50px;
+ 	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+
+.report_print_main_option_select_cover_div:focus-within {
+	  outline: -webkit-focus-ring-color auto 5px;
+}
+
+/*리포트 다운로드 메인옵션 select 커버 div */
+.report_download_main_option_select_cover_div {
+	border:1px solid #B2B9C7;
+	
+	position: absolute;
+	top: 60px;
+	left: 5%;
+	width: 90%;
+	height: 40px;
+	background: url(../img/report/select_arrow.png) no-repeat;
+	background-position: right center;
+	background-size: 40px;
+	-moz-border-radius: 50px;
+ 	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+
+.report_download_main_option_select_cover_div:focus-within {
+	    outline: -webkit-focus-ring-color auto 5px;
+}
+
+/*리포트 프린트 메인옵션 select label */
+.report_print_main_option_select_label{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size : 12px;
+	
+	left: 5%;
+	width: 80%;
+	text-align: left;
+}
+
+ 
+/*리포트 다운로드 메인옵션 select label */
+.report_download_main_option_select_label{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 12px;
+	left: 5%;
+	width: 80%;
+	text-align: left;
+}
+
+
+
+/*리포트 다운로드 메인옵션 인쇄버튼 */
+.download_main_option_download_button {
+	position: absolute;
+	bottom: 5%;
+	right: 51%;
+	width: 20%;
+	height: 7%;
+	background-color: #768DB6;
+	border: 1px solid #6D7B9C;
+	color: #FFFFFF;
+}
+
+
+/*리포트 다운로드 메인옵션 취소버튼 */
+.download_main_option_cancel_button {
+	position: absolute;
+	bottom: 5%;
+	left: 51%;
+	width: 20%;
+	height: 7%;
+}
+
+/*리포트 다운로드 메인옵션 인쇄범위 DIV*/
+.report_download_main_option_range_div {
+	position: absolute;
+	top: 240px;
+	left: 0px;
+	right: 0px;
+	height: 240px;
+	border-bottom: 0px;
+	background-color: #FBFBFB;
+	overflow: auto;
+	text-align: center;
+}
+
+/*리포트 다운로드 메인옵션 인쇄범위 DIV*/
+.report_download_main_option_file_name_div {
+	position: absolute;
+	top: 120px;
+	left: 0px;
+	right: 0px;
+	height: 120px;
+	border-bottom: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: auto;
+	text-align: center;
+}
+
+/*리포트 다운로드 서브옵션 div*/
+.report_download_sub_option_div {
+	position: absolute;
+	left:0px;
+	top: 0px;
+	width:100%;
+	height: 80%;
+	border-collapse: collapse;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+
+/*리포트 다운로드 파일명*/
+.report_download_main_option_file_name_input{
+	position: absolute;
+	top: 60px;	
+	left: 5%;
+	width: 85%;
+	height: 40px;	
+	padding-left:5%;
+	border:1px solid #B2B9C7;
+	-moz-border-radius: 50px;
+ 	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+
+
+/*리포트 다운로드 서브옵션  DIV*/
+.report_download_sub_option_frame_div {
+	position: absolute;
+	top: 50px;
+	left: 30%;
+	right: 40%;
+	bottom: 10%;
+	font-size: 12px;
+	border: 1px solid #DCDCDC;
+	background-color: #FBFBFB;
+	overflow: hidden;
+	text-align: center;
+	z-index: 100;
+}
+
+/*리포트 다운로드 서브옵션  DIV*/
+.report_download_sub_option_frame_div_vertical {
+	left: 50%;
+	right: 0px;
+	bottom: 30%;
+}
+
+/*리포트 다운로드 서브옵션 변경버튼 */
+.download_sub_option_change_button {
+	position: absolute;
+	bottom: 5%;
+	right: 35%;
+	width: 30%;
+	height: 7%;
+	background-color: #768DB6;
+    border: 1px solid #6D7B9C;
+    color: #FFFFFF;
+}
+
+/*리포트 다운로드 서브옵션 저장버튼 */
+.download_sub_option_save_button {
+	position: absolute;
+	bottom: 5%;
+	right: 51%;
+	width: 20%;
+	height: 7%;
+	background-color: #768DB6;
+    border: 1px solid #6D7B9C;
+    color: #FFFFFF;
+}
+
+/*리포트 다운로드 서브옵션 취소버튼 */
+.download_sub_option_cancel_button {
+	position: absolute;
+	bottom: 5%;
+	left: 51%;
+	width: 20%;
+	height: 7%;
+}
+
+
+/*선택된 리포트 썸네일 이미지 DIV*/
+.thumbnail_img_div {
+	position: relative;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	border: 0px;
+	padding-left: 40px;
+	padding-right: 15px;
+	padding-top: 17px;
+	padding-bottom: 5px
+}
+
+/*썸네일 이미지 DIV*/
+.thumbnail_inner_img_div{
+	position: relative;
+	text-align: center;
+	border: 2px solid #D8D8D8;
+	background-color: #F0F0F0;
+	padding-top: 2px;
+	padding-bottom: 2px
+}
+
+
+
+
+/*편집가능 컨트롤 포커스 접근*/
+.mRe_focus:focus{
+	filter:alpha(opacity=100) !important; 
+	opacity:100 !important;
+}
+
+/* */
+.report_mobile_prev_button{
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	width:30px;
+	height:30px;
+	border: 0px;
+	display:none;
+	text-align: center;
+	z-index: 30;
+	padding:0px;
+	background-size: cover;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-image: url(../img/report/left.png);
+}
+
+/* */
+.report_mobile_next_button{
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	width:30px;
+	height:30px;
+	border: 0px;
+	display:none;
+	text-align: center;
+	z-index: 30;
+	padding:0px;
+	background-size: cover;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-image: url(../img/report/right.png);
+}
+
+/*리포트 뷰어의 메뉴바를 숨길때 나머지 메뉴 올릴때*/
+.clip_report_menu_up{
+	top:0px;
+}
+
+/*리포트 뷰어의 메뉴바를 숨길때 header 없애기*/
+.clip_report_diplay_none{
+	display:none;
+}
+
+
+
+/*리포트 메뉴 버튼*/
+.report_menu_button{
+	position: absolute;
+	top: 8px;	
+	bottom: 8px;
+	width: 34px;
+	background-size: contain;
+	border: 0px solid #FFFFFF;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+
+/*zoom Select*/
+.report_zoom_select{
+	position: absolute;	
+	-webkit-appearance: menulist-button;
+	background-color: #505050;
+	border: 0px;
+	color: #FFF;
+	top: 10px;	
+	bottom: 10px;
+	right: 36px;
+	width: 102px;	
+	height: 30px;
+}
+
+/*페이지 정보 관련 DIV*/
+.report_page_info_div{
+	position: absolute;
+	border: 0px;
+	background-color: #505050;
+	top: 10px;	
+	bottom: 10px;
+	right: 206px;
+	width: 144px;	
+	height:30px;
+}
+
+/*현재 페이지 정보 관련 Input*/
+.report_current_page_info_input{
+	-webkit-appearance: none;
+	position: absolute;
+	top: 0px;	
+	bottom: 0px;
+	left: 0px;
+	width:48%;
+	height:100%;
+	color: #FFF;
+	border: 0px;
+	border-right: 1px solid #323232;
+	background-color: #505050;
+	padding:0px;
+}
+
+/*전체 페이지 정보 관련 Input*/
+.report_total_page_info_input{
+	-webkit-appearance: none;
+	position: absolute;
+	top: 0px;	
+	bottom: 0px;
+	right: 0px;	
+	width:49%;	
+	height:100%;
+	color: #FFF;
+	border: 0px;	
+	background-color: #505050;
+	padding:0px;
+}
+/*전체 페이지 정보 관련 Input*/
+.report_page_progress_div{
+	-webkit-appearance: none;
+	position: absolute;
+	top: 7px;	
+	bottom: 7px;
+	right: 0px;	
+	width:16px;	
+	cursor: none;
+	background-size: cover;
+    background-color: transparent;
+    background-repeat: no-repeat;
+	background-image: url(../img/report/progress.gif);
+	z-index:5;
+}
+
+/*리포트 썸네일 버튼*/
+.report_menu_thumbnail_button{
+	left: 10%;	
+	background-image: url(../img/report/thumbnail.png);
+}
+
+/*리포트 썸네일 버튼*/
+.report_menu_thumbnail_button_lowie{
+	left: 10%;	
+	background-image: url(../img/report/lowIE/thumbnail.png);
+}
+
+
+/*리포트 toc 버튼*/
+.report_menu_toc_button{
+	left: 6%;	
+	background-image: url(../img/report/toc.png);
+}
+
+/*리포트 toc 버튼*/
+.report_menu_toc_button_lowie{
+	left: 6%;	
+	background-image: url(../img/report/lowIE/toc.png);
+}
+
+
+/*리포트 다음 버튼*/
+.report_menu_next_button{
+	right: 172px;
+	background-image: url(../img/report/next.png);
+}
+
+/*리포트 다음 버튼*/
+.report_menu_next_button_lowie{
+	right: 172px;
+	background-image: url(../img/report/lowIE/next.png);
+}
+
+
+/*리포트 마지막 버튼*/
+.report_menu_last_button{
+	right: 138px;
+	background-image: url(../img/report/last.png);
+}  
+
+/*리포트 마지막 버튼*/
+.report_menu_last_button_lowie{
+	right: 138px;
+	background-image: url(../img/report/lowIE/last.png);
+}  
+
+
+/*리포트 이전 버튼*/
+.report_menu_prev_button{
+	right: 350px;
+	background-image: url(../img/report/prev.png);
+}
+
+/*리포트 이전 버튼*/
+.report_menu_prev_button_lowie{
+	right: 350px;
+	background-image: url(../img/report/lowIE/prev.png);
+}
+
+/*리포트 처음 버튼*/
+.report_menu_first_button{
+	right: 384px;
+	background-image: url(../img/report/first.png);
+}  
+
+/*리포트 처음 버튼*/
+.report_menu_first_button_lowie{
+	right: 384px;
+	background-image: url(../img/report/lowIE/first.png);
+}  
+
+/*리포트 처음 버튼*/
+.report_menu_info_button{
+	right: 0px;
+	background-image: url(../img/report/info.png);
+}  
+
+
+/*리포트 저장 버튼*/
+.report_menu_save_button{
+	left: 0px;
+	background-image: url(../img/report/save.png);	
+}  
+/*리포트 저장 버튼*/
+.report_menu_save_button_lowie{
+	left: 0px;
+	background-image: url(../img/report/lowIE/save.png);	
+} 
+
+/*리포트 인쇄 버튼*/
+.report_menu_print_button{
+	left: 40px;
+	background-image: url(../img/report/print.png);
+}  
+
+/*리포트 인쇄 버튼*/
+.report_menu_print_button_lowie{
+	left: 40px;
+	background-image: url(../img/report/lowIE/print.png);
+}  
+
+/*리포트 hwp 다운로드 버튼*/
+.report_menu_hwp_download_button{
+	left: 78%;
+	background-image: url(../img/report/hwp.png);
+}  
+
+/*리포트 hwp 다운로드 버튼*/
+.report_menu_hwp_download_button_lowie{
+	left: 78%;
+	background-image: url(../img/report/lowIE/hwp.png);
+}
+
+/*리포트 excel 다운로드 버튼*/
+.report_menu_excel_download_button{
+	left: 82%;
+	background-image: url(../img/report/excel.png);
+}
+
+/*리포트 excel 다운로드 버튼*/
+.report_menu_excel_download_button_lowie{
+	left: 82%;
+	background-image: url(../img/report/lowIE/excel.png);
+}
+
+/*리포트 pdf 다운로드 버튼*/
+.report_menu_pdf_download_button{
+	left: 86%;
+	background-image: url(../img/report/pdf.png);
+}
+
+/*리포트 pdf 다운로드 버튼*/
+.report_menu_pdf_download_button_lowie{
+	left: 86%;
+	background-image: url(../img/report/lowIE/pdf.png);
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_doc_download_button{
+	left: 90%;
+	background-image: url(../img/report/doc.png);
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_doc_download_button_lowie{
+	left: 90%;
+	background-image: url(../img/report/lowIE/doc.png);
+}
+
+
+/*리포트 왼쪽 wall 버튼*/
+.report_menu_header_wall_left_div{
+	left: 80px;
+	background-image: url(../img/report/wall.png);
+	cursor: default;
+}
+
+/*리포트 왼쪽 wall 버튼*/
+.report_menu_header_wall_left_div_lowie{
+	left: 80px;
+	background-image: url(../img/report/lowIE/wall.png);
+	cursor: default;
+}
+
+
+/*리포트 오른쪽 wall 버튼*/
+.report_menu_header_wall_right_div{
+	right: 416px;
+	background-image: url(../img/report/wall.png);
+	cursor: default;
+}
+
+
+/*리포트 오른쪽 wall 버튼*/
+.report_menu_header_wall_right_div_lowie{
+	right: 416px;
+	background-image: url(../img/report/lowIE/wall.png);
+	cursor: default;
+}
+
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_close_button{
+	position: absolute;
+    top: 8px;
+    bottom: 8px;
+    width: 34px;
+    background-size: contain;
+    border: 0px solid #FFFFFF;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+	right: 4px;
+	background-image: url(../img/report/close.png);
+	
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_close_button_lowie{
+	background-image: url(../img/report/lowIE/close.png);	
+}
+
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_test_button{
+	left: 20%;
+	background-image: url(../img/report/info.png);
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_memo_button{
+	left: 0%;
+	background-image: url(../img/report/memo.png);
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_memo_sign_button{
+	left: 10%;
+	background-image: url(../img/report/memosign.png);
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_move_memo_page_button{
+	left: 0%;
+	background-image: url(../img/report/memo.png);
+}
+/*리포트 doc 다운로드 버튼*/
+.report_menu_memo_opacity_button{
+	left: 20%;
+	background-image: url(../img/report/opacity.png);
+}
+
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_memo_option_button{
+	left: 30%;
+	background-image: url(../img/report/option.png);
+}
+
+/*리포트 doc 다운로드 버튼*/
+.report_menu_return_memo_page_button{
+	right: 0%;
+	background-image: url(../img/report/back.png);
+}
+
+
+
+/*리포트 toc depth0 div*/
+.report_toc_depth0_div{
+	/*left: 10%;
+	top: 5%*/
+	background-color:#FFFEFF;
+	border: 0px solid blue;
+}
+
+/*리포트 toc depth1 div*/
+.report_toc_depth1_div{
+	/*left: 20%;
+	top: 5%*/
+	background-color:#FFFEFF;
+	border: 0px solid blue;
+}
+
+/*리포트 toc depth2 div*/
+.report_toc_depth2_div{
+	/*left: 30%;
+	top: 5%*/
+	background-color:#FFFEFF;
+	border: 0px solid blue;
+}
+
+/*리포트 toc depth0 span*/
+.report_toc_depth0_span{
+	left: 5%;
+	top: 25%
+}
+
+/*리포트 toc depth1 span*/
+.report_toc_depth1_span{
+	left: 15%;
+	top: 25%
+}
+
+/*리포트 toc depth2 span*/
+.report_toc_depth2_span{
+	left: 25%;
+	top: 25%
+}
+
+
+/*리포트 search word div*/
+.report_search_word_div{
+	/*left: 10%;
+	top: 5%*/
+	background-color:#FFFEFF;
+	border: 0px solid blue;
+}
+
+/*리포트 search_word span*/
+.report_search_word_span{
+	left: 5%;
+	top: 25%
+}
+
+/*리포트 Thumbnail 종료 버튼*/
+.report_thumbnail_close_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 0px;
+	top: 0px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/frameClose.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+/*리포트 Thumbnail 종료 버튼*/
+.report_thumbnail_close_button_lowie{
+	background-image: url(../img/report/lowIE/frameClose.png);
+}
+
+
+/*리포트 TOC 종료 버튼*/
+.report_toc_close_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 0px;
+	top: 0px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/frameClose.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+/*리포트 TOC 종료 버튼*/
+.report_toc_close_button_lowie{
+	background-image: url(../img/report/lowIE/frameClose.png);
+}
+
+
+/*리포트 Thumbnail 종료 버튼*/
+.report_searchword_close_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 2px;
+	top: 2px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/close.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+
+/*리포트 search 시작 버튼*/
+.report_searchword_search_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 204px;
+	top: 2px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/search.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+
+/*리포트 search 시작 버튼*/
+.report_searchword_up_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 102px;
+	top: 2px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/up.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+
+/*리포트 search 시작 버튼*/
+.report_searchword_down_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 68px;
+	top: 2px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/down.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+/*리포트 search 시작 버튼*/
+.report_searchword_toggle_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 34px;
+	top: 2px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/toggle.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+/*리포트 TOC 종료 버튼*/
+.report_speech_bubble_close_button{
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	right: 0px;
+	top: 0px;
+	padding: 0px;
+    border: 0px;
+	background-image: url(../img/report/frameClose.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor: pointer;	
+	background-repeat:no-repeat;
+}
+
+/*리포트 TOC 종료 버튼*/
+.report_speech_bubble_close_button_lowie{
+	background-image: url(../img/report/lowIE/frameClose.png);
+}
+
+
+
+/*선택된 리포트 썸네일 이미지 DIV*/
+.selected_thumbnail_img_div {
+	border: 2px solid #5692EA;
+	background-image:url(../img/report/select_thumbnail.png);
+	background-size: cover;
+}
+
+/*선택된 리포트 TOC DIV*/
+.selected_toc_div {
+	border: 2px solid #5692EA;	
+	background-image:url(../img/report/select_toc.png);
+	background-size: cover;
+}
+
+
+/*선택된 리포트 TOC DIV*/
+.selected_search_word_div {
+	border: 2px solid #5692EA;	
+	background-image:url(../img/report/select_toc.png);
+	background-size: cover;
+}
+
+
+/*
+프로그래스 createProgress 함수를 사용하였을 때 동작합니다.
+*/
+.report_progress{
+	background-position: 50% 50%;
+	background-image: url(../img/report/progress.gif);
+	filter:alpha(opacity=50);
+	background-color:rgba(60, 60, 60, 0.5);
+}
+
+.report_progress_msg{
+	position:absolute;
+	left:0px;
+	right:0px;
+	top:32%;
+	bottom:0px;
+	overflow:hidden;
+	text-align: center;
+	font-size:13pt;
+	color:gray;
+}
+
+/*
+프로그래스 callCreateUserProgress 함수를 사용하였을 때 동작합니다.
+*/
+.user_progress{
+	background-position: 50% 50%;
+	background-image: url(../img/report/progress.gif);
+	filter:alpha(opacity=50);
+	background-color:rgba(60, 60, 60, 0.5);
+}
+
+
+.report_thumbnail_frame_div{ scrollbar-arrow-color: #efefef;
+        scrollbar-Track-Color: #efefef; 
+        scrollbar-base-color: #dfdfdf;
+        scrollbar-Face-Color: #dfdfdf;
+        scrollbar-3dLight-Color: #dfdfdf;         
+        scrollbar-DarkShadow-Color: #dfdfdf;
+        scrollbar-Highlight-Color: #dfdfdf;
+        scrollbar-Shadow-Color: #dfdfdf}
+/* Chrome, Safari용 스크롤 바 */
+.report_thumbnail_frame_div::-webkit-scrollbar {width: 12px; height: 12px;  }
+.report_thumbnail_frame_div::-webkit-scrollbar-button:start:decrement, 
+.report_thumbnail_frame_div::-webkit-scrollbar-button:end:increment {display: block; width: 12px;height: 12px; background: rgba(0,0,0,.05);}
+.report_thumbnail_frame_div::-webkit-scrollbar-track {     background: rgba(0,0,0,.05); }
+.report_thumbnail_frame_div::-webkit-scrollbar-thumb {  background: rgba(0,0,0,.1);  }
+
+
+
+
+
+.report_searchword_frame_div{ scrollbar-arrow-color: #efefef;
+        scrollbar-Track-Color: #efefef; 
+        scrollbar-base-color: #dfdfdf;
+        scrollbar-Face-Color: #dfdfdf;
+        scrollbar-3dLight-Color: #dfdfdf;         
+        scrollbar-DarkShadow-Color: #dfdfdf;
+        scrollbar-Highlight-Color: #dfdfdf;
+        scrollbar-Shadow-Color: #dfdfdf}
+/* Chrome, Safari용 스크롤 바 */
+.report_searchword_frame_div::-webkit-scrollbar {width: 12px; height: 12px;  }
+.report_searchword_frame_div::-webkit-scrollbar-button:start:decrement, 
+.report_searchword_frame_div::-webkit-scrollbar-button:end:increment {display: block; width: 12px;height: 12px; background: rgba(0,0,0,.05);}
+.report_searchword_frame_div::-webkit-scrollbar-track {     background: rgba(0,0,0,.05); }
+.report_searchword_frame_div::-webkit-scrollbar-thumb {  background: rgba(0,0,0,.1);  }
+
+
+
+/*선택된 리포트 TOC DIV*/
+.search_word_inner_div {
+	position:absolute;
+	border:0.3pt solid #FF6400; 
+	padding: 0px 0px 0px 0px !important;
+	background-color:transparent;
+	cursor:pointer;
+}
+
+
+/*선택된 리포트 TOC DIV*/
+.selected_search_word_inner_div {
+	border-color:#1A75BC;
+	z-index: 47;
+	background-color: #1A75BC;
+	opacity: 0.5;
+}
+
+
+
+.bubble_speech_position_div{
+	position:absolute;
+	left:0px;
+	top:0px; 
+	width:20px;
+	height:20px;
+	background-color:rgb(0,100,0);
+	cursor:all-scroll;
+	display:none;
+}
+
+.bubble_speech_layout_div{
+	position:absolute;
+	left:0px;
+	top:0px;
+	min-width:120px;
+	min-height:100px;
+	border:0px dashed black;
+	z-index:1;
+}
+
+.bubble_speech_text_div{
+	position:absolute;
+	top:15px;
+	left:15px;
+	right:15px;
+	bottom: 15px;
+}
+
+.bubble_speech_text{
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	cursor:default;
+	padding:0px;
+	border:0px;
+}
+
+.bubble_speech_size_div{
+	position:absolute;
+	right:0px;
+	bottom:0px;
+	width:20px;
+	height:20px;
+	background-image: url(../img/report/change_size.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor:nw-resize;
+}
+
+.bubble_speech_delete_div{
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:20px;
+	height:20px;
+	background-image: url(../img/report/delete.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor:pointer;
+}
+
+.bubble_speech_erase_div{
+	position:absolute;
+	right:0px;
+	bottom:40px;
+	width:20px;
+	height:20px;
+	background-image: url(../img/report/reset.png);
+	background-size: contain;
+	background-color: transparent;
+	cursor:pointer;
+}
+
+.bubble_speech_frame_pointer_left_div{
+	background-image: url(../img/report/pointer_left.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_pointer_right_div{
+	background-image: url(../img/report/pointer_right.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.bubble_speech_frame_pointer_top_div{
+	background-image: url(../img/report/pointer_top.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.bubble_speech_frame_pointer_bottom_div{
+	background-image: url(../img/report/pointer_bottom.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.bubble_speech_frame_pointer_none_div{
+	background-image: url(../img/report/pointer_none.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_sentence_left_div{
+	background-image: url(../img/report/sentence_left.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_sentence_center_div{
+	background-image: url(../img/report/sentence_center.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_sentence_right_div{
+	background-image: url(../img/report/sentence_right.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_sentence_top_div{
+	background-image: url(../img/report/sentence_top.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_sentence_middle_div{
+	background-image: url(../img/report/sentence_middle.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.bubble_speech_frame_sentence_bottom_div{
+	background-image: url(../img/report/sentence_bottom.png);	
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/*뷰어 내부 안내창 공통 스타일*/
+.report_view_box {
+	background-color: #FDFDFD;
+	font-size: 8pt;
+	font-family: 나눔고딕;
+	border: 2px solid gray;
+}
+
+/*리포트 정보창 위치 정보*/
+.report_info_view_position {
+	position: absolute;
+	right: 23px;
+	top: 80px;
+	width: 440px;
+	height: 260px;
+}
+
+
+/*뷰어의 모든 안내창을 감싸고 있는 DIV*/
+.report_popup_view {
+	position:relative;
+	left:0px;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	zoom:1;
+	z-index:300;
+}
+
+.report_view_cliplogo {
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-image: url(../img/report/cliplogo.png);
+}
+
+/*뷰어 내부 안내창 공통 버튼 스타일*/
+.report_view_button {
+	position: absolute;
+	background-color: RGB(89, 89, 89);
+	border: 1px solid darkolivegreen;
+	color: white;
+}
+
+
+/*오류 전체 배경*/
+.error_background {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	bottom: 0px;
+	overflow : hidden;
+	z-index:500;
+	background-color: rgba(0,0,0,0.3);
+}
+
+.error_layout{
+	position:absolute;
+	width:600px;
+	height:380px;
+	border: 1px solid #ddd;
+	box-sizing: border-box;  
+	background-color: #fff;
+	box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.175);
+}
+
+.error_layout_head{
+	background: #f5f5f5
+	;font-weight: 600; 
+	padding: 10px 15px; 
+}
+
+.error_layout_body{
+	 padding: 20px 15px;  
+	 border-bottom: 1px solid transparent;
+}
+
+.error_layout_bottom{
+	position:absolute;
+	width:100%;
+	height:50px;
+	bottom:0px;
+	text-align:center;
+}
+
+.error_font{
+	color: #333;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+	font-size: 14px; 
+	line-height: 1.42857;
+}
+
+.error_ok_button{
+	display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.error_cancel_button{
+	display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+    border-color: #ccc;
+}

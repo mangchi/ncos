@@ -1,0 +1,20 @@
+package mil.ln.ncos.udp;
+
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class OutboundAssetJob extends QuartzJobBean {
+	
+	private final UdpOutboundService udpOutboundService;
+
+	@Override
+	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+		this.udpOutboundService.send(3);
+	}
+
+
+}

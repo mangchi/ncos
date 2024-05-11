@@ -1,0 +1,1096 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Rpt">
+  
+  <select id="selectRptMngCount" parameterType="map" resultType="long">
+        SELECT COUNT(1) 
+         FROM report_manage A
+         INNER JOIN report_form B
+         ON A.FORM_ID = B.FORM_ID
+         INNER JOIN report_schedule C
+         ON A.SCHEDULE_ID = C.SCHEDULE_ID
+         LEFT JOIN user_account D
+         ON A.ACCOUNT_ID = D.ACCOUNT_ID
+         <include refid="whereRptMngList"></include>
+  </select>
+
+  <select id="selectRptMngList" parameterType="map" resultType="CmmnMap">
+
+     	SELECT  RN
+     	      , A.MANAGE_ID ID
+     	      , A.REPORT_TITLE
+     	      , A.PERIOD_ID
+     	      , A.THREAT_LEVEL
+     	      , A.ASSET_LEVEL
+     	      , A.SCHEDULE_TITLE
+     	      , A.REPORT_TYPE
+              , A.FORM_ID
+     	      , B.CREATE_TIME
+     	      , A.USERNAME
+     	      , A.ACCOUNT_ID
+     	      , B.CLICK_COUNT
+        FROM ( SELECT A.MANAGE_ID
+                    , B.FORM_ID
+                    , B.REPORT_TITLE
+                    , B.REPORT_TYPE
+                    , B.THREAT_LEVEL
+     	            , B.ASSET_LEVEL
+                    , C.PERIOD_ID
+                    , C.SCHEDULE_TITLE
+                    , D.USERNAME
+                    , D.ACCOUNT_ID
+                    , ROW_NUMBER() OVER (ORDER BY A.CREATE_TIME DESC, A.MANAGE_ID DESC) AS RN
+               FROM report_manage A
+               INNER JOIN report_form B
+               ON A.FORM_ID = B.FORM_ID
+               INNER JOIN report_schedule C
+               ON A.SCHEDULE_ID = C.SCHEDULE_ID
+               LEFT JOIN user_account D
+               ON A.ACCOUNT_ID = D.ACCOUNT_ID
+               <include refid="whereRptMngList"></include>
+               LIMIT #{startRow},#{rowPerPage}) A
+        STRAIGHT_JOIN report_manage B
+        ON (A.MANAGE_ID = B.MANAGE_ID)
+        ORDER BY RN
+
+  </select>
+  
+  <sql id="whereRptMngList">
+        <where>
+         <choose>
+	         <when test='paramId == null'>
+            <if test='frDt != null and !frDt.equals("")'>
+             AND A.CREATE_TIME <![CDATA[>=]]> #{frDt}
+             </if>
+             <if test='toDt != null and !toDt.equals("")'>
+             AND A.CREATE_TIME <![CDATA[<=]]> #{toDt}
+             </if>
+             <if test='schReportTitle != null'>
+             AND B.REPORT_TITLE LIKE CONCAT('%',#{schReportTitle},'%')
+             </if>
+            <if test='schAccountId != null'>
+            AND D.ACCOUNT_ID IN 
+            <foreach collection="schAccountId" item="item" open="(" close=")" separator="," index="idx">
+              #{item}
+	         </foreach> 
+           </if>
+           </when>
+           <otherwise>
+            AND A.MANAGE_ID = #{paramId}
+           </otherwise>
+        </choose>
+        </where>
+  </sql>
+  
+   <select id="selectRptFrmCount" parameterType="map" resultType="long">
+        SELECT COUNT(1) 
+          FROM report_form A
+          LEFT JOIN user_account B
+          ON A.ACCOUNT_ID = B.ACCOUNT_ID
+          <include refid="whereRptFrmList"></include>
+  </select>
+
+  <select id="selectRptFrmList" parameterType="map" resultType="CmmnMap">
+
+     	SELECT  RN
+     	      , B.FORM_ID ID
+     	      , B.REPORT_TITLE
+     	      , B.REPORT_TYPE
+     	      , B.THREAT_ANALYSIS
+     	      , B.THREAT_LEVEL
+     	      , B.ASSET_STATUS
+     	      , B.ASSET_LEVEL
+     	      , B.CREATE_TIME 
+     	      , USERNAME
+     	      , B.USE_FLAG
+     	      , B.ACCOUNT_ID
+        FROM ( SELECT A.FORM_ID
+                    , B.USERNAME
+                    , ROW_NUMBER() OVER (ORDER BY A.FORM_ID DESC,A.FORM_ID DESC) AS RN
+               FROM report_form A
+               LEFT JOIN user_account B
+               ON A.ACCOUNT_ID = B.ACCOUNT_ID
+               <include refid="whereRptFrmList"></include>
+               LIMIT #{startRow},#{rowPerPage}) A
+        STRAIGHT_JOIN report_form B
+        ON (A.FORM_ID = B.FORM_ID)
+        ORDER BY RN
+
+  </select>
+  
+  <select id="selectRptFrms" parameterType="map" resultType="CmmnMap">
+
+       SELECT FORM_ID ID
+            , ROW_NUMBER() OVER (ORDER BY FORM_ID DESC,CREATE_TIME DESC) AS RN
+            , REPORT_TITLE
+            , REPORT_TYPE
+       FROM report_form 
+       WHERE USE_FLAG = 1
+       ORDER BY RN
+
+  </select>
+  
+  <sql id="whereRptFrmList">
+        <where>
+             <if test='schReportTitle != null'>
+             AND A.REPORT_TITLE LIKE  CONCAT('%',#{schReportTitle},'%')
+             </if>
+             <if test='schReportType != null'>
+             AND A.REPORT_TYPE IN 
+             <foreach collection="schReportType" item="item" open="(" close=")" separator="," index="idx">
+             #{item}
+	         </foreach> 
+             </if>
+             <if test='schUseFlag != null'>
+             AND A.USE_FLAG = #{schUseFlag}
+             </if>
+             <if test='schAccountId != null'>
+	          AND B.ACCOUNT_ID IN 
+	          <foreach collection="schAccountId" item="item" open="(" close=")" separator="," index="idx">
+	             #{item}
+		      </foreach> 
+	          </if>
+        </where>
+  </sql>
+  
+  
+  <select id="selectRptSchCount" parameterType="map" resultType="long">
+        SELECT COUNT(1) 
+          FROM report_schedule A
+          INNER JOIN report_form B
+          ON A.FORM_ID = B.FORM_ID
+          LEFT JOIN user_account C
+          ON A.ACCOUNT_ID = C.ACCOUNT_ID
+          <include refid="whereRptSchList"></include>
+  </select>
+
+  <select id="selectRptSchList" parameterType="map" resultType="CmmnMap">
+
+     	SELECT  RN
+     	      , B.SCHEDULE_ID ID
+     	      , B.SCHEDULE_TITLE
+     	      , B.PERIOD_ID
+              , A.FORM_ID
+              , A.REPORT_TITLE
+              , A.REPORT_TYPE
+     	      , B.USE_FLAG
+     	      , B.CREATE_TIME
+     	      , A.USERNAME
+     	      , B.ACCOUNT_ID
+        FROM ( SELECT A.SCHEDULE_ID
+                    , B.FORM_ID
+                    , B.REPORT_TITLE
+                    , B.REPORT_TYPE
+                    , C.USERNAME
+                    , ROW_NUMBER() OVER (ORDER BY A.CREATE_TIME DESC,A.SCHEDULE_ID DESC) AS RN
+               FROM report_schedule A
+               INNER JOIN report_form B
+               ON A.FORM_ID = B.FORM_ID
+               LEFT JOIN user_account C
+               ON A.ACCOUNT_ID = C.ACCOUNT_ID
+               <include refid="whereRptSchList"></include>
+               LIMIT #{startRow},#{rowPerPage}) A
+        STRAIGHT_JOIN report_schedule B
+        ON (A.SCHEDULE_ID = B.SCHEDULE_ID)
+        ORDER BY RN
+
+  </select>
+  
+   <sql id="whereRptSchList">
+        <where>
+           <if test='schScheduleNm != null'>
+		   AND A.SCHEDULE_TITLE LIKE  CONCAT('%',#{schScheduleNm},'%')
+           </if>
+           <if test='schReportTitle != null'>
+           AND B.REPORT_TITLE  LIKE  CONCAT('%',#{schReportTitle},'%')
+           </if>
+           <if test='schUseFlag != null'>
+           AND A.USE_FLAG = #{schUseFlag}
+           </if>
+           <if test='schAccountId != null'>
+           AND C.ACCOUNT_ID IN 
+           <foreach collection="schAccountId" item="item" open="(" close=")" separator="," index="idx">
+              #{item}
+	       </foreach> 
+           </if>
+        </where>
+  </sql>
+  
+    <select id="selectRptJob" parameterType="map" resultType="CmmnMap">
+
+      SELECT A.SCHEDULE_ID
+           , A.ACCOUNT_ID
+           , A.CREATE_TIME
+           , A.NEXT_TIME
+           , A.PERIOD_ID
+           , A.FORM_ID
+           , CASE WHEN DATE_FORMAT(NOW(),'%Y%m%d%H%i') = DATE_FORMAT(A.NEXT_TIME,'%Y%m%d%H%i') THEN 'Y'
+                  ELSE 'N' END MAKE_RPT
+           , CASE WHEN B.MANAGE_ID IS NULL AND DATE_FORMAT(NOW(),'%Y%m%d%H%i') > DATE_FORMAT(A.NEXT_TIME,'%Y%m%d%H%i') THEN 'Y'
+                  ELSE 'N' END AFTER_MAKE_RPT
+       FROM report_schedule A
+       LEFT JOIN report_manage B
+       ON A.SCHEDULE_ID = B.SCHEDULE_ID
+       AND DATE_FORMAT(A.NEXT_TIME,'%Y%m%d%H%i') = DATE_FORMAT(B.CREATE_TIME,'%Y%m%d%H%i')
+             
+
+  </select>
+  
+  <select id="selectRptDetectThreat" parameterType="map" resultType="CmmnMap">
+
+	SELECT code_info.CODE_KR
+	    , COUNT(*) AS COUNT
+	    , FORMAT((COUNT(*) / (SELECT COUNT(*) 
+	                          FROM threat_info 
+	                          WHERE 1 = 1
+	                          <if test='periodId != null'>
+						        <choose>
+									<when test='periodId == 1'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY)
+									</when>
+									<when test='periodId == 2'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK)
+									</when>
+									<when test='periodId == 3'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH)
+									</when>
+									<when test='periodId == 4'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR)
+									</when>
+									<otherwise>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK)
+									</otherwise>
+								</choose>
+							  </if>
+	                            AND DETECTION_TIME <![CDATA[<]]> DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'))) * 100, 2) AS PERCENTAGE
+	FROM threat_info 
+	JOIN code_info ON threat_info.THREAT_DETECTION_METHOD = code_info.CODE
+	WHERE code_info.MAINGROUP = 'TH' 
+	AND code_info.SUBGROUP = 'TY'
+	 <if test='periodId != null'>
+       <choose>
+		<when test='periodId == 1'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</when>
+		<when test='periodId == 2'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+		</when>
+		<when test='periodId == 3'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+		</when>
+		<when test='periodId == 4'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+		</when>
+		<otherwise>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</otherwise>
+	  </choose>
+     </if>
+	
+	AND DETECTION_TIME <![CDATA[<]]> DATE_FORMAT(#{toDate}, '%Y-%m-%d %T')
+	<if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	GROUP BY code_info.code_kr
+
+  </select>
+  
+  <select id="selectRptThreatAnalysis" parameterType="map" resultType="CmmnMap">
+
+    SELECT IFNULL(CI.CODE_KR, '미조치') AS analysis_result
+         , COUNT(*) AS count
+         , FORMAT((COUNT(*) / (SELECT COUNT(*) FROM threat_info TI 
+                               WHERE 1 = 1
+                               <if test='periodId != null'>
+						        <choose>
+									<when test='periodId == 1'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS percentage 
+									</when>
+									<when test='periodId == 2'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK))) * 100, 2) AS percentage 
+									</when>
+									<when test='periodId == 3'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH))) * 100, 2) AS percentage 
+									</when>
+									<when test='periodId == 4'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR))) * 100, 2) AS percentage 
+									</when>
+									<otherwise>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS percentage 
+									</otherwise>
+								</choose>
+							  </if>
+                              
+	FROM threat_info TI
+	LEFT JOIN threat_analysis TA 
+	ON TI.THREAT_ID = TA.THREAT_ID 
+	LEFT JOIN code_info CI 
+	ON TA.ANALYSIS_RESULT = CI.CODE 
+	AND CI.MAINGROUP = 'TH' 
+	AND CI.SUBGROUP = 'RES' 
+	<where>
+	 <if test='periodId != null'>
+	 <choose>
+		<when test='periodId == 1'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</when>
+		<when test='periodId == 2'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+		</when>
+		<when test='periodId == 3'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+		</when>
+		<when test='periodId == 4'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+		</when>
+		<otherwise>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</otherwise>
+	</choose>
+    </if>
+	
+	<if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	</where> 
+	GROUP BY ANALYSIS_RESULT 
+
+  </select>
+  
+  <select id="selectRptThreatImportance" parameterType="map" resultType="CmmnMap">
+
+    SELECT 
+			IFNULL(CI.CODE_KR, '기타') AS THREAT_IMPORTANCE, 
+			COUNT(*) AS COUNT, 
+			FORMAT((COUNT(*) / (SELECT COUNT(*) FROM threat_info TI 
+			                    WHERE 1 = 1
+			                    <if test='periodId != null'>
+			                    <choose>
+									<when test='periodId == 1'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<when test='periodId == 2'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<when test='periodId == 3'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<when test='periodId == 4'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<otherwise>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS PERCENTAGE 
+									</otherwise>
+								</choose>
+							    </if>
+			                    
+	FROM threat_info TI 
+	LEFT JOIN code_info CI 
+	ON TI.THREAT_IMPORTANCE = CI.CODE 
+	AND CI.MAINGROUP = 'TH' 
+	AND CI.SUBGROUP = 'IM' 
+	<where>
+	<if test='periodId != null'>
+    <choose>
+		<when test='periodId == 1'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</when>
+		<when test='periodId == 2'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+		</when>
+		<when test='periodId == 3'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+		</when>
+		<when test='periodId == 4'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+		</when>
+		<otherwise>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</otherwise>
+	</choose>
+    </if>
+	
+	<if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	</where>
+	GROUP BY THREAT_IMPORTANCE 
+	ORDER BY THREAT_IMPORTANCE  
+
+  </select>
+  
+  <sql id="appendThreatLevel">
+       <choose>
+		<when test='threatLevel == 9'>
+		AND THREAT_IMPORTANCE IN (1,3,5) 
+		</when>
+		<when test='threatLevel == 8'>
+		AND THREAT_IMPORTANCE IN (3,5) 
+		</when>
+		<when test='threatLevel == 6'>
+		AND THREAT_IMPORTANCE IN (1,5) 
+		</when>
+		<when test='threatLevel == 4'>
+		AND THREAT_IMPORTANCE IN (1,3) 
+		</when>
+		<otherwise>
+		AND THREAT_IMPORTANCE = #{threatLevel}
+		</otherwise>
+	</choose>
+  </sql>
+  
+  <sql id="appendPeriodThreat">
+         , (SELECT CODE_KR 
+            FROM code_info 
+            WHERE code_info.MAINGROUP = 'TH' 
+            AND code_info.SUBGROUP = 'TY' 
+            AND CODE = M.THREAT_DETECTION_METHOD) AS THREAT_DETECTION_METHOD
+	     , COUNT(T.THREAT_DETECTION_METHOD) AS COUNT 
+      FROM ( SELECT DISTINCT THREAT_DETECTION_METHOD 
+               FROM threat_info ) M 
+      CROSS JOIN ( 
+  </sql>
+  
+  <select id="selectRptPeriodThreat" parameterType="map" resultType="CmmnMap">
+      <choose>
+			<when test='periodId == 1'>
+        SELECT date_format(h.hour, '%d %H:00') AS time
+        <include refid="appendPeriodThreat"></include>
+			      SELECT DATE_FORMAT(dates.date + INTERVAL hours.hour HOUR, '%Y-%m-%d %H:00:00') AS hour 
+                    FROM 
+				        ( SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') AS date 
+				          UNION ALL 
+				         SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') - INTERVAL 1 DAY 
+				        ) dates 
+				  JOIN ( SELECT 0 AS hour 
+				          UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 
+				          UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 
+				          UNION ALL SELECT 13 UNION ALL SELECT 14 UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 
+				          UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL SELECT 22 UNION ALL SELECT 23 
+				       ) hours 
+                ) h 
+       LEFT JOIN threat_info t 
+       ON m.threat_detection_method = t.threat_detection_method 
+       AND h.hour = DATE_FORMAT(t.detection_time, '%Y-%m-%d %H:00:00') 
+      <include refid="appendThreatLevel"></include>
+       WHERE h.hour BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+       GROUP BY m.threat_detection_method, h.hour 
+       ORDER BY h.hour ASC, m.threat_detection_method ASC
+            </when>
+			<when test='periodId == 2'>
+	   SELECT DATE_FORMAT(h.date, '%Y-%m-%d') AS time
+	   <include refid="appendPeriodThreat"></include>
+			     SELECT DATE_FORMAT('to_date', '%Y-%m-%d') - INTERVAL (days.number + tens.number * 10) DAY AS date 
+                   FROM 
+                       (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) days 
+        CROSS JOIN (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) tens 
+                    WHERE days.number + tens.number * 10 <![CDATA[<=]]> DATEDIFF(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), DATE_FORMAT(#{toDate}, '%Y-%m-%d') - INTERVAL 7 DAY) 
+                   ) h 
+        LEFT JOIN threat_info t ON m.threat_detection_method = t.threat_detection_method AND DATE(t.detection_time) = h.date 
+        <include refid="appendThreatLevel"></include>
+        WHERE h.date <![CDATA[>=]]> DATE_FORMAT(#{toDate}, '%Y-%m-%d') - INTERVAL 7 DAY 
+        GROUP BY m.threat_detection_method, h.date 
+        ORDER BY h.date ASC, m.threat_detection_method ASC
+			</when>
+			<when test='periodId == 3'>
+		 SELECT DATE_FORMAT(h.date, '%Y-%m-%d') AS time
+	    <include refid="appendPeriodThreat"></include>
+			     SELECT DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL (days.number + tens.number * 10) DAY) AS date 
+                   FROM 
+                       (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) days 
+        CROSS JOIN (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) tens 
+                    WHERE days.number + tens.number * 10 <![CDATA[<=]]> DATEDIFF(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL 1 MONTH)) 
+                    ) h 
+        LEFT JOIN threat_info t 
+        ON m.threat_detection_method = t.threat_detection_method AND DATE(t.detection_time) = h.date 
+        <include refid="appendThreatLevel"></include>
+        WHERE h.date <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL 1 MONTH) 
+        GROUP BY m.threat_detection_method, h.date 
+        ORDER BY h.date ASC, m.threat_detection_method ASC
+			</when>
+			<when test='periodId == 4'>
+	    SELECT  CONCAT(YEAR(m.month), '-', LPAD(MONTH(m.month), 2, '0')) AS time
+              , (SELECT code_kr FROM code_info WHERE code_info.maingroup = 'TH' AND code_info.subgroup = 'TY' AND CODE = t.threat_detection_method) AS threat_detection_method
+              ,  COUNT(ti.threat_detection_method) AS count 
+          FROM 
+               (SELECT DATE_FORMAT(DATE_SUB(DATE_FORMAT('to_date', '%Y-%m-%d'), INTERVAL n.n MONTH), '%Y-%m-01') AS month 
+                  FROM 
+                      (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 
+                       UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 
+                       UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11) AS n 
+                       ) AS m 
+        LEFT JOIN (SELECT DISTINCT threat_detection_method FROM threat_info) AS t ON 1=1 
+        LEFT JOIN threat_info AS ti 
+        ON ti.threat_detection_method = t.threat_detection_method 
+        AND ti.detection_time <![CDATA[>=]]> m.month AND ti.detection_time <![CDATA[<]]> DATE_ADD(m.month, INTERVAL 1 MONTH) 
+        <include refid="appendThreatLevel"></include>
+        WHERE m.month <![CDATA[>=]]> DATE_FORMAT(DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL 1 YEAR), '%Y-%m-01') 
+          AND m.month <![CDATA[<=]]> DATE_FORMAT(#{toDate}, '%Y-%m-01') 
+        GROUP BY t.threat_detection_method, m.month 
+        ORDER BY m.month, t.threat_detection_method; 
+			</when>
+			<otherwise>
+		SELECT h.hour AS time
+	    <include refid="appendPeriodThreat"></include>
+			      SELECT DATE_FORMAT(dates.date + INTERVAL hours.hour HOUR, '%Y-%m-%d %H:00:00') AS hour 
+                    FROM 
+				        ( SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') AS date 
+				          UNION ALL 
+				         SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') - INTERVAL 1 DAY 
+				        ) dates 
+				  JOIN ( SELECT 0 AS hour 
+				          UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 
+				          UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 
+				          UNION ALL SELECT 13 UNION ALL SELECT 14 UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 
+				          UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL SELECT 22 UNION ALL SELECT 23 
+				       ) hours 
+                ) h 
+       LEFT JOIN threat_info t 
+       ON m.threat_detection_method = t.threat_detection_method 
+       AND h.hour = DATE_FORMAT(t.detection_time, '%Y-%m-%d %H:00:00') 
+       <include refid="appendThreatLevel"></include>
+       WHERE h.hour BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+       GROUP BY m.threat_detection_method, h.hour 
+       ORDER BY h.hour ASC, m.threat_detection_method ASC
+			</otherwise>
+	</choose>
+   
+  </select>
+  
+  <select id="selectRptThreatMain" parameterType="map" resultType="CmmnMap">
+    SELECT T.THREAT_ID
+         , DATE_FORMAT(T.DETECTION_TIME,'%Y-%m-%d %T') DETECTION_TIME
+         , INET_NTOA(T.SRC_IP) AS SRC_IP
+         , INET_NTOA(T.DST_IP) AS DST_IP
+         , T.SRC_PORT
+         , T.DST_PORT
+         , CASE WHEN TA.ANALYSIS_RESULT IS NULL THEN '미조치' ELSE C1.CODE_KR END AS ANALYSIS_RESULT
+         , COALESCE(C2.CODE_KR, 'N/A') AS DETECTION_METHOD
+         , COALESCE(C3.CODE_KR, 'N/A') AS IMPORTANCE  
+	 FROM threat_info T  
+	 LEFT JOIN threat_analysis TA 
+	 ON T.THREAT_ID = TA.THREAT_ID  
+	 LEFT JOIN code_info C1 
+	 ON TA.ANALYSIS_RESULT = C1.CODE 
+	 AND C1.MAINGROUP = 'TH' 
+	 AND C1.SUBGROUP = 'RES'  
+	 LEFT JOIN code_info C2 
+	 ON T.THREAT_DETECTION_METHOD = C2.CODE 
+	 AND C2.MAINGROUP = 'TH' 
+	 AND C2.SUBGROUP = 'TY'  
+	 LEFT JOIN code_info C3 
+	 ON T.THREAT_IMPORTANCE = C3.CODE 
+	 AND C3.MAINGROUP = 'TH' AND C3.SUBGROUP = 'IM'  
+	 <if test='periodId != null'>
+	    <choose>
+			<when test='periodId == 1'>
+			 WHERE T.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+			</when>
+			<when test='periodId == 2'>
+			 WHERE T.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+			</when>
+			<when test='periodId == 3'>
+			 WHERE T.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+			</when>
+			<when test='periodId == 4'>
+			 WHERE T.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+			</when>
+			<otherwise>
+			 WHERE T.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+			</otherwise>
+		</choose>
+	   </if>  
+	 <if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	 ORDER BY DETECTION_TIME 
+  </select>
+  
+  
+  <select id="selectRptAsset" parameterType="map" resultType="CmmnMap">
+      SELECT  c.code_kr
+            , COUNT(a.system_id) AS count
+            , FORMAT((COUNT(a.system_id) / (SELECT COUNT(a.system_id) 
+                                              FROM   network_asset_info n 
+                                            LEFT JOIN asset_status_info a 
+                                            ON n.system_id = a.system_id 
+                                            AND a.asset_status = 1 
+                                            LEFT JOIN code_info c 
+                                            ON n.large_category = c.code 
+                                            AND c.maingroup = 'AS' 
+                                            AND c.subgroup = 'LC' 
+                                          WHERE  1 = 1
+                                          <if test='periodId != null'>
+										    <choose>
+												<when test='periodId == 1'>
+												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
+												</when>
+												<when test='periodId == 2'>
+												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 WEEK 
+												</when>
+												<when test='periodId == 3'>
+												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 MONTH 
+												</when>
+												<when test='periodId == 4'>
+												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 YEAR 
+												</when>
+												<otherwise>
+												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
+												</otherwise>
+											</choose>											
+										   </if>
+										   AND a.detection_time <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00')
+										   <if test='assetLevel != null'>
+										    <choose>
+												<when test='periodId == 1'>
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1))) * 100, 2) AS percent 
+												</when>
+												<when test='periodId == 3'>
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3))) * 100, 2) AS percent 
+												</when>
+												<when test='periodId == 5'>
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3, 5))) * 100, 2) AS percent 
+												</when>												
+												<otherwise>
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3, 5))) * 100, 2) AS percent 
+												</otherwise>
+											</choose>
+										   </if>
+      FROM   network_asset_info n 
+      LEFT JOIN asset_status_info a 
+      ON n.system_id = a.system_id 
+      AND a.asset_status = 1 
+      LEFT JOIN code_info c 
+      ON n.large_category = c.code 
+      AND c.maingroup = 'AS' 
+      AND c.subgroup = 'LC' 
+      WHERE 1 = 1
+      <if test='periodId != null'>
+	    <choose>
+			<when test='periodId == 1'>
+			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
+			</when>
+			<when test='periodId == 2'>
+			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 WEEK 
+			</when>
+			<when test='periodId == 3'>
+			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 MONTH 
+			</when>
+			<when test='periodId == 4'>
+			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 YEAR 
+			</when>
+			<otherwise>
+			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
+			</otherwise>
+		</choose>
+	   </if>
+      AND a.detection_time <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') 
+      AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) = #{assetLevel}
+      GROUP  BY n.large_category, c.code_kr 
+      ORDER BY c.code_kr
+   
+   </select>
+   
+   <select id="selectRptAssetPerHour" parameterType="map" resultType="CmmnMap">
+     <choose>
+		<when test='periodId == 1'>
+		SELECT CONCAT(dates.date, ' ', hours.hour) AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+          FROM  
+		      ( SELECT DISTINCT DATE(detection_time) AS date  
+		        FROM v_asset_lc_status  
+		       WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		      ) AS dates 
+		CROSS JOIN 
+			    ( 
+				SELECT '00' AS hour UNION ALL SELECT '01' UNION ALL SELECT '02' UNION ALL SELECT '03' UNION ALL 
+				SELECT '04' UNION ALL SELECT '05' UNION ALL SELECT '06' UNION ALL SELECT '07' UNION ALL 
+				SELECT '08' UNION ALL SELECT '09' UNION ALL SELECT '10' UNION ALL SELECT '11' UNION ALL 
+				SELECT '12' UNION ALL SELECT '13' UNION ALL SELECT '14' UNION ALL SELECT '15' UNION ALL 
+				SELECT '16' UNION ALL SELECT '17' UNION ALL SELECT '18' UNION ALL SELECT '19' UNION ALL 
+				SELECT '20' UNION ALL SELECT '21' UNION ALL SELECT '22' UNION ALL SELECT '23' 
+				) AS hours 
+		CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
+		LEFT JOIN  (SELECT DATE(detection_time) AS date, DATE_FORMAT(detection_time, '%H') AS hour, large_cat, COUNT(*) as cnt 
+		              FROM v_asset_lc_status 
+		             WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		               AND grade = #{assetLevel}
+		             GROUP BY date, hour, large_cat ) AS vc 
+		ON dates.date = vc.date AND hours.hour = vc.hour AND cats.large_cat = vc.large_cat 
+		ORDER BY xValue, cats.large_cat
+		</when>
+		<when test='periodId == 2'>
+		 SELECT CONCAT(dates.date)  AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+		   FROM  
+			    (SELECT DATE(DATE_ADD(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL -1*nums.num DAY)) as date 
+				FROM ( 
+					 SELECT 0 as num 
+					 UNION ALL SELECT 1 
+					 UNION ALL SELECT 2 
+					 UNION ALL SELECT 3 
+					 UNION ALL SELECT 4 
+					 UNION ALL SELECT 5 
+					 UNION ALL SELECT 6 
+				     ) nums 
+			    ) AS dates 
+		 CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
+		 LEFT JOIN (SELECT DATE(detection_time) AS date, large_cat, COUNT(*) as cnt 
+			          FROM v_asset_lc_status 
+			         WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+			         AND grade = #{assetLevel}
+			         GROUP BY date, large_cat) AS vc 
+		 ON dates.date = vc.date AND cats.large_cat = vc.large_cat 
+		 ORDER BY xValue, cats.large_cat
+		</when>
+		<when test='periodId == 3'>
+		 SELECT CONCAT(dates.date) AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+           FROM ( SELECT DATE(DATE_ADD(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL -1*nums.num DAY)) as date 
+                    FROM ( SELECT 0 as num 
+						   UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 
+						   UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 UNION ALL SELECT 13 UNION ALL SELECT 14 
+						   UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 
+						   UNION ALL SELECT 22 UNION ALL SELECT 23 UNION ALL SELECT 24 UNION ALL SELECT 25 UNION ALL SELECT 26 UNION ALL SELECT 27 UNION ALL SELECT 28 
+						   UNION ALL SELECT 29 UNION ALL SELECT 30 
+						 ) nums 
+			      ) AS dates 
+         CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
+         LEFT JOIN ( SELECT DATE(detection_time) AS date, large_cat, COUNT(*) as cnt 
+                       FROM v_asset_lc_status 
+                      WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+                      AND grade = #{assetLevel}
+                      GROUP BY date, large_cat ) AS vc 
+         ON dates.date = vc.date AND cats.large_cat = vc.large_cat 
+         ORDER BY xValue, cats.large_cat
+		</when>
+		<when test='periodId == 4'>
+		 SELECT CONCAT(dates.date) AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+            FROM  ( SELECT DATE_FORMAT(DATE_ADD(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL -1*nums.num MONTH), '%Y-%m') as date 
+                      FROM ( SELECT 0 as num 
+							   UNION ALL SELECT 1 
+							   UNION ALL SELECT 2 
+							   UNION ALL SELECT 3 
+							   UNION ALL SELECT 4 
+							   UNION ALL SELECT 5 
+							   UNION ALL SELECT 6 
+							   UNION ALL SELECT 7 
+							   UNION ALL SELECT 8 
+							   UNION ALL SELECT 9 
+							   UNION ALL SELECT 10 
+							   UNION ALL SELECT 11 
+						     ) nums 
+				   ) AS dates 
+         CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
+          LEFT JOIN  ( SELECT DATE_FORMAT(detection_time, '%Y-%m') AS date, large_cat, COUNT(*) as cnt 
+                         FROM v_asset_lc_status 
+                        WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+                          AND grade = #{assetLevel}
+                        GROUP BY date, large_cat ) AS vc 
+         ON dates.date = vc.date AND cats.large_cat = vc.large_cat 
+         ORDER BY xValue, cats.large_cat
+		</when>
+		<otherwise>
+		SELECT CONCAT(dates.date, ' ', hours.hour) AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+          FROM  
+		      ( SELECT DISTINCT DATE(detection_time) AS date  
+		        FROM v_asset_lc_status  
+		       WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		      ) AS dates 
+		CROSS JOIN 
+			    ( 
+				SELECT '00' AS hour UNION ALL SELECT '01' UNION ALL SELECT '02' UNION ALL SELECT '03' UNION ALL 
+				SELECT '04' UNION ALL SELECT '05' UNION ALL SELECT '06' UNION ALL SELECT '07' UNION ALL 
+				SELECT '08' UNION ALL SELECT '09' UNION ALL SELECT '10' UNION ALL SELECT '11' UNION ALL 
+				SELECT '12' UNION ALL SELECT '13' UNION ALL SELECT '14' UNION ALL SELECT '15' UNION ALL 
+				SELECT '16' UNION ALL SELECT '17' UNION ALL SELECT '18' UNION ALL SELECT '19' UNION ALL 
+				SELECT '20' UNION ALL SELECT '21' UNION ALL SELECT '22' UNION ALL SELECT '23' 
+				) AS hours 
+		CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
+		LEFT JOIN  (SELECT DATE(detection_time) AS date, DATE_FORMAT(detection_time, '%H') AS hour, large_cat, COUNT(*) as cnt 
+		              FROM v_asset_lc_status 
+		             WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		               AND grade = #{assetLevel}
+		             GROUP BY date, hour, large_cat ) AS vc 
+		ON dates.date = vc.date AND hours.hour = vc.hour AND cats.large_cat = vc.large_cat 
+		ORDER BY xValue, cats.large_cat
+		</otherwise>
+	 </choose>
+   </select>
+   
+   <select id="selectRptAssetArea" parameterType="map" resultType="CmmnMap">
+        SELECT  zone_name
+              , COUNT(*) AS count
+              , ROUND((COUNT(*) /(SELECT COUNT(*) 
+                                    FROM v_asset_zone_status 
+                                   WHERE 1 = 1 
+						          <if test='periodId != null'>
+							       <choose>
+									<when test='periodId == 1'>
+									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
+									</when>
+									<when test='periodId == 2'>
+									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 WEEK) 
+									</when>
+									<when test='periodId == 3'>
+									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 MONTH) 
+									</when>
+									<when test='periodId == 4'>
+									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 YEAR) 
+									</when>
+									<otherwise>
+									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
+									</otherwise>
+									</choose>
+								   </if>
+                                  AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00') 
+                                  AND grade  = #{assetLevel}
+                                  )) * 100, 2 ) AS percentage  
+          FROM v_asset_zone_status  
+          WHERE 1 = 1 
+          <if test='periodId != null'>
+	       <choose>
+			<when test='periodId == 1'>
+			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
+			</when>
+			<when test='periodId == 2'>
+			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 WEEK) 
+			</when>
+			<when test='periodId == 3'>
+			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 MONTH) 
+			</when>
+			<when test='periodId == 4'>
+			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 YEAR) 
+			</when>
+			<otherwise>
+			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
+			</otherwise>
+			</choose>
+		   </if>
+           AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00')  
+           AND grade = #{assetLevel}
+           GROUP BY  zone_name
+   </select>
+   
+   <select id="selectRptAssetMain" parameterType="map" resultType="CmmnMap">
+         SELECT DATE_FORMAT(detection_time,'%Y-%m-%d %T') detection_time
+              , large_cat
+              , small_cat
+              , asset_name
+              , ipaddress
+              , zone_name
+              , manager
+              , confidentiality_level
+              , integrity_level
+              , availability_level
+              , asset_status, grade 
+          FROM v_asset_status_rawdata  
+          WHERE 1 = 1
+          <if test='periodId != null'>
+	       <choose>
+			<when test='periodId == 1'>
+			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 hour  
+			</when>
+			<when test='periodId == 2'>
+			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 WEEK  
+			</when>
+			<when test='periodId == 3'>
+			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 MONTH  
+			</when>
+			<when test='periodId == 4'>
+			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 YEAR  
+			</when>
+			<otherwise>
+			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 hour  
+			</otherwise>
+			</choose>
+		   </if>
+            
+            AND detection_time <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') 
+          <if test='assetLevel != null'>
+            AND grade = #{assetLevel}
+	      </if>
+   </select>
+  
+  
+  
+  <update id="insertRptSch" parameterType="map">
+       INSERT INTO report_schedule (FORM_ID
+					              , ACCOUNT_ID
+					              , SCHEDULE_TITLE
+					              , PERIOD_ID
+					              , CREATE_TIME
+					              , NEXT_TIME
+					              , USE_FLAG)
+					        VALUES( #{formId}
+					              , #{accountId}
+					              , #{scheduleTitle}
+					              , #{periodId}
+					              , #{createTime}
+	   <choose>
+	   <when test='periodId != null and periodId.equals("1")'>
+	                              , date_add(#{createTime}, interval 1 day)
+	   </when>
+	    <when test='periodId != null and periodId.equals("2")'>
+	                              , date_add(#{createTime}, interval 1 week)
+	   </when>
+	   <otherwise>
+	                              , date_add(#{createTime}, interval 1 month)
+	   </otherwise>
+	   </choose>
+					              
+					              , DECODE_ORACLE(#{useFlag, jdbcType=VARCHAR},1,1,2))
+   </update>
+   
+   <update id="updateRptSch" parameterType="map">
+       UPDATE report_schedule SET   FORM_ID = #{formId, jdbcType=VARCHAR}
+                                  , ACCOUNT_ID  = #{accountId, jdbcType=VARCHAR}
+                                  , SCHEDULE_TITLE = #{scheduleTitle, jdbcType=VARCHAR}
+                                  , PERIOD_ID  = #{periodId, jdbcType=VARCHAR}
+                                  , CREATE_TIME = #{createTime}
+      <choose>
+	    <when test='periodId != null and periodId.equals("1")'>
+	                              , NEXT_TIME = date_add(#{createTime}, interval 1 day)
+	    </when>
+	    <when test='periodId != null and periodId.equals("2")'>
+	                              , NEXT_TIME = date_add(#{createTime}, interval 1 month)
+	    </when>
+	    <otherwise>
+	                              , NEXT_TIME = date_add(#{createTime}, interval 1 month)
+	    </otherwise>
+	    </choose>
+	   
+                                  
+					              , USE_FLAG = DECODE_ORACLE(#{useFlag, jdbcType=VARCHAR},1,1,2)
+       WHERE SCHEDULE_ID = #{scheduleId}
+					     
+   </update>
+   
+   <update id="updateRptSchNextTime" parameterType="map">
+       UPDATE report_schedule SET  
+      <choose>
+	    <when test='periodId != null and periodId.equals("1")'>
+	                               NEXT_TIME = date_add(#{nextTime}, interval 1 day)
+	    </when>
+	    <when test='periodId != null and periodId.equals("2")'>
+	                               NEXT_TIME = date_add(#{nextTime}, interval 1 month)
+	    </when>
+	    <otherwise>
+	                               NEXT_TIME = date_add(#{nextTime}, interval 1 month)
+	    </otherwise>
+	    </choose>
+
+       WHERE SCHEDULE_ID = #{scheduleId}
+					     
+   </update>
+   
+   
+   <update id="insertRptFrm" parameterType="map">
+       INSERT INTO report_form (ACCOUNT_ID
+                              , REPORT_TITLE
+				              , REPORT_TYPE
+       <if test='assetYn != null'>
+				              , ASSET_STATUS
+				              , ASSET_LEVEL
+	   </if>
+				              , THREAT_ANALYSIS
+				              , THREAT_LEVEL
+                              , CREATE_TIME
+                              , USE_FLAG
+                              )
+				        VALUES( #{accountId}
+				              , #{reportTitle}
+				              , #{reportType}
+	   <if test='assetYn != null'>
+				              , DECODE_ORACLE(#{assetStatus, jdbcType=VARCHAR},1,1,2)
+				              , #{assetLevel}
+	   </if>
+				              , DECODE_ORACLE(#{threatAnalysis, jdbcType=VARCHAR},1,1,2)
+				              , #{threatLevel}
+                              , SYSDATE()
+                              , DECODE_ORACLE(#{useFlag, jdbcType=VARCHAR},1,1,2)
+				              )
+					     
+   </update>
+   
+   <update id="updateRptFrm" parameterType="map">
+        UPDATE report_form SET  ACCOUNT_ID = #{accountId}
+                              , REPORT_TITLE = #{reportTitle}
+				              , REPORT_TYPE = #{reportType}
+	     <if test='assetYn != null'>
+				              , ASSET_STATUS = DECODE_ORACLE(#{assetStatus, jdbcType=VARCHAR},1,1,2)
+				              , ASSET_LEVEL = #{assetLevel}
+	    </if>
+				              , THREAT_ANALYSIS = DECODE_ORACLE(#{threatAnalysis, jdbcType=VARCHAR},1,1,2)
+				              , THREAT_LEVEL = #{threatLevel}
+				              , USE_FLAG = DECODE_ORACLE(#{useFlag, jdbcType=VARCHAR},1,1,2)
+	    WHERE FORM_ID = #{formId}
+   </update>
+   
+   <update id="insertRptMng" parameterType="map">
+         INSERT INTO report_manage (SCHEDULE_ID
+                                  , FORM_ID
+				                  , ACCOUNT_ID
+				                  , CREATE_TIME
+				                  , CLICK_COUNT
+				                   )
+				              VALUES(#{scheduleId}
+				                   , #{formId}
+				                   , #{accountId}
+				                   , NOW()
+				                   , 0
+				                   )
+   </update>
+   
+    <update id="updateRptMng" parameterType="map">
+        UPDATE report_manage SET  CLICK_COUNT = CLICK_COUNT + 1
+	    WHERE MANAGE_ID = #{id}
+   </update>
+   
+   
+   
+   <update id="deleteRptSch" parameterType="map">
+        UPDATE report_schedule SET USE_FLAG = 2
+        WHERE SCHEDULE_ID IN
+         <foreach collection="list" item="row" open="(" close=")" separator=",">
+	        <foreach collection="row" item="col" index="key">
+	          <if test='key.equals("id")'>
+	            #{col} 
+	          </if>
+		    </foreach> 
+        </foreach>     
+   </update>
+   
+   <update id="deleteRptFrm" parameterType="map">
+        UPDATE  report_form SET USE_FLAG = 2
+        WHERE FORM_ID IN
+        <foreach collection="list" item="row" open="(" close=")" separator=",">
+	        <foreach collection="row" item="col" index="key">
+	          <if test='key.equals("id")'>
+	            #{col} 
+	          </if>
+		    </foreach> 
+        </foreach>     
+   </update>
+   
+   <update id="updateClickCount" parameterType="map">
+        UPDATE  report_manage SET CLICK_COUNT = CLICK_COUNT + 1
+        WHERE MANAGE_ID = #{id}
+   </update>
+   
+    <update id="updatePrintYn" parameterType="map">
+        UPDATE report_manage SET  PRINT_YN = CLICK_COUNT + 1
+	    WHERE MANAGE_ID = #{id}
+   </update>
+   
+   <delete id="deleteRptMng" parameterType="map">
+        DELETE FROM report_manage
+        WHERE MANAGE_ID IN
+        <foreach collection="list" item="row" open="(" close=")" separator=",">
+	        <foreach collection="row" item="col" index="key">
+	          <if test='key.equals("id")'>
+	            #{col} 
+	          </if>
+		    </foreach> 
+        </foreach>     
+   </delete>
+   
+</mapper>

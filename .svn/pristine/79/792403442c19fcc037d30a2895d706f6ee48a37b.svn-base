@@ -1,0 +1,14 @@
+package mil.ln.ncos.client.service;
+
+public interface TcpOutboudService {
+	
+	void saveTransmitData() throws Exception;
+	
+	void sendThreatInfo() throws Exception;
+	 
+	void sendAssertInfo() throws Exception;
+	 
+	void sendHeartBeat() throws Exception;
+	 
+
+}

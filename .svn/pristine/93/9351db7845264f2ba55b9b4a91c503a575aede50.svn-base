@@ -1,6 +1,0 @@
-{ 
-	"version" : "1.0.0",
-	"locale" : "ko_KR",
-	"crypto" : "AES128",
-	"protocol" : "JSON"
-}

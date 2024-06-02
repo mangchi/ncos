@@ -5,8 +5,9 @@
 ### VS Code 바로가기 👉 https://code.visualstudio.com/
 
 ## Spring Boot 개발을 위한 확장 Pack 설치
-### Spring Boot 개발을 위해 vscode의 왼쪽 메뉴에 있는 확장 아이콘을 클릭하고, 검색창에 spring을 입력 후 검색돈 4가지 확장팩으로 설치합니다.
-![spring boot 확장팩 설치](./extension_setting.png)
+### Spring Boot 개발을 위해 vscode의 왼쪽 메뉴에 있는 확장 아이콘을 클릭하고, 검색창에 spring을 입력 후 검색돈 4가지 확장팩을 설치합니다.
+<img src="./extension_setting.png" widht="600" height="400" alt="spring boot 확장팩 설치">
+<!-- ![spring boot 확장팩 설치](./extension_setting.png) -->
 
 
 

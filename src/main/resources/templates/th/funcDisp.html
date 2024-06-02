@@ -142,7 +142,6 @@
 	    	e.preventDefault();
 			ncos.schMode = 'auto';
 			ncos.initBtn = true;
-			gfn_initObj(document.querySelector('.schwrap'));
 			searchFunc();
 			ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
 	    });
@@ -150,7 +149,7 @@
 	    	e.preventDefault();
 	    	ncos.schMode = 'menual';
 	    	clearInterval(ncos.intervalFunc);
-	    	searchFunc(e.target);
+	    	searchFunc();
 	    });
 
 	});
@@ -159,7 +158,7 @@
     	document.getElementById('frDt').value= gfn_getDiffDt(ncos.diffDay);
     	document.getElementById('toDt').value= gfn_getTodayDt();
     	createMultiChk(document.getElementById('schCscName'),'FNCSC');
-    	createChk(document.getElementById('schStatus'),'FNST','전체');
+    	createChk(document.getElementById('schStatus'),'FNST');
     	const headColumns = [{data_id:"id",width: "0px"}
 					        ,{data_id:"collectionTime",label:"시간",data_dateFrmt:"yy-mm-dd hh:mi:ss"}
 					        ,{data_id:"cscName",label:"기능명" ,data_grpCd:"FNCSC"}

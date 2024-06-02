@@ -8,7 +8,6 @@
 	   <!--      , CONCAT(ASSET_NAME,'(',CODE_KR,')') ASSET_NM-->
 	         , ASSET_NAME
 	         , CODE_KR
-	         , SYSTEM_ID
 	   FROM network_asset_info A
 	   LEFT JOIN code_info B
 	   ON A.SMALL_CATEGORY = B.CODE
@@ -21,7 +20,7 @@
   <select id="selectTopoList" parameterType="HashMap" resultType="CmmnMap">
 	    SELECT LINK_ID  
 	      , UPPER_LINK_ID  
-          , B.ASSET_ID 
+          , A.ASSET_ID 
           , B.ASSET_NAME
           , C.CODE
           , C.CODE_KR
@@ -29,7 +28,7 @@
           , B.LARGE_CATEGORY
        FROM link_info A
        INNER JOIN network_asset_info B 
-       ON A.ASSET_ID = B.SYSTEM_ID
+       ON A.ASSET_ID = B.ASSET_ID
        INNER JOIN  code_info C
        ON  B.SMALL_CATEGORY = C.CODE
        AND C.MAINGROUP = 'AS'
@@ -42,29 +41,26 @@
 
          SELECT A.LINK_ID
 		      , A.UPPER_LINK_ID
-		      , B.ASSET_ID
+		      , A.ASSET_ID
 		      , A.LINK_TYPE
               , B.ASSET_NAME
               , B.LARGE_CATEGORY
-              , C.A_GRADE,C.REASON_NAME,D.S_GRADE, D.S_DETECTION_THREAT_NAME
+              , C.A_GRADE,C.statusText,D.S_GRADE, D.S_DETECTION_THREAT_NAME
               , E.D_GRADE,E.D_DETECTION_THREAT_NAME
               , CASE WHEN B.SYSTEM_ID IS NULL AND D.SRC_IP IS NULL AND E.DST_IP IS NULL THEN 'N' ELSE 'Y' END IS_PROBLEM
-              , DATE_ADD(NOW(), INTERVAL -1 MINUTE) BASE_TIME
-              , (SELECT MAX(DETECTION_TIME) FROM asset_status_info ASI WHERE ASI.SYSTEM_ID = B.SYSTEM_ID) DETECTION_TIME
-		FROM link_info A
+		  FROM link_info A
 		INNER JOIN network_asset_info B
-		ON A.ASSET_ID = B.SYSTEM_ID
+		  ON A.ASSET_ID = B.ASSET_ID
 		LEFT JOIN
-	    (SELECT A.SYSTEM_ID,0 A_GRADE, statusText REASON_NAME
+	    (SELECT A.SYSTEM_ID,0 A_GRADE, statusText 
 		FROM asset_status_info A
 		LEFT JOIN reason_v B
-		ON A.SYSTEM_ID = B.SYSTEMID
-        AND A.REASON_ID = B.STATUSCODE
-		<!-- ON    A.REASON_ID = B.ID -->
+		ON    A.REASON_ID = B.ID
 		WHERE (A.SYSTEM_ID,A.STATUS_ID)
 		IN (
 		SELECT  SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
 		FROM asset_status_info
+		WHERE ASSET_STATUS != 2
 		GROUP BY SYSTEM_ID)
 		AND A.ASSET_STATUS != 2) C
 		ON B.SYSTEM_ID = C.SYSTEM_ID

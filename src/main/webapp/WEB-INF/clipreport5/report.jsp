@@ -40,8 +40,6 @@ function html2xml(divPath){
 	var report = createReport("/reportServer", reportkey, document.getElementById(divPath));
    
 	report.setStyle("close_button", "display:none;");
-	report.setSaveOptionVisible("jpg", true);
-	report.setSaveOptionVisible("html", true);
 	//리포트 실행
     report.view();
 }

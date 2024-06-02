@@ -117,8 +117,7 @@
 </div>
 <script th:inline="javascript"> 
 	window.addEventListener('DOMContentLoaded', () => {
-		ncos.schMode = 'auto';
-		init();
+		   init();
 		   
 	});
    
@@ -163,7 +162,6 @@
 	        for(let key in list){
 	        	let tr = document.createElement('TR');
 	        	let item = list[key];
-	        	console.log("item:",item);
 	        	let tdId = document.createElement('TD');
 	        	tdId.classList.add('displayNone');
 	        	tdId.setAttribute("data-id",'settingId');
@@ -384,7 +382,6 @@
 			}		
     		
 		});
-    	/*
     	jsonParam.alarmStatus = 0;
     	if(alarmLevel > 0){
     		jsonParam.alarmStatus = 1;
@@ -393,7 +390,6 @@
     	if(warningLevel > 0){
     		jsonParam.warningStatus = 1;
     	}
-    	*/
     	jsonParam.alarmLevel = alarmLevel;
     	jsonParam.warningLevel = warningLevel;
     	gfn_asyncTranDataCall('/saveEnvConf','POST',jsonParam,searchFunc,true);
@@ -401,8 +397,7 @@
     
     document.querySelector('.schBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	ncos.schMode = 'menual';
-    	searchFunc(e.target);
+    	searchFunc();
     });
 </script>
 </th:block>

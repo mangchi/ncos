@@ -24,9 +24,6 @@ let msg = {
          , invalidDelete  : "본인이 생성한 건만 삭제할 수 있습니다."
          , possibleDelete  : "본인이 생성한 건만 삭제됩니다."
          , invalidDelZone  : "수정만 가능합니다."
-         , btDayChk1: "시작일과 종료일을 <br>2~6일 이내로 해주세요."
-         , btDayChk2: "시작일과 종료일이 동일합니다."
-         , invalidPeriodId : "스케쥴 등록시 생성주기가 필수값입니다."
          
 }
 

@@ -16,6 +16,7 @@
   </select>
 
   <select id="selectRptMngList" parameterType="map" resultType="CmmnMap">
+
      	SELECT  RN
      	      , A.MANAGE_ID ID
      	      , A.REPORT_TITLE
@@ -289,276 +290,429 @@
 		<choose>
 			<when test='periodId == 1'>
 				SELECT code_info.code_kr,
-				       Count(threat_info.threat_detection_method)  AS count,
-				       IFNULL(Format(( Count(threat_info.threat_detection_method) / (SELECT Count(*)
+				       Count(*)                                                    AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info
-				                            WHERE  detection_time >= Date_sub(Date_format(#{toDate},'%Y-%m-%d %T'),interval 1 day)
-				                              AND detection_time <![CDATA[<]]> Date_format(#{toDate},'%Y-%m-%d %T')
-				                           <include refid="appendThreatLevel"></include>) ) * 100, 2),0) AS percentage
-				FROM  (select * from code_info where maingroup = 'TH' AND subgroup = 'TY') code_info
-				left join threat_info
-				ON threat_info.threat_detection_method = code_info.code
-				AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},'%Y-%m-%d %T'),interval 1 day)
-				AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
-			    <include refid="appendThreatLevel"></include>
+				                            WHERE  detection_time >= Date_sub(
+				                                   Date_format(#{toDate},
+				                                   '%Y-%m-%d %T'),
+				                                                             interval 1 day)
+				                                   AND detection_time <![CDATA[<]]>
+				                                       Date_format(#{toDate},
+				                                       '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info
+				       join code_info
+				         ON threat_info.threat_detection_method = code_info.code
+				WHERE  code_info.maingroup = 'TH'
+				       AND code_info.subgroup = 'TY'
+				       AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},
+				                                      '%Y-%m-%d %T')
+				                             ,
+				                             interval 1 day)
+				       AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
+				       <include refid="appendThreatLevel"></include>
 				GROUP  BY code_info.code_kr 
 			</when>
 			<when test='periodId == 2'>
 				SELECT code_info.code_kr,
-				       Count(threat_info.threat_detection_method)  AS count,
-				       Format(( Count(threat_info.threat_detection_method) / (SELECT Count(*)
+				       Count(*)                                                    AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info
-				                            WHERE  detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},'%Y-%m-%d %T'),INTERVAL 1 week)
-				                              AND detection_time <![CDATA[<]]> Date_format(#{toDate},'%Y-%m-%d %T')
-				                          <include refid="appendThreatLevel"></include>) ) * 100, 2) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'TY') code_info
-				left join threat_info
-				ON threat_info.threat_detection_method = code_info.code
-				AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},'%Y-%m-%d %T'),INTERVAL 1 week)
-				AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
-				<include refid="appendThreatLevel"></include>
-				GROUP  BY code_info.code_kr
-			</when>
-			<when test='periodId == 3'>
-				SELECT code_info.code_kr,
-				       Count(threat_info.threat_detection_method) AS count,
-				       Format(( Count(threat_info.threat_detection_method) / (SELECT Count(*)
-				                            FROM   threat_info
-				                            WHERE  detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate}, '%Y-%m-%d %T'),INTERVAL 1 MONTH)
-				                             AND detection_time <![CDATA[<]]> Date_format(#{toDate},'%Y-%m-%d %T')
-				                           <include refid="appendThreatLevel"></include>) ) * 100, 2) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'TY') code_info
-				left join threat_info
-				ON threat_info.threat_detection_method = code_info.code
-				AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},'%Y-%m-%d %T') ,INTERVAL 1 MONTH)
-				AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
-				<include refid="appendThreatLevel"></include>
-				GROUP  BY code_info.code_kr
-			</when>
-			<when test='periodId == 4'>
-				SELECT code_info.code_kr,
-				       Count(threat_info.threat_detection_method)  AS count,
-				       Format(( Count(threat_info.threat_detection_method) / (SELECT Count(*)
-				                            FROM   threat_info
-				                            WHERE  detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},'%Y-%m-%d %T'),INTERVAL 1 YEAR)
-				                             AND detection_time <![CDATA[<]]> Date_format(#{toDate},'%Y-%m-%d %T')
-				                           <include refid="appendThreatLevel"></include>) ) * 100, 2) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'TY') code_info
-				left join threat_info
-				ON threat_info.threat_detection_method = code_info.code
-				       AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},'%Y-%m-%d %T'),INTERVAL 1 YEAR)
+				                            WHERE  detection_time <![CDATA[>=]]> Date_sub(
+				                                   Date_format(#{toDate},
+				                                   '%Y-%m-%d %T'),
+				                                                             INTERVAL 1 week)
+				                                   AND detection_time <![CDATA[<]]>
+				                                       Date_format(#{toDate},
+				                                       '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info
+				       JOIN code_info
+				         ON threat_info.threat_detection_method = code_info.code
+				WHERE  code_info.maingroup = 'TH'
+				       AND code_info.subgroup = 'TY'
+				       AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},
+				                                      '%Y-%m-%d %T')
+				                             ,
+				                             INTERVAL 1 week)
 				       AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
 				       <include refid="appendThreatLevel"></include>
 				GROUP  BY code_info.code_kr
 			</when>
-			<otherwise>
-			    SELECT code_info.code_kr,
-				       Count(threat_info.threat_detection_method)  AS count,
-				       IFNULL(Format(( Count(threat_info.threat_detection_method) / (SELECT Count(*)
+			<when test='periodId == 3'>
+				SELECT code_info.code_kr,
+				       Count(*)                                                    AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info
-				                            WHERE  detection_time >=  Date_format(#{frDate},'%Y-%m-%d %T')
-				                            AND detection_time <![CDATA[<]]> Date_format(#{toDate},'%Y-%m-%d %T')
-				                           <include refid="appendThreatLevel"></include>) ) * 100, 2),0) AS percentage
-				FROM  (select * from code_info where maingroup = 'TH' AND subgroup = 'TY') code_info
-				left join threat_info
-				ON threat_info.threat_detection_method = code_info.code
-				AND detection_time <![CDATA[>=]]> Date_format(#{frDate},'%Y-%m-%d %T')
-				AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
+				                            WHERE  detection_time <![CDATA[>=]]> Date_sub(
+				                                   Date_format(#{toDate},
+				                                   '%Y-%m-%d %T'),
+				                                                             INTERVAL 1 MONTH)
+				                                   AND detection_time <![CDATA[<]]>
+				                                       Date_format(#{toDate},
+				                                       '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info
+				       JOIN code_info
+				         ON threat_info.threat_detection_method = code_info.code
+				WHERE  code_info.maingroup = 'TH'
+				       AND code_info.subgroup = 'TY'
+				       AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},
+				                                      '%Y-%m-%d %T')
+				                             ,
+				                             INTERVAL 1 MONTH)
+				       AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
 				       <include refid="appendThreatLevel"></include>
-				GROUP  BY code_info.code_kr 
-			</otherwise>
+				GROUP  BY code_info.code_kr
+			</when>
+			<when test='periodId == 4'>
+				SELECT code_info.code_kr,
+				       Count(*)                                                    AS count,
+				       Format(( Count(*) / (SELECT Count(*)
+				                            FROM   threat_info
+				                            WHERE  detection_time <![CDATA[>=]]> Date_sub(
+				                                   Date_format(#{toDate},
+				                                   '%Y-%m-%d %T'),
+				                                                             INTERVAL 1 YEAR)
+				                                   AND detection_time <![CDATA[<]]>
+				                                       Date_format(#{toDate},
+				                                       '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info
+				       JOIN code_info
+				         ON threat_info.threat_detection_method = code_info.code
+				WHERE  code_info.maingroup = 'TH'
+				       AND code_info.subgroup = 'TY'
+				       AND detection_time <![CDATA[>=]]> Date_sub(Date_format(#{toDate},
+				                                      '%Y-%m-%d %T')
+				                             ,
+				                             INTERVAL 1 YEAR)
+				       AND detection_time <![CDATA[<]]> Date_format(#{toDate}, '%Y-%m-%d %T')
+				       <include refid="appendThreatLevel"></include>
+				GROUP  BY code_info.code_kr
+			</when>
 		</choose>	
 	</select>
   
+  <select id="selectRptDetectThreat2" parameterType="map" resultType="CmmnMap">
+
+	SELECT code_info.CODE_KR
+	    , COUNT(*) AS COUNT
+	    , FORMAT((COUNT(*) / (SELECT COUNT(*) 
+	                          FROM threat_info 
+	                          WHERE 1 = 1
+	                          <if test='periodId != null'>
+						        <choose>
+									<when test='periodId == 1'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY)
+									</when>
+									<when test='periodId == 2'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK)
+									</when>
+									<when test='periodId == 3'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH)
+									</when>
+									<when test='periodId == 4'>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR)
+									</when>
+									<otherwise>
+									AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK)
+									</otherwise>
+								</choose>
+							  </if>
+	                            AND DETECTION_TIME <![CDATA[<]]> DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'))) * 100, 2) AS PERCENTAGE
+	FROM threat_info 
+	JOIN code_info ON threat_info.THREAT_DETECTION_METHOD = code_info.CODE
+	WHERE code_info.MAINGROUP = 'TH' 
+	AND code_info.SUBGROUP = 'TY'
+	 <if test='periodId != null'>
+       <choose>
+		<when test='periodId == 1'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</when>
+		<when test='periodId == 2'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+		</when>
+		<when test='periodId == 3'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+		</when>
+		<when test='periodId == 4'>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+		</when>
+		<otherwise>
+		AND DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</otherwise>
+	  </choose>
+     </if>
+	<if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	GROUP BY code_info.code_kr
+
+  </select>
   
 	<select id="selectRptThreatAnalysis" parameterType="map" resultType="CmmnMap">
 		<choose>
 			<when test='periodId == 1'>		
-				SELECT IFNULL(ci.code_kr, '미조치') AS analysis_result,
-				       Count(ti.threat_id) AS count,
-				       IFNULL(Format(( Count(ti.threat_id) / (SELECT Count(*)
+				SELECT IFNULL(ci.code_kr, '미조치')
+				       AS
+				       analysis_result,
+				       Count(*)
+				       AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info ti
-				                            join threat_analysis ta
-				                            ON  ta.threat_id =  ti.threat_id
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100 , 2),0) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'RES') ci
-				left join threat_analysis ta
-				ON  ci.code = ta.analysis_result
-				left join threat_info ti
-				ON  ta.threat_id =  ti.threat_id
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND  date_format(#{toDate}, '%Y-%m-%d %T')
-			   <include refid="appendThreatLevel"></include>
-				GROUP  BY ta.analysis_result
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100 , 2) AS percentage
+				FROM   threat_info ti
+				       left join threat_analysis ta
+				              ON ti.threat_id = ta.threat_id
+				       left join code_info ci
+				              ON ta.analysis_result = ci.code
+				                 AND ci.maingroup = 'TH'
+				                 AND ci.subgroup = 'RES'
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				       <include refid="appendThreatLevel"></include>
+				GROUP  BY analysis_result
 			</when>
 			<when test='periodId == 2'>
-				SELECT IFNULL(ci.code_kr, '미조치') AS analysis_result,
-				       Count(ti.threat_id) AS count,
-				       IFNULL(Format(( Count(ti.threat_id) / (SELECT Count(*)
+				SELECT IFNULL(ci.code_kr, '미조치')
+				       AS
+				       analysis_result,
+				       Count(*)
+				       AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info ti
-				                            join threat_analysis ta
-				                            ON  ta.threat_id =  ti.threat_id
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100 , 2),0) AS percentage
-				FROM    (select * from code_info where maingroup = 'TH' AND subgroup = 'RES') ci
-				left join threat_analysis ta
-				ON  ci.code = ta.analysis_result
-				left join threat_info ti
-				ON  ta.threat_id =  ti.threat_id
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				<include refid="appendThreatLevel"></include>
-				GROUP  BY ta.analysis_result
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100 , 2) AS percentage
+				FROM   threat_info ti
+				       left join threat_analysis ta
+				              ON ti.threat_id = ta.threat_id
+				       left join code_info ci
+				              ON ta.analysis_result = ci.code
+				                 AND ci.maingroup = 'TH'
+				                 AND ci.subgroup = 'RES'
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				       <include refid="appendThreatLevel"></include>
+				GROUP  BY analysis_result
 			</when>
 			<when test='periodId == 3'>
-				SELECT IFNULL(ci.code_kr, '미조치') AS analysis_result,
-				       Count(ti.threat_id) AS count,
-				       IFNULL(Format(( Count(ti.threat_id) / (SELECT Count(*)
+				SELECT IFNULL(ci.code_kr, '미조치')
+				       AS
+				       analysis_result,
+				       Count(*)
+				       AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info ti
-				                            join threat_analysis ta
-				                            ON  ta.threat_id =  ti.threat_id
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100 , 2),0) AS percentage
-				FROM  (select * from code_info where maingroup = 'TH' AND subgroup = 'RES') ci
-				left join threat_analysis ta
-				ON  ci.code = ta.analysis_result
-				left join threat_info ti
-				ON  ta.threat_id =  ti.threat_id
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				<include refid="appendThreatLevel"></include>
-				GROUP  BY ta.analysis_result
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100 , 2) AS percentage
+				FROM   threat_info ti
+				       left join threat_analysis ta
+				              ON ti.threat_id = ta.threat_id
+				       left join code_info ci
+				              ON ta.analysis_result = ci.code
+				                 AND ci.maingroup = 'TH'
+				                 AND ci.subgroup = 'RES'
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				       <include refid="appendThreatLevel"></include>
+				GROUP  BY analysis_result
 			</when>
 			<when test='periodId == 4'>			
-				SELECT IFNULL(ci.code_kr, '미조치') AS analysis_result,
-				       Count(ti.threat_id) AS count,
-				       IFNULL(Format(( Count(ti.threat_id) / (SELECT Count(*)
+				SELECT IFNULL(ci.code_kr, '미조치')
+				       AS
+				       analysis_result,
+				       Count(*)
+				       AS count,
+				       Format(( Count(*) / (SELECT Count(*)
 				                            FROM   threat_info ti
-				                            join threat_analysis ta
-				                            ON  ta.threat_id =  ti.threat_id
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100 , 2),0) AS percentage
-				FROM  (select * from code_info where maingroup = 'TH' AND subgroup = 'RES') ci
-				left join threat_analysis ta
-				ON  ci.code = ta.analysis_result
-				left join threat_info ti
-				ON  ta.threat_id =  ti.threat_id
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND  date_format(#{toDate}, '%Y-%m-%d %T')
-			    <include refid="appendThreatLevel"></include>
-				GROUP  BY ta.analysis_result
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100 , 2) AS percentage
+				FROM   threat_info ti
+				       left join threat_analysis ta
+				              ON ti.threat_id = ta.threat_id
+				       left join code_info ci
+				              ON ta.analysis_result = ci.code
+				                 AND ci.maingroup = 'TH'
+				                 AND ci.subgroup = 'RES'
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				       <include refid="appendThreatLevel"></include>
+				GROUP  BY analysis_result
 			</when>
-			<otherwise>
-			    SELECT IFNULL(ci.code_kr, '미조치') AS analysis_result,
-				       Count(ti.threat_id) AS count,
-				       IFNULL(Format(( Count(ti.threat_id) / (SELECT Count(*)
-				                            FROM   threat_info ti
-				                            join threat_analysis ta
-				                            ON  ta.threat_id =  ti.threat_id
-				                            WHERE  ti.detection_time BETWEEN date_format(#{frDate}, '%Y-%m-%d %T')
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100 , 2),0) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'RES') ci
-				left join threat_analysis ta
-				ON  ci.code = ta.analysis_result
-				left join threat_info ti
-				ON  ta.threat_id =  ti.threat_id
-				AND  ti.detection_time BETWEEN date_format(#{frDate}, '%Y-%m-%d %T') AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				<include refid="appendThreatLevel"></include>
-				GROUP  BY ta.analysis_result
-			</otherwise>
 		</choose>
 	</select>
+  
+  <select id="selectRptThreatAnalysis2" parameterType="map" resultType="CmmnMap">
 
+    SELECT IFNULL(CI.CODE_KR, '미조치') AS analysis_result
+         , COUNT(*) AS count
+         , FORMAT((COUNT(*) / (SELECT COUNT(*) FROM threat_info TI 
+                               WHERE 1 = 1
+                               <if test='periodId != null'>
+						        <choose>
+									<when test='periodId == 1'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS percentage 
+									</when>
+									<when test='periodId == 2'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK))) * 100, 2) AS percentage 
+									</when>
+									<when test='periodId == 3'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH))) * 100, 2) AS percentage 
+									</when>
+									<when test='periodId == 4'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR))) * 100, 2) AS percentage 
+									</when>
+									<otherwise>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS percentage 
+									</otherwise>
+								</choose>
+							  </if>
+                              
+	FROM threat_info TI
+	LEFT JOIN threat_analysis TA 
+	ON TI.THREAT_ID = TA.THREAT_ID 
+	LEFT JOIN code_info CI 
+	ON TA.ANALYSIS_RESULT = CI.CODE 
+	AND CI.MAINGROUP = 'TH' 
+	AND CI.SUBGROUP = 'RES' 
+	<where>
+	 <if test='periodId != null'>
+	 <choose>
+		<when test='periodId == 1'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</when>
+		<when test='periodId == 2'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+		</when>
+		<when test='periodId == 3'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+		</when>
+		<when test='periodId == 4'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+		</when>
+		<otherwise>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</otherwise>
+	</choose>
+    </if>
+	
+	<if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	</where> 
+	GROUP BY ANALYSIS_RESULT 
+
+  </select>
+  
 	<select id="selectRptThreatImportance" parameterType="map" resultType="CmmnMap">
 		<choose>
 			<when test='periodId == 1'>
-				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance
-				       , Count(ti.threat_importance) AS COUNT
-				       , IFNULL(Format(( Count(ti.threat_importance) / (SELECT COUNT(*) FROM   threat_info ti
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100, 2),0) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'IM' ) ci
-				left join threat_info ti
-			    ON ci.code = ti.threat_importance
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance, Count(*) AS COUNT,
+				       Format(( Count(*) / (SELECT COUNT(*) FROM   threat_info ti
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info ti
+				       left join code_info ci
+				              ON ti.threat_importance = ci.code
+				                 AND ci.maingroup = 'TH' AND ci.subgroup = 'IM' 
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND  date_format(#{toDate}, '%Y-%m-%d %T')
 				       <include refid="appendThreatLevel"></include>
-				GROUP  BY ci.code
+				GROUP  BY threat_importance
 				ORDER  BY threat_importance ASC
 			</when>
 			<when test='periodId == 2'>
-				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance,   Count(ti.threat_importance) AS COUNT,
-				       IFNULL(Format(( Count(ti.threat_importance) / (SELECT COUNT(*) FROM   threat_info ti
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100, 2),0) AS percentage
-				FROM  (select * from code_info where maingroup = 'TH' AND subgroup = 'IM') ci
-				left join  threat_info ti
-				ON  ci.code = ti.threat_importance 
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance, Count(*) AS COUNT,
+				       Format(( Count(*) / (SELECT COUNT(*) FROM   threat_info ti
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info ti
+				       left join code_info ci
+				              ON ti.threat_importance = ci.code
+				                 AND ci.maingroup = 'TH' AND ci.subgroup = 'IM' 
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 week) AND  date_format(#{toDate}, '%Y-%m-%d %T')
 				       <include refid="appendThreatLevel"></include>
-				GROUP  BY ci.code
+				GROUP  BY threat_importance
 				ORDER  BY threat_importance ASC
 			</when>
 			<when test='periodId == 3'>
-				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance, Count(ti.threat_importance) AS COUNT,
-				       IFNULL(Format(( Count(ti.threat_importance) / (SELECT COUNT(*) FROM   threat_info ti
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100, 2),0) AS percentage
-				FROM  (select * from code_info where maingroup = 'TH' AND subgroup = 'IM') ci 
-				left join  threat_info ti
-				ON  ci.code = ti.threat_importance 
-				AND  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance, Count(*) AS COUNT,
+				       Format(( Count(*) / (SELECT COUNT(*) FROM   threat_info ti
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info ti
+				       left join code_info ci
+				              ON ti.threat_importance = ci.code
+				                 AND ci.maingroup = 'TH' AND ci.subgroup = 'IM' 
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 month) AND  date_format(#{toDate}, '%Y-%m-%d %T')
 				       <include refid="appendThreatLevel"></include>
-				GROUP  BY ci.code
+				GROUP  BY threat_importance
 				ORDER  BY threat_importance ASC
 			</when>
 			<when test='periodId == 4'>
-				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance, Count(ti.threat_importance) AS COUNT,
-				       IFNULL(Format(( Count(ti.threat_importance) / (SELECT COUNT(*) FROM   threat_info ti
-				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) 
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100, 2),0) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'IM') ci 
-				left join  threat_info ti
-				ON  ci.code = ti.threat_importance 
-				AND   ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND  date_format(#{toDate}, '%Y-%m-%d %T')
+				SELECT Ifnull(ci.code_kr, '기타') AS threat_importance, Count(*) AS COUNT,
+				       Format(( Count(*) / (SELECT COUNT(*) FROM   threat_info ti
+				                            WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND  date_format(#{toDate}, '%Y-%m-%d %T')) ) * 100, 2) AS percentage
+				FROM   threat_info ti
+				       left join code_info ci
+				              ON ti.threat_importance = ci.code
+				                 AND ci.maingroup = 'TH' AND ci.subgroup = 'IM' 
+				WHERE  ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND  date_format(#{toDate}, '%Y-%m-%d %T')
 				       <include refid="appendThreatLevel"></include>
-				GROUP  BY ci.code
+				GROUP  BY threat_importance
 				ORDER  BY threat_importance ASC
 			</when>
-			<otherwise>
-			   SELECT Ifnull(ci.code_kr, '기타') AS threat_importance
-				       , Count(ti.threat_importance) AS COUNT
-				       , IFNULL(Format(( Count(ti.threat_importance) / (SELECT COUNT(*) FROM   threat_info ti
-				                            WHERE  ti.detection_time BETWEEN date_format(#{frDate}, '%Y-%m-%d %T')
-				                            AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				                            <include refid="appendThreatLevel"></include>
-				                            ) ) * 100, 2),0) AS percentage
-				FROM   (select * from code_info where maingroup = 'TH' AND subgroup = 'IM' ) ci
-				left join threat_info ti
-			    ON ci.code = ti.threat_importance
-				AND  ti.detection_time BETWEEN date_format(#{frDate}, '%Y-%m-%d %T') AND  date_format(#{toDate}, '%Y-%m-%d %T')
-				       <include refid="appendThreatLevel"></include>
-				GROUP  BY ci.code
-				ORDER  BY threat_importance ASC
-			</otherwise>
 		</choose>
 	</select>
 	
- 
+  <select id="selectRptThreatImportance2" parameterType="map" resultType="CmmnMap">
+
+    SELECT 
+			IFNULL(CI.CODE_KR, '기타') AS THREAT_IMPORTANCE, 
+			COUNT(*) AS COUNT, 
+			FORMAT((COUNT(*) / (SELECT COUNT(*) FROM threat_info TI 
+			                    WHERE 1 = 1
+			                    <if test='periodId != null'>
+			                    <choose>
+									<when test='periodId == 1'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<when test='periodId == 2'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<when test='periodId == 3'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<when test='periodId == 4'>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR))) * 100, 2) AS PERCENTAGE 
+									</when>
+									<otherwise>
+									 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY))) * 100, 2) AS PERCENTAGE 
+									</otherwise>
+								</choose>
+							    </if>
+			                    
+	FROM threat_info TI 
+	LEFT JOIN code_info CI 
+	ON TI.THREAT_IMPORTANCE = CI.CODE 
+	AND CI.MAINGROUP = 'TH' 
+	AND CI.SUBGROUP = 'IM' 
+	<where>
+	<if test='periodId != null'>
+    <choose>
+		<when test='periodId == 1'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</when>
+		<when test='periodId == 2'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) 
+		</when>
+		<when test='periodId == 3'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) 
+		</when>
+		<when test='periodId == 4'>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) 
+		</when>
+		<otherwise>
+		 AND TI.DETECTION_TIME <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) 
+		</otherwise>
+	</choose>
+    </if>
+	
+	<if test='threatLevel != null'>
+        <include refid="appendThreatLevel"></include>
+	</if>
+	</where>
+	GROUP BY THREAT_IMPORTANCE 
+	ORDER BY THREAT_IMPORTANCE  
+
+  </select>
   
   <sql id="appendPeriodThreat">
          , (SELECT CODE_KR 
@@ -575,35 +729,43 @@
 	<select id="selectRptPeriodThreat" parameterType="map" resultType="CmmnMap">
 		<choose>
 			<when test='periodId == 1'>
-				SELECT  Date_format(h.hour, '%d %H:00') AS time,
-				       (SELECT code_kr FROM   code_info
-				         WHERE code_info.maingroup = 'TH'
-				           AND code_info.subgroup = 'TY'
-				           AND code = m.threat_detection_method) AS threat_detection_method,
-				       Count(t.threat_detection_method)  AS count
-				  FROM  (SELECT DISTINCT threat_detection_method
-				           FROM threat_info ) m
-				  CROSS JOIN (SELECT date_format(dates.date + interval hours.hour hour, '%Y-%m-%d %H:00:00') AS hour
-				                FROM (SELECT date_format(#{toDate}, '%Y-%m-%d %T') AS date
-				                       UNION ALL
-				                      SELECT date_format(#{toDate}, '%Y-%m-%d %T') - interval 1 day ) dates
-				                JOIN  (SELECT 0 AS hour UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-				                       UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9
-				                       UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 UNION ALL SELECT 13 UNION ALL
-				                       SELECT 14 UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL
-				                       SELECT 18 UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL
-				                       SELECT 22 UNION ALL SELECT 23 ) hours ) h
-				 LEFT JOIN  threat_info t
-				 ON         m.threat_detection_method = t.threat_detection_method
-				 AND        h.hour = date_format(t.detection_time, '%Y-%m-%d %H:00:00')
-				 <include refid="appendThreatLevel"></include>
-				 AND t.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND date_format(#{toDate}, '%Y-%m-%d %T')
-				 WHERE      h.hour BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %H:00:00'), interval 24 hour) 
-				 AND        date_format(#{toDate}, '%Y-%m-%d %H:00:00')
-				 GROUP BY   m.threat_detection_method,
-				            h.hour
-				 ORDER BY   h.hour ASC,
-				            m.threat_detection_method ASC
+				SELECT     Date_format(h.hour, '%d %H:00') AS time,
+				           (
+				                  SELECT code_kr
+				                  FROM   code_info
+				                  WHERE  code_info.maingroup = 'TH'
+				                  AND    code_info.subgroup = 'TY'
+				                  AND    code = m.threat_detection_method) AS threat_detection_method,
+				           Count(t.threat_detection_method)                AS count
+				FROM       (
+				                           SELECT DISTINCT threat_detection_method
+				                           FROM            threat_info ) m
+				CROSS JOIN
+				           (
+				                  SELECT date_format(dates.date + interval hours.hour hour, '%Y-%m-%d %H:00:00') AS hour
+				                  FROM   (
+				                                SELECT date_format(#{toDate}, '%Y-%m-%d %T') AS date
+				                                UNION ALL
+				                                SELECT date_format(#{toDate}, '%Y-%m-%d %T') - interval 1 day ) dates
+				                  JOIN
+				                         (
+				                                SELECT 0 AS hour UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+				                                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9
+				                                UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 UNION ALL SELECT 13 UNION ALL
+				                                SELECT 14 UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL
+				                                SELECT 18 UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL
+				                                SELECT 22 UNION ALL SELECT 23 ) hours ) h
+				LEFT JOIN  threat_info t
+				ON         m.threat_detection_method = t.threat_detection_method
+				AND        h.hour = date_format(t.detection_time, '%Y-%m-%d %H:00:00')
+				<include refid="appendThreatLevel"></include>
+				AND t.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 24 hour) AND date_format(#{toDate}, '%Y-%m-%d %T')
+				WHERE      h.hour BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %H:00:00'), interval 24 hour) 
+				AND        date_format(#{toDate}, '%Y-%m-%d %H:00:00')
+				GROUP BY   m.threat_detection_method,
+				           h.hour
+				ORDER BY   h.hour ASC,
+				           m.threat_detection_method ASC
 			</when>
 			<when test='periodId == 2'>
 				SELECT Date_format(h.date, '%Y-%m-%d') AS time,
@@ -615,7 +777,10 @@
 				       Count(t.threat_detection_method)              AS count
 				FROM   (SELECT DISTINCT threat_detection_method
 				        FROM   threat_info) m
-				       CROSS JOIN (SELECT Date_format(#{toDate}, '%Y-%m-%d') - INTERVAL (days.number + tens.number * 10) day AS date
+				       CROSS JOIN (SELECT Date_format(#{toDate}, '%Y-%m-%d') -
+				                                                 INTERVAL (days.number +
+				                                                 tens.number *
+				                                                 10) day AS date
 				                   FROM   (SELECT 0 AS number
 				                           UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) days
 				                          CROSS JOIN (SELECT 0 AS NUMBER UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
@@ -635,11 +800,11 @@
 			</when>
 			<when test='periodId == 3'>
 				SELECT DATE_FORMAT(h.date, '%Y-%m-%d') AS TIME, 
-					   (SELECT code_kr FROM code_info 
-					    WHERE code_info.maingroup = 'TH' 
-					      AND code_info.subgroup = 'TY' 
-					      AND CODE = m.threat_detection_method) AS threat_detection_method, 
-					    COUNT(t.threat_detection_method) AS count 
+					(SELECT code_kr FROM code_info 
+					WHERE code_info.maingroup = 'TH' 
+							AND code_info.subgroup = 'TY' 
+							AND CODE = m.threat_detection_method) AS threat_detection_method, 
+					COUNT(t.threat_detection_method) AS count 
 				FROM ( SELECT DISTINCT threat_detection_method FROM threat_info ) m 
 						CROSS JOIN ( SELECT DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), 
 							INTERVAL (days.number + tens.number * 10) DAY) AS date FROM 
@@ -675,110 +840,128 @@
 				                 AND ti.detection_time <![CDATA[>=]]> m.month
 				                 AND ti.detection_time <![CDATA[<]]> Date_add(m.month, INTERVAL 1 month)
 				                 <include refid="appendThreatLevel"></include>
-				                 AND ti.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND date_format(#{toDate}, '%Y-%m-%d %T')
+				                 AND t.detection_time BETWEEN date_sub(date_format(#{toDate}, '%Y-%m-%d %T'), interval 1 year) AND date_format(#{toDate}, '%Y-%m-%d %T')
 				WHERE  m.month <![CDATA[>=]]> Date_format(Date_sub(Date_format(#{toDate}, '%Y-%m-%d'), INTERVAL 1 year), '%Y-%m-01')
 				       AND m.month <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-01')
 				GROUP  BY t.threat_detection_method, m.month
 				ORDER  BY m.month, t.threat_detection_method
 			</when>
 			<otherwise>
-			    SELECT Date_format(h.date, '%Y-%m-%d') AS time,
-				       (SELECT code_kr
-				        FROM   code_info
-				        WHERE  code_info.maingroup = 'TH'
-				               AND code_info.subgroup = 'TY'
-				               AND code = m.threat_detection_method) AS threat_detection_method,
-				       Count(t.threat_detection_method)              AS count
-				FROM   (SELECT DISTINCT threat_detection_method
-				        FROM   threat_info) m
-				       CROSS JOIN (SELECT Date_format(#{toDate}, '%Y-%m-%d') - INTERVAL (days.number + tens.number * 10) day AS date
-				                   FROM   (<choose>
-			                               <when test='btDay == 1'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-			                               </when>
-			                               <when test='btDay == 2'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-			                               </when>
-			                               <when test='btDay == 3'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-				                           UNION SELECT 3 
-			                               </when>
-			                               <when test='btDay == 4'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-				                           UNION SELECT 3 
-				                           UNION SELECT 4
-			                               </when>
-			                               <otherwise>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-				                           UNION SELECT 3 
-				                           UNION SELECT 4
-				                           UNION SELECT 5 
-			                               </otherwise>
-			                               </choose>
-                                          ) days
-				              CROSS JOIN (<choose>
-			                               <when test='btDay == 1'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-			                               </when>
-			                               <when test='btDay == 2'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-			                               </when>
-			                               <when test='btDay == 3'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-				                           UNION SELECT 3 
-			                               </when>
-			                               <when test='btDay == 4'>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-				                           UNION SELECT 3 
-				                           UNION SELECT 4
-			                               </when>
-			                               <otherwise>
-			                               SELECT 0 AS number
-				                           UNION SELECT 1 
-				                           UNION SELECT 2
-				                           UNION SELECT 3 
-				                           UNION SELECT 4
-				                           UNION SELECT 5 
-			                               </otherwise>
-			                               </choose>
-			                               ) tens
-				                   WHERE  days.number + tens.number * 10 <![CDATA[<=]]> DATEDIFF(Date_format(#{toDate}, '%Y-%m-%d') ,date_format(#{frDate}, '%Y-%m-%d %T'))) h
-				                  LEFT JOIN threat_info t
-				                         ON m.threat_detection_method =
-				                            t.threat_detection_method
-				                            AND Date(t.detection_time) = h.date
-				                            <include refid="appendThreatLevel"></include>
-				                            AND t.detection_time BETWEEN date_format(#{frDate}, '%Y-%m-%d %T') AND date_format(#{toDate}, '%Y-%m-%d %T')
-				WHERE  h.date <![CDATA[>=]]> DATEDIFF(Date_format(#{toDate}, '%Y-%m-%d') , date_format(#{frDate}, '%Y-%m-%d %T'))
-				GROUP  BY m.threat_detection_method, h.date
-				ORDER  BY h.date ASC, m.threat_detection_method ASC
 			</otherwise>
 		</choose>
 	</select>
   
- 
+  <select id="selectRptPeriodThreat2" parameterType="map" resultType="CmmnMap">
+      <choose>
+			<when test='periodId == 1'>
+        SELECT date_format(h.hour, '%d %H:00') AS time
+        <include refid="appendPeriodThreat"></include>
+			      SELECT DATE_FORMAT(dates.date + INTERVAL hours.hour HOUR, '%Y-%m-%d %H:00:00') AS hour 
+                    FROM 
+				        ( SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') AS date 
+				          UNION ALL 
+				         SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') - INTERVAL 1 DAY 
+				        ) dates 
+				  JOIN ( SELECT 0 AS hour 
+				          UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 
+				          UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 
+				          UNION ALL SELECT 13 UNION ALL SELECT 14 UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 
+				          UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL SELECT 22 UNION ALL SELECT 23 
+				       ) hours 
+                ) h 
+       LEFT JOIN threat_info t 
+       ON m.threat_detection_method = t.threat_detection_method 
+       AND h.hour = DATE_FORMAT(t.detection_time, '%Y-%m-%d %H:00:00') 
+      <include refid="appendThreatLevel"></include>
+       WHERE h.hour BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+       GROUP BY m.threat_detection_method, h.hour 
+       ORDER BY h.hour ASC, m.threat_detection_method ASC
+            </when>
+			<when test='periodId == 2'>
+	   SELECT DATE_FORMAT(h.date, '%Y-%m-%d') AS time
+	   <include refid="appendPeriodThreat"></include>
+			     SELECT DATE_FORMAT('to_date', '%Y-%m-%d') - INTERVAL (days.number + tens.number * 10) DAY AS date 
+                   FROM 
+                       (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) days 
+        CROSS JOIN (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) tens 
+                    WHERE days.number + tens.number * 10 <![CDATA[<=]]> DATEDIFF(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), DATE_FORMAT(#{toDate}, '%Y-%m-%d') - INTERVAL 7 DAY) 
+                   ) h 
+        LEFT JOIN threat_info t ON m.threat_detection_method = t.threat_detection_method AND DATE(t.detection_time) = h.date 
+        <include refid="appendThreatLevel"></include>
+        WHERE h.date <![CDATA[>=]]> DATE_FORMAT(#{toDate}, '%Y-%m-%d') - INTERVAL 7 DAY 
+        GROUP BY m.threat_detection_method, h.date 
+        ORDER BY h.date ASC, m.threat_detection_method ASC
+			</when>
+			<when test='periodId == 3'>
+		 SELECT DATE_FORMAT(h.date, '%Y-%m-%d') AS time
+	    <include refid="appendPeriodThreat"></include>
+			     SELECT DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL (days.number + tens.number * 10) DAY) AS date 
+                   FROM 
+                       (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) days 
+        CROSS JOIN (SELECT 0 AS number UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) tens 
+                    WHERE days.number + tens.number * 10 <![CDATA[<=]]> DATEDIFF(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL 1 MONTH)) 
+                    ) h 
+        LEFT JOIN threat_info t 
+        ON m.threat_detection_method = t.threat_detection_method AND DATE(t.detection_time) = h.date 
+        <include refid="appendThreatLevel"></include>
+        WHERE h.date <![CDATA[>=]]> DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL 1 MONTH) 
+        GROUP BY m.threat_detection_method, h.date 
+        ORDER BY h.date ASC, m.threat_detection_method ASC
+			</when>
+			<when test='periodId == 4'>
+	    SELECT  CONCAT(YEAR(m.month), '-', LPAD(MONTH(m.month), 2, '0')) AS time
+              , (SELECT code_kr FROM code_info WHERE code_info.maingroup = 'TH' AND code_info.subgroup = 'TY' AND CODE = t.threat_detection_method) AS threat_detection_method
+              ,  COUNT(ti.threat_detection_method) AS count 
+          FROM 
+               (SELECT DATE_FORMAT(DATE_SUB(DATE_FORMAT('to_date', '%Y-%m-%d'), INTERVAL n.n MONTH), '%Y-%m-01') AS month 
+                  FROM 
+                      (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 
+                       UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 
+                       UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11) AS n 
+                       ) AS m 
+        LEFT JOIN (SELECT DISTINCT threat_detection_method FROM threat_info) AS t ON 1=1 
+        LEFT JOIN threat_info AS ti 
+        ON ti.threat_detection_method = t.threat_detection_method 
+        AND ti.detection_time <![CDATA[>=]]> m.month AND ti.detection_time <![CDATA[<]]> DATE_ADD(m.month, INTERVAL 1 MONTH) 
+        <include refid="appendThreatLevel"></include>
+        WHERE m.month <![CDATA[>=]]> DATE_FORMAT(DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d'), INTERVAL 1 YEAR), '%Y-%m-01') 
+          AND m.month <![CDATA[<=]]> DATE_FORMAT(#{toDate}, '%Y-%m-01') 
+        GROUP BY t.threat_detection_method, m.month 
+        ORDER BY m.month, t.threat_detection_method; 
+			</when>
+			<otherwise>
+		SELECT h.hour AS time
+	    <include refid="appendPeriodThreat"></include>
+			      SELECT DATE_FORMAT(dates.date + INTERVAL hours.hour HOUR, '%Y-%m-%d %H:00:00') AS hour 
+                    FROM 
+				        ( SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') AS date 
+				          UNION ALL 
+				         SELECT DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') - INTERVAL 1 DAY 
+				        ) dates 
+				  JOIN ( SELECT 0 AS hour 
+				          UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 
+				          UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12 
+				          UNION ALL SELECT 13 UNION ALL SELECT 14 UNION ALL SELECT 15 UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 
+				          UNION ALL SELECT 19 UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL SELECT 22 UNION ALL SELECT 23 
+				       ) hours 
+                ) h 
+       LEFT JOIN threat_info t 
+       ON m.threat_detection_method = t.threat_detection_method 
+       AND h.hour = DATE_FORMAT(t.detection_time, '%Y-%m-%d %H:00:00') 
+       <include refid="appendThreatLevel"></include>
+       WHERE h.hour BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+       GROUP BY m.threat_detection_method, h.hour 
+       ORDER BY h.hour ASC, m.threat_detection_method ASC
+			</otherwise>
+	</choose>
+   
+  </select>
   
   <select id="selectRptThreatMain" parameterType="map" resultType="CmmnMap">
     SELECT T.THREAT_ID
          , DATE_FORMAT(T.DETECTION_TIME,'%Y-%m-%d %T') DETECTION_TIME
-         , T.SRC_IP
-         , T.DST_IP
+         , INET_NTOA(T.SRC_IP) AS SRC_IP
+         , INET_NTOA(T.DST_IP) AS DST_IP
          , T.SRC_PORT
          , T.DST_PORT
          , CASE WHEN TA.ANALYSIS_RESULT IS NULL THEN '미조치' ELSE C1.CODE_KR END AS ANALYSIS_RESULT
@@ -798,23 +981,25 @@
 	 LEFT JOIN code_info C3 
 	 ON T.THREAT_IMPORTANCE = C3.CODE 
 	 AND C3.MAINGROUP = 'TH' AND C3.SUBGROUP = 'IM'  
-     <choose>
-		<when test='periodId == 1'>
-		 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T')
-		</when>
-		<when test='periodId == 2'>
-		 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
-		</when>
-		<when test='periodId == 3'>
-		 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
-		</when>
-		<when test='periodId == 4'>
-		 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
-		</when>
-		<otherwise>
-		 WHERE T.DETECTION_TIME BETWEEN DATE_FORMAT(#{frDate}, '%Y-%m-%d %T') AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T')
-		</otherwise>
-	 </choose>
+	 <if test='periodId != null'>
+	    <choose>
+			<when test='periodId == 1'>
+			 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T')
+			</when>
+			<when test='periodId == 2'>
+			 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 WEEK) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+			</when>
+			<when test='periodId == 3'>
+			 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 MONTH) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+			</when>
+			<when test='periodId == 4'>
+			 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 YEAR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+			</when>
+			<otherwise>
+			 WHERE T.DETECTION_TIME BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 1 DAY) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+			</otherwise>
+		</choose>
+	   </if>  
 	 <if test='threatLevel != null'>
         <include refid="appendThreatLevel"></include>
 	</if>
@@ -825,7 +1010,7 @@
   <select id="selectRptAsset" parameterType="map" resultType="CmmnMap">
       SELECT  c.code_kr
             , COUNT(a.system_id) AS count
-            , IFNULL(FORMAT((COUNT(a.system_id) / (SELECT COUNT(a.system_id) 
+            , FORMAT((COUNT(a.system_id) / (SELECT COUNT(a.system_id) 
                                               FROM   network_asset_info n 
                                             LEFT JOIN asset_status_info a 
                                             ON n.system_id = a.system_id 
@@ -835,8 +1020,8 @@
                                             AND c.maingroup = 'AS' 
                                             AND c.subgroup = 'LC' 
                                           WHERE  1 = 1
+                                          <if test='periodId != null'>
 										    <choose>
-										        
 												<when test='periodId == 1'>
 												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
 												</when>
@@ -850,32 +1035,37 @@
 												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 YEAR 
 												</when>
 												<otherwise>
-												 AND a.detection_time <![CDATA[>=]]> Date_format(#{frDate}, '%Y-%m-%d %H:00:00')
+												 AND a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
 												</otherwise>
 											</choose>											
+										   </if>
 										   AND a.detection_time <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00')
 										   <if test='assetLevel != null'>
 										    <choose>
 												<when test='assetLevel == 1'>
-												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1))) * 100, 2),0) AS percent 
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1))) * 100, 2) AS percent 
 												</when>
 												<when test='assetLevel == 3'>
-												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3))) * 100, 2),0) AS percent 
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3))) * 100, 2) AS percent 
 												</when>
 												<when test='assetLevel == 5'>
-												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3, 5))) * 100, 2),0) AS percent 
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3, 5))) * 100, 2) AS percent 
 												</when>												
 												<otherwise>
-												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3, 5))) * 100, 2),0) AS percent 
+												 AND Greatest(n.confidentiality_level, n.integrity_level, n.availability_level) IN (1, 3, 5))) * 100, 2) AS percent 
 												</otherwise>
 											</choose>
 										   </if>
-      FROM   (select * from code_info where maingroup = 'AS' AND subgroup = 'LC' ) c
-      left join network_asset_info n 
+      FROM   network_asset_info n 
       LEFT JOIN asset_status_info a 
       ON n.system_id = a.system_id 
       AND a.asset_status = 1 
+      LEFT JOIN code_info c 
       ON n.large_category = c.code 
+      AND c.maingroup = 'AS' 
+      AND c.subgroup = 'LC' 
+      WHERE 1 = 1
+      <if test='periodId != null'>
 	    <choose>
 			<when test='periodId == 1'>
 			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
@@ -890,9 +1080,10 @@
 			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 YEAR 
 			</when>
 			<otherwise>
-			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{frDate}, '%Y-%m-%d %H:00:00') 
+			 AND  a.detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 HOUR 
 			</otherwise>
 		</choose>
+	   </if>
       AND a.detection_time <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') 
       <if test='assetLevel != null'>
 	    <choose>
@@ -918,23 +1109,28 @@
    <select id="selectRptAssetPerHour" parameterType="map" resultType="CmmnMap">
      <choose>
 		<when test='periodId == 1'>
-		
-		SELECT dates.dateH AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+		SELECT CONCAT(dates.date, ' ', hours.hour) AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
           FROM  
-		      (  with recursive T as (
-			    select DATE_FORMAT(DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR),'%Y-%m-%d %H') as dateH
-			    union all
-			    select DATE_FORMAT(DATE_ADD(DATE_FORMAT(dateH, '%Y-%m-%d %T'), INTERVAL 1 HOUR),'%Y-%m-%d %H')  from T where dateH  <![CDATA[<]]> DATE_FORMAT(#{toDate}, '%Y-%m-%d %T')
-			    )
-			    select * from T
-				) AS dates 
+		      ( SELECT DISTINCT DATE(detection_time) AS date  
+		        FROM v_asset_lc_status  
+		       WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		      ) AS dates 
+		CROSS JOIN 
+			    ( 
+				SELECT '00' AS hour UNION ALL SELECT '01' UNION ALL SELECT '02' UNION ALL SELECT '03' UNION ALL 
+				SELECT '04' UNION ALL SELECT '05' UNION ALL SELECT '06' UNION ALL SELECT '07' UNION ALL 
+				SELECT '08' UNION ALL SELECT '09' UNION ALL SELECT '10' UNION ALL SELECT '11' UNION ALL 
+				SELECT '12' UNION ALL SELECT '13' UNION ALL SELECT '14' UNION ALL SELECT '15' UNION ALL 
+				SELECT '16' UNION ALL SELECT '17' UNION ALL SELECT '18' UNION ALL SELECT '19' UNION ALL 
+				SELECT '20' UNION ALL SELECT '21' UNION ALL SELECT '22' UNION ALL SELECT '23' 
+				) AS hours 
 		CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
-		LEFT JOIN  (SELECT DATE_FORMAT(detection_time, '%Y-%m-%d %H') AS dateH, large_cat, COUNT(*) as cnt 
+		LEFT JOIN  (SELECT DATE(detection_time) AS date, DATE_FORMAT(detection_time, '%H') AS hour, large_cat, COUNT(*) as cnt 
 		              FROM v_asset_lc_status 
 		             WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
-		               AND grade  <![CDATA[<=]]>  '3'
-		             GROUP BY dateH, large_cat ) AS vc 
-		ON dates.dateH = vc.dateH AND cats.large_cat = vc.large_cat 
+		               AND grade <![CDATA[<=]]> #{assetLevel}
+		             GROUP BY date, hour, large_cat ) AS vc 
+		ON dates.date = vc.date AND hours.hour = vc.hour AND cats.large_cat = vc.large_cat 
 		ORDER BY xValue, cats.large_cat
 		</when>
 		<when test='periodId == 2'>
@@ -1007,62 +1203,40 @@
          ORDER BY xValue, cats.large_cat
 		</when>
 		<otherwise>
-		SELECT CONCAT(dates.date)  AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
-		   FROM  
-			    (SELECT DATE(DATE_ADD(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL -1*nums.num DAY)) as date 
-				FROM ( 
-					 <choose>
-                     <when test='btDay == 1'>
-                      SELECT 0 AS num
-                      UNION SELECT 1 
-                     </when>
-                     <when test='btDay == 2'>
-                      SELECT 0 AS num
-                      UNION SELECT 1 
-                      UNION SELECT 2
-                     </when>
-                     <when test='btDay == 3'>
-                      SELECT 0 AS num
-                      UNION SELECT 1 
-                      UNION SELECT 2
-                      UNION SELECT 3 
-                     </when>
-                     <when test='btDay == 4'>
-                      SELECT 0 AS num
-                      UNION SELECT 1 
-                      UNION SELECT 2
-                      UNION SELECT 3 
-                      UNION SELECT 4
-                     </when>
-                     <otherwise>
-                      SELECT 0 AS num
-                      UNION SELECT 1 
-                      UNION SELECT 2
-                      UNION SELECT 3 
-                      UNION SELECT 4
-                      UNION SELECT 5 
-                     </otherwise>
-                     </choose>
-				     ) nums 
-			    ) AS dates 
-		 CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
-		 LEFT JOIN (SELECT DATE(detection_time) AS date, large_cat, COUNT(*) as cnt 
-			          FROM v_asset_lc_status 
-			         WHERE detection_time BETWEEN DATE_FORMAT(#{frDate}, '%Y-%m-%d %T')  AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
-			         AND grade <![CDATA[<=]]> #{assetLevel}
-			         GROUP BY date, large_cat) AS vc 
-		 ON dates.date = vc.date AND cats.large_cat = vc.large_cat 
-		 ORDER BY xValue, cats.large_cat
+		SELECT CONCAT(dates.date, ' ', hours.hour) AS xValue, cats.large_cat, IFNULL(vc.cnt, 0) AS count 
+          FROM  
+		      ( SELECT DISTINCT DATE(detection_time) AS date  
+		        FROM v_asset_lc_status  
+		       WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		      ) AS dates 
+		CROSS JOIN 
+			    ( 
+				SELECT '00' AS hour UNION ALL SELECT '01' UNION ALL SELECT '02' UNION ALL SELECT '03' UNION ALL 
+				SELECT '04' UNION ALL SELECT '05' UNION ALL SELECT '06' UNION ALL SELECT '07' UNION ALL 
+				SELECT '08' UNION ALL SELECT '09' UNION ALL SELECT '10' UNION ALL SELECT '11' UNION ALL 
+				SELECT '12' UNION ALL SELECT '13' UNION ALL SELECT '14' UNION ALL SELECT '15' UNION ALL 
+				SELECT '16' UNION ALL SELECT '17' UNION ALL SELECT '18' UNION ALL SELECT '19' UNION ALL 
+				SELECT '20' UNION ALL SELECT '21' UNION ALL SELECT '22' UNION ALL SELECT '23' 
+				) AS hours 
+		CROSS JOIN (SELECT DISTINCT large_cat FROM v_asset_lc_status) AS cats 
+		LEFT JOIN  (SELECT DATE(detection_time) AS date, DATE_FORMAT(detection_time, '%H') AS hour, large_cat, COUNT(*) as cnt 
+		              FROM v_asset_lc_status 
+		             WHERE detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %T'), INTERVAL 24 HOUR) AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %T') 
+		               AND grade <![CDATA[<=]]> #{assetLevel}
+		             GROUP BY date, hour, large_cat ) AS vc 
+		ON dates.date = vc.date AND hours.hour = vc.hour AND cats.large_cat = vc.large_cat 
+		ORDER BY xValue, cats.large_cat
 		</otherwise>
 	 </choose>
    </select>
    
    <select id="selectRptAssetArea" parameterType="map" resultType="CmmnMap">
         SELECT  zone_name
-              , COUNT(si.system_id) AS count
-              , IFNULL(ROUND((COUNT(si.system_id) /(SELECT COUNT(*) 
+              , COUNT(*) AS count
+              , ROUND((COUNT(*) /(SELECT COUNT(*) 
                                     FROM v_asset_zone_status 
                                    WHERE 1 = 1 
+						          <if test='periodId != null'>
 							       <choose>
 									<when test='periodId == 1'>
 									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
@@ -1077,18 +1251,16 @@
 									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 YEAR) 
 									</when>
 									<otherwise>
-									 AND  detection_time BETWEEN DATE_FORMAT(#{frDate}, '%Y-%m-%d %H:00:00') 
+									 AND  detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
 									</otherwise>
 									</choose>
+								   </if>
                                   AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00') 
                                   AND grade  <![CDATA[<=]]> #{assetLevel}
-                                  )) * 100, 2 ),0) AS percentage  
-          FROM zone_location zl
-          left join network_asset_info na
-          on zl.zone_id = na.zone_id
-          left join asset_status_info si
-          on  na.system_id = si.system_id
-          and  si.asset_status = 1
+                                  )) * 100, 2 ) AS percentage  
+          FROM v_asset_zone_status  
+          WHERE 1 = 1 
+          <if test='periodId != null'>
 	       <choose>
 			<when test='periodId == 1'>
 			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
@@ -1103,11 +1275,12 @@
 			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 1 YEAR) 
 			</when>
 			<otherwise>
-			 AND detection_time BETWEEN DATE_FORMAT(#{frDate}, '%Y-%m-%d %H:00:00')  
+			 AND detection_time BETWEEN DATE_SUB(DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00'), INTERVAL 24 HOUR) 
 			</otherwise>
 			</choose>
+		   </if>
            AND DATE_FORMAT(#{toDate}, '%Y-%m-%d %H:00:00')  
-           and greatest(na.confidentiality_level, na.integrity_level, na.availability_level) <![CDATA[<=]]> #{assetLevel}
+           AND grade <![CDATA[<=]]> #{assetLevel}
            GROUP BY  zone_name
    </select>
    
@@ -1125,6 +1298,7 @@
               , asset_status, grade 
           FROM v_asset_status_rawdata  
           WHERE 1 = 1
+          <if test='periodId != null'>
 	       <choose>
 			<when test='periodId == 1'>
 			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 hour  
@@ -1139,34 +1313,18 @@
 			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 1 YEAR  
 			</when>
 			<otherwise>
-			  AND  detection_time <![CDATA[>=]]>  Date_format(#{frDate}, '%Y-%m-%d %H:00:00') 
+			 AND  detection_time <![CDATA[>=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') - interval 24 hour  
 			</otherwise>
 			</choose>
+		   </if>
+            
             AND detection_time <![CDATA[<=]]> Date_format(#{toDate}, '%Y-%m-%d %H:00:00') 
           <if test='assetLevel != null'>
             AND grade <![CDATA[<=]]> #{assetLevel}
 	      </if>
    </select>
   
-   <select id="selectRptAfter" parameterType="map" resultType="CmmnMap">
-           SELECT   DATE_FORMAT(NOW(),'%Y-%m-%d %T') AS CUR_TIME 
-                    <choose>
-					<when test='periodId == 1'>
-					,Date_format(#{toDate}, '%Y-%m-%d %T') - interval 24 hour  AS FR_TIME
-					</when>
-					<when test='periodId == 2'>
-					,Date_format(#{toDate}, '%Y-%m-%d %T') - interval 1 WEEK  AS FR_TIME
-					</when>
-					<when test='periodId == 3'>
-					,Date_format(#{toDate}, '%Y-%m-%d %T') - interval 1 MONTH  AS FR_TIME
-					</when>
-					<when test='periodId == 4'>
-					,Date_format(#{toDate}, '%Y-%m-%d %T') - interval 1 YEAR  AS FR_TIME
-					</when>
-					<otherwise>
-					</otherwise>
-					</choose>
-   </select>
+  
   
   <update id="insertRptSch" parameterType="map">
        INSERT INTO report_schedule (FORM_ID
@@ -1207,7 +1365,7 @@
 	                              , NEXT_TIME = date_add(#{createTime}, interval 1 day)
 	    </when>
 	    <when test='periodId != null and periodId.equals("2")'>
-	                              , NEXT_TIME = date_add(#{createTime}, interval 1 week)
+	                              , NEXT_TIME = date_add(#{createTime}, interval 1 month)
 	    </when>
 	    <otherwise>
 	                              , NEXT_TIME = date_add(#{createTime}, interval 1 month)
@@ -1227,7 +1385,7 @@
 	                               NEXT_TIME = date_add(#{nextTime}, interval 1 day)
 	    </when>
 	    <when test='periodId != null and periodId.equals("2")'>
-	                               NEXT_TIME = date_add(#{nextTime}, interval 1 week)
+	                               NEXT_TIME = date_add(#{nextTime}, interval 1 month)
 	    </when>
 	    <otherwise>
 	                               NEXT_TIME = date_add(#{nextTime}, interval 1 month)
@@ -1256,13 +1414,13 @@
 				              , #{reportTitle}
 				              , #{reportType}
 	   <if test='assetYn != null'>
-				              , DECODE_ORACLE(#{assetStatus},1,1,2)
-				              , DECODE_ORACLE(#{assetLevel, jdbcType=VARCHAR},'',0,#{assetLevel})
+				              , DECODE_ORACLE(#{assetStatus, jdbcType=VARCHAR},1,1,2)
+				              , #{assetLevel}
 	   </if>
-				              , DECODE_ORACLE(#{threatAnalysis},1,1,2)
+				              , DECODE_ORACLE(#{threatAnalysis, jdbcType=VARCHAR},1,1,2)
 				              , #{threatLevel}
                               , SYSDATE()
-                              , DECODE_ORACLE(#{useFlag},1,1,2)
+                              , DECODE_ORACLE(#{useFlag, jdbcType=VARCHAR},1,1,2)
 				              )
 					     
    </update>
@@ -1272,12 +1430,12 @@
                               , REPORT_TITLE = #{reportTitle}
 				              , REPORT_TYPE = #{reportType}
 	     <if test='assetYn != null'>
-				              , ASSET_STATUS = DECODE_ORACLE(#{assetStatus},1,1,2)
-				              , ASSET_LEVEL = DECODE_ORACLE(#{assetLevel, jdbcType=VARCHAR},'',0,#{assetLevel})
+				              , ASSET_STATUS = DECODE_ORACLE(#{assetStatus, jdbcType=VARCHAR},1,1,2)
+				              , ASSET_LEVEL = #{assetLevel}
 	    </if>
-				              , THREAT_ANALYSIS = DECODE_ORACLE(#{threatAnalysis},1,1,2)
+				              , THREAT_ANALYSIS = DECODE_ORACLE(#{threatAnalysis, jdbcType=VARCHAR},1,1,2)
 				              , THREAT_LEVEL = #{threatLevel}
-				              , USE_FLAG = DECODE_ORACLE(#{useFlag},1,1,2)
+				              , USE_FLAG = DECODE_ORACLE(#{useFlag, jdbcType=VARCHAR},1,1,2)
 	    WHERE FORM_ID = #{formId}
    </update>
    

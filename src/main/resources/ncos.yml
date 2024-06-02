@@ -9,25 +9,36 @@ code:
 darkMode: dark
 whiteMode: white
 
+addr: 
+  navy: 127.0.0.1
+  land: lnsystem.iptime.org
+  
 cronFrmt: 0 0/1 * * * ?
 
 tcp:
+  server: 
+    host: 192.168.220.11
+    port: 31000
   client:
     connection:
       poolSize: 1
 
-thread:
-  pool:
-    size: 1
     
-#prodMode: Y
+  
+udp:
+  server:
+    host: 192.168.220.11
+    port: 31000
+  client:
+    cronFrmt: 0/1 * * * * ?
 
-#ssoMode: Y
+navyPayload: /
 
-#cryptoMode: Y
+prodMode: Y
 
-#cmd: /home/user/ncos/train_run.sh
+ssoMode: Y
 
+cryptoMode: Y
 
 crypto: 
   key1: KEY1
@@ -36,7 +47,7 @@ crypto:
 affiliation:
   unitcount : 3
   unit0 :
-    id : '1'
+    id : '996'
     lat : 37.75000
     lon : 128.88333
     img : '/img/icon/navy_pin_blue.svg'

@@ -4,12 +4,12 @@
 let ncos = { storageKey : "ncosStorage"
 	      , cryptKey   : "ncosAuth"
 	      , codeKey   : "codeKey"
-	      , interval  :  5000  //5000
-	      , intervalTrans  :  1000//1000
+	      , interval  :  5000   //5000
+	      , intervalTrans  :  1000   //1000
 	      , diffDay   : -100  
 	      , uiMode    : "ncosUiMode"
 	      , diffDay   : -30
-	      , schMode   : 'menual'
+	      , schMode   : 'auto'
 	      , intervalFunc : null
 	      , watchFunc : null
 	      , intervalHm : 24   //24
@@ -29,15 +29,13 @@ const gfn_formToJson = (form) => {
 
 const gfn_asyncTranDataCall = async (url,method,jsonParam,callBackFn,msgYn) => {
 	try{
-        let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
+        sessionTime = gfn_getStorageItem('sessionTm',false);
+		if(sessionTime > -1){
+			setTimer();
 		}
 		let _method = method===undefined?'POST':method;
 		const data = await fetch(url, {method: _method
 		                               , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} // 'Content-Type':
-		                               , credentials: "same-origin"
 		                               , body: JSON.stringify(jsonParam)
 								 }).then((result) =>{
 									 return result.json();
@@ -70,12 +68,10 @@ const gfn_asyncTranDataCall = async (url,method,jsonParam,callBackFn,msgYn) => {
 
 const gfn_asyncTranCall = async (url,method,requiredParams,comp,callBackFn,msgYn) => {
 	try{
-		let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
+		sessionTime = gfn_getStorageItem('sessionTm',false);
+		if(sessionTime > -1){
+			setTimer();
 		}
-		console.log("requiredParams:",requiredParams);
 		if(requiredParams != undefined && requiredParams != null){
 			if(!gfn_valid(comp,requiredParams)){
 				return;
@@ -84,7 +80,6 @@ const gfn_asyncTranCall = async (url,method,requiredParams,comp,callBackFn,msgYn
 		let _method = method===undefined?'POST':method;
 		const data = await fetch(url, {method: _method
 		                               , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} // 'Content-Type':
-		                               , credentials: "same-origin"
 		                               , body: JSON.stringify(gfn_genJsonParam(comp))
 								 }).then((result) =>{
 									 return result.json();
@@ -136,15 +131,6 @@ const gfn_asyncTranCall = async (url,method,requiredParams,comp,callBackFn,msgYn
 
 const gfn_asyncJsonCall = async (url,method,jsonParam,requiredParams,comp,callBackFn,msgYn) => {
 	//console.log("gfn_asyncJsonCall schMode:",ncos.schMode);
-	let sessionTime = gfn_getStorageItem('sessionTm',false);
-	//console.log("ncos.schMode:",ncos.schMode);
-	if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-		if(url != '/watchList' &&  url != '/watchEquipStatus' &&  url != '/dataTrans' &&  ncos.schMode == 'menual'){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
-		
-	}
 	try{
 		let _method = method===undefined?'POST':method;
 		if(_method.toUpperCase() === 'POST' && (jsonParam === undefined || jsonParam === null || Object.keys(jsonParam).length === 0)){
@@ -168,8 +154,7 @@ const gfn_asyncJsonCall = async (url,method,jsonParam,requiredParams,comp,callBa
 		}
 		let sendData = {method: _method
                       , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} 
-                      , credentials: "same-origin"
-	                   };
+	                   }; 
 	    
 		if(method.toUpperCase() === 'POST'){
 			sendData.body = JSON.stringify(jsonParam);
@@ -181,11 +166,6 @@ const gfn_asyncJsonCall = async (url,method,jsonParam,requiredParams,comp,callBa
 		
 		if(jsonParam && jsonParam.pageNo && parseInt(jsonParam.pageNo) > 1 && ncos.schMode === 'auto'){
 			clearInterval(ncos.intervalFunc);
-			if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-				clearInterval(loginInterval);
-				setTimer(sessionTime);
-			}
-			
 		}
 		const data = await fetch(url, sendData).then((result) =>{
 									 return result.json();
@@ -209,6 +189,44 @@ const gfn_asyncJsonCall = async (url,method,jsonParam,requiredParams,comp,callBa
 }
 
 
+const gfn_ssoCall = () => {
+	try{
+	    console.log("gfn_ssoCall");
+	    let url = "http://localhost:8081/loginTest";
+        let option = 'resizable=yes';
+        window.open(url, '_blank',option);
+	    let myForm = document.sessionFrm;
+        myForm.action = url;
+        myForm.method = "post";
+        myForm.target = "_blank";
+        myForm.submit();
+      
+    } catch (err) {
+    	console.error("gfn_ssoCall errorr:", err);
+    	
+    	
+    }
+}
+
+
+const gfn_formCall = (form) => {
+	try{
+		console.log("gfn_formCall...");      
+		let urlPath = document.location.protocol + "//" + document.location.host;  
+		let lastIdx = urlPath.lastIndexOf(':');
+        const formData = new FormData(form);
+        const sessionData = new URLSearchParams(formData);        
+	    fetch(urlPath.substring(0,lastIdx)+':8081/apiv1/session', {
+               method: 'POST',
+               headers: {'Content-Type': 'application/x-www-form-urlencoded', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content},
+               body: sessionData,
+        });
+
+    } catch (err) {
+    	console.error("gfn_formCall errorr:", err);
+    }
+}
+
 const gfn_ssoLogout = (form) => {
 	try{
 		console.log("gfn_ssoLogout...");      
@@ -230,8 +248,7 @@ const gfn_ssoLogout = (form) => {
 const gfn_asyncSessionChk = async () => {
 	let sendData = {method: 'GET'
                       , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} 
-                      , credentials: "same-origin"
-	                }; 
+	                   }; 
 	sendData.params = JSON.stringify({});
     const data =  await fetch('/sessionChk', sendData).then((result) =>{
 								 return result.json();
@@ -246,7 +263,6 @@ const gfn_asyncUrlCall = async (url,method,params,modalYn) => {
 		let _method = method===undefined?'POST':method;
 		let sendData = {method: _method
                       , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} 
-                      , credentials: "same-origin"
 		              };
 		
 		if(_method === 'POST'){
@@ -269,7 +285,7 @@ const gfn_asyncUrlCall = async (url,method,params,modalYn) => {
 		}
 		*/
 		const result = await fetch(url, sendData);
-		//console.log("result:result");
+		console.log("result:result");
 		const data = await result.text();
 		return data;
     } catch (err) {
@@ -280,7 +296,6 @@ const gfn_asyncUrlCall = async (url,method,params,modalYn) => {
 const gfn_schParam = (schParam) => {
 	schParam.schMode = ncos.schMode;
 	let schwrap = document.querySelector('.schwrap');
-	console.log("schwarp:",schwrap);
 	if(schwrap){
 		let inputs = schwrap.getElementsByTagName('input');
 		for (let input  of inputs) {
@@ -323,7 +338,6 @@ const gfn_schParam = (schParam) => {
 		});
 			
 	}
-	console.log("schParam:",schParam);
 }
 
 
@@ -335,7 +349,6 @@ const gfn_codes =  async () => {
 		const data = await fetch("/codes"
                                , {method: "GET"
 		                        , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} // 'Content-Type':
-		                        , credentials: "same-origin"
 						         }).then((result)=> {return result.json();
 						         }).then((codes)=>{
 									 codes.codes.push({grpCd:"useFlag",cd:1,cdNm:"사용"});
@@ -350,10 +363,6 @@ const gfn_codes =  async () => {
 									 codes.codes.push({grpCd:"STDE",cd:40,cdNm:"40"});
 									 codes.codes.push({grpCd:"STDE",cd:50,cdNm:"50"});
 									 codes.codes.push({grpCd:"STDE",cd:60,cdNm:"60"});
-									 codes.codes.push({grpCd:"AIIX",cd:1,cdNm:"정확도"});
-									 codes.codes.push({grpCd:"AIIX",cd:2,cdNm:"정밀도"});
-									 codes.codes.push({grpCd:"AIIX",cd:2,cdNm:"재현율"});
-									 codes.codes.push({grpCd:"AIIX",cd:2,cdNm:"FI점수"});
 									 return codes;
 								 }); 
 		gfn_setStorage(ncos.codeKey, CryptoJS.AES.encrypt(JSON.stringify(data), ncos.cryptKey));
@@ -442,25 +451,6 @@ const gfn_valid = (comp,requiredParams,fileYn) => {
 			   }
 			   isValid = false;
 		   }
-		   else{
-			    if(comp != undefined){
-				   let item = comp.querySelector('#'+key);
-				   if(item.tagName === 'INPUT'){
-				       let message = item.parentNode.querySelector('.message');
-				       if(message){
-						   item.parentNode.classList.remove('error');
-						   message.textContent = '';
-					   }
-					   else{
-						   comp.querySelector('#'+key).style.borderColor = ''; 
-					   }
-				       
-				   }
-				   else if(item.tagName === 'UL'){
-				       item.parentNode.querySelector('.selected').style.borderColor = ''; 
-				   }
-			   }
-		   }
 	   }
 	   if(_fileYn){
 		   let existUploadFile = false;
@@ -541,10 +531,6 @@ const gfn_initObj = (obj,isValid) => {
 			else if(input.type === 'datetime-local'){
 				if(input.id === 'frDt') input.value = gfn_getDiffDt(ncos.diffDay);;
 				if(input.id === 'toDt') input.value= gfn_getTodayDt();
-				if(!_isValid){
-					input.style.borderColor = ''; 	
-				}
-
 			}
 			else if(input.type === 'checkbox'){
 				if(!_isValid){
@@ -555,7 +541,6 @@ const gfn_initObj = (obj,isValid) => {
 			else {
 				if(!_isValid){
 					input.value = '';	
-					input.style.borderColor = ''; 	
 				}
 				//console.log("input:",input.parentNode);
 				if(input.parentNode.classList.contains('error')){
@@ -563,7 +548,7 @@ const gfn_initObj = (obj,isValid) => {
 					input.parentNode.classList.remove('error');
 					input.parentNode.querySelector('.message').textContent = '';
 				}
-				
+				//input.style.borderColor = ''; 	
 			}
 			
 		}
@@ -652,11 +637,6 @@ const gfn_genJsonParam = (obj) => {
 				params[input.getAttribute('id')] = input.value;
 			}
 			
-		}
-		
-		let textareas = obj.getElementsByTagName('textarea');
-		for (let textarea of textareas) {
-			params[textarea.getAttribute('id')] = textarea.value;
 		}
 	
 		let selectedValues = obj.querySelectorAll('.selected-value');
@@ -787,22 +767,6 @@ const gfn_validDay = (sDay,eDay) => {
 	}
 };
 
-const gfn_getBtDay = (sDay,eDay) => {
-	let sDate = sDay.replace('T',' ').substring(0,19);
-	let eDate = eDay.replace('T',' ').substring(0,19);
-	sDate = new Date(sDate);
-	eDate = new Date(eDate);
-
-	try{
-		let btMs = eDate.getTime() - sDate.getTime() ;
-		let btDay = btMs / (1000*60*60*24) ;
-	    return Math.ceil(btDay);
-    }catch(e){
-		console.error("gfn_validDay error:",e);
-	}
-};
-
-
 
 /**
  * Storage Item 조회
@@ -866,20 +830,8 @@ const gfn_setStorage = (key,val) => {
 };
 
 const gfn_getCodeVal = (grpCd,cd) => {
+
 	try{
-		if(typeof cd === "string"){
-			if(cd === 'true'){
-				cd = '1';
-			}
-			if(cd === 'false'){
-				cd = '0';
-			}
-			
-		}
-		if(typeof cd === "boolean"){
-			cd = Number(cd);
-		}
-		
 		let codeCache = gfn_getStorage(ncos.codeKey);
 		if(codeCache){
 			codeCache = JSON.parse(CryptoJS.AES.decrypt(codeCache,ncos.cryptKey).toString(CryptoJS.enc.Utf8))["codes"];
@@ -1083,7 +1035,7 @@ const gfn_nullValue = (val) => {
 	if(val === undefined || val === null || val === 'undefined'){
 		return '';
 	}
-	return val+'';
+	return val;
 }
 
 
@@ -1155,7 +1107,7 @@ const showMsgLayer = (el)=> {
 }
 
 const msgCall = (msg,isSuccess,isCancel,callBackFn) => {
-	//console.log("dim:",document.querySelector('#messageBox').parentNode);
+	console.log("dim:",document.querySelector('#messageBox').parentNode);
 	document.querySelector('#messageBox').parentNode.style.display = 'block';
 	let _isCancel = (isCancel===undefined || isCancel === null)?false:isCancel;
     if(_isCancel){
@@ -1198,11 +1150,7 @@ const msgCall = (msg,isSuccess,isCancel,callBackFn) => {
 	});       	
 	document.querySelector('.confirmBtn').addEventListener('click',e => {
 		e.preventDefault();
-		//console.log("paranet:",document.querySelector('#messageBox').parentNode);
-	    //document.querySelector('#messageBox').parentNode.style.display = 'none';
-	    if(document.querySelector('#messageBox').parentNode.style.display != 'none'){
-			document.querySelector('#messageBox').parentNode.style.display = 'none';
-		}
+		document.querySelector('#messageBox').parentNode.style.display = 'none';
 		document.querySelector('#messageBox').style.display = 'none';
 		document.querySelector('#messageBox').querySelector('.cancelBtn').style.display = 'none';
 		if(document.querySelector('#messageBox').querySelector('.messageContent').classList.contains('success')){
@@ -1211,10 +1159,8 @@ const msgCall = (msg,isSuccess,isCancel,callBackFn) => {
 		if(document.querySelector('#messageBox').querySelector('.messageContent').classList.contains('fail')){
 			document.querySelector('#messageBox').querySelector('.messageContent').classList.remove('fail');
 		}
-		if(callBackFn != undefined && callBackFn != null){
-			console.log("callbackfn");
+		if(callBackFn != undefined){
 			callBackFn();
-			callBackFn = null;
 		}
 	});
 	
@@ -1313,14 +1259,11 @@ function toggleSelectBox(selectBox) {
 }
 
 function selectOption(optionElement) {
+	console.log("selectOption");
 	const selectBox = optionElement.closest(".select");
     const selectedElement = selectBox.querySelector(".selected-value");
     selectedElement.textContent = optionElement.textContent;
     selectedElement.setAttribute("data-value",optionElement.getAttribute("data-value"));
-    if (typeof changeSelectBox !== "undefined") { 
-		changeSelectBox(optionElement.parentNode,selectedElement.getAttribute("data-value"));
-    }
-    
 }
 
 
@@ -1426,7 +1369,6 @@ const gfn_getCodeZone = async() => {
 	const data = await fetch("/zoneList"
                            , {method: "GET"
 	                        , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} 
-	                        , credentials: "same-origin"
 					         }).then((result) =>{
 								 return result.json();
 							 }).catch((error) => {
@@ -1439,24 +1381,10 @@ const gfn_getCodeManager = async() => {
 	const data = await fetch("/managerList"
                            , {method: "GET"
 	                        , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} 
-	                        , credentials: "same-origin"
 					         }).then((result) =>{
 								 return result.json();
 							 }).catch((error) => {
 								 console.error("gfn_getCodeManager errorr:",error);
-							 });
-	return data;
-}
-
-const gfn_getCodeUser = async() => {
-	const data = await fetch("/userCodeList"
-                           , {method: "GET"
-	                        , headers: {'Content-Type': 'application/json', 'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content} 
-	                        , credentials: "same-origin"
-					         }).then((result) =>{
-								 return result.json();
-							 }).catch((error) => {
-								 console.error("gfn_getCodeUser errorr:",error);
 							 });
 	return data;
 }
@@ -1471,9 +1399,6 @@ const createMultiChk = (comp,grpCd,codeData) => {
 		cds = codeData;
 	}
 	else if(grpCd === 'AD'){
-		cds = codeData;
-	}
-	else if(grpCd === 'UA'){
 		cds = codeData;
 	}
 	else{
@@ -1492,35 +1417,24 @@ const createMultiChk = (comp,grpCd,codeData) => {
 
 const createChk = (comp,grpCd,optionLable,codeData) => {
 	let cds = null;
-	//console.log("codeData:",codeData);
 	let html = '';
 	if(grpCd === 'ZNLS'){
 		cds = codeData;
-	}
-	else if(grpCd === 'UNIT'){
-		cds = codeData;
-	}
-	else if(grpCd === 'SHIP'){
-		cds = codeData;
-	}
-	else{
+	}else{
 		cds = gfn_getCodeGrp(grpCd);
+		if(grpCd === 'COUT'){
+			console.log("cds:",cds);
+		}
 		
 	}
 	if(optionLable != null){
 		html += '<li class="option" data-value="">';
 		html += optionLable+'</li>';
 	}
-	if(cds.length > 1){
-		cds.forEach((cd) => {
+	cds.forEach((cd) => {
 		html += '<li class="option" data-value="'+cd.cd+'">';
 		html += cd.cdNm+'</li>';
 	});
-	}
-	else{
-		html += '<li class="option" data-value="'+cds[0].cd+'">';
-		html += cds[0].cdNm+'</li>';
-	}
 	
 	comp.innerHTML = html;
 	
@@ -1540,7 +1454,7 @@ const setCheckValue = (lis,selectedValue,data) => {
 const setMultiImpCheckValue = (multiObj,labels,data) => {
 	let selectedValue = multiObj.parentNode.querySelector('.selected-value');
 	labels.forEach((label) => {
-		let checkbox = label.childNodes[0];
+		let checkbox = label.querySelector('#'+label.getAttribute('for'));
 		if(data === '9'){
 			checkbox.checked = true;
 			selectedValue.textContent = '하, 중, 상';

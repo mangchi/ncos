@@ -6,63 +6,11 @@
   <select id="selectAssetCount" parameterType="map" resultType="long">
         SELECT COUNT(1) 
          FROM network_asset_info A
+         INNER JOIN asset_status_info C ON A.system_id = C.system_id
          LEFT JOIN zone_location B
          ON A.ZONE_ID = B.ZONE_ID
          <include refid="whereAssetList"></include>
   </select>
-  
-  <select id="selectAssetDispAllList" parameterType="map" resultType="CmmnMap">
-
-     	SELECT  RN
-     	      , A.ASSET_ID ID
-     	      , B.LARGE_CATEGORY
-     	      , B.SMALL_CATEGORY
-     	      , B.SYSTEM_ID
-     	      , B.ASSET_NAME
-     	      , B.IP_ADDRESS
-     	      , A.ZONE_ID
-     	      , A.ZONE_NAME
-     	      , B.MANAGER
-     	      , B.CONFIDENTIALITY_LEVEL
-     	      , B.INTEGRITY_LEVEL
-     	      , B.AVAILABILITY_LEVEL
-     	      , B.ASSET_REG_TIME
-     	      , A.DETECTION_TIME
-     	      , A.ASSET_STATUS
-     	      , IF(A.ASSET_STATUS = 1, (SELECT V.statusText FROM reason_v V WHERE V.statusCode = A.reason_id AND V.systemId = A.system_id), NULL) AS STATUS_TEXT
-        FROM ( SELECT A.ASSET_ID
-                    , B.ZONE_ID
-                    , B.ZONE_NAME
-                    , C.DETECTION_TIME
-                    , C.ASSET_STATUS
-                    , C.reason_id
-                    , A.system_id
-                    , ROW_NUMBER() OVER (ORDER BY A.ASSET_ID DESC) AS RN
-               FROM  network_asset_info A
-               INNER JOIN asset_status_info C 
-               ON A.system_id = C.system_id
-               LEFT JOIN zone_location B
-               ON A.ZONE_ID = B.ZONE_ID
-               <include refid="whereAssetDispList"></include>
-               ) A
-        STRAIGHT_JOIN network_asset_info B
-        ON (A.ASSET_ID = B.ASSET_ID)
-        ORDER BY RN
-  </select>
-  
-  <select id="selectListAssetStatus" parameterType="map" resultType="CmmnMap">
-
-      SELECT (SELECT COUNT(1) FROM network_asset_info) TOT_CNT, COUNT(1) ASSET_CNT
-	   FROM
-           (SELECT ASSET_ID
-            FROM network_asset_info A
-            INNER JOIN asset_status_info C ON A.system_id = C.system_id
-            <include refid="whereAssetDispList"></include>
-			AND C.ASSET_STATUS != 2
-			GROUP BY ASSET_ID) A
-	
-  </select>
-  
 
   <select id="selectAssetList" parameterType="map" resultType="CmmnMap">
 
@@ -80,13 +28,22 @@
      	      , B.INTEGRITY_LEVEL
      	      , B.AVAILABILITY_LEVEL
      	      , B.ASSET_REG_TIME
+     	      , A.DETECTION_TIME
+     	      , A.ASSET_STATUS
+     	      , IF(A.ASSET_STATUS = 1, A.statusText, NULL) AS STATUS_TEXT
         FROM ( SELECT A.ASSET_ID
                     , B.ZONE_ID
                     , B.ZONE_NAME
-                    , ROW_NUMBER() OVER (ORDER BY A.ASSET_ID DESC) AS RN
+                    , C.DETECTION_TIME
+                    , C.ASSET_STATUS
+                    , C.reason_id
+                    , V.statusText
+                    , ROW_NUMBER() OVER (ORDER BY C.DETECTION_TIME DESC,A.ASSET_ID DESC) AS RN
                FROM  network_asset_info A
+               INNER JOIN asset_status_info C ON A.system_id = C.system_id
                LEFT JOIN zone_location B
                ON A.ZONE_ID = B.ZONE_ID
+               LEFT JOIN reason_v V ON V.statusCode = C.reason_id AND V.systemId = C.system_id
                <include refid="whereAssetList"></include>
                LIMIT #{startRow},#{rowPerPage}) A
         STRAIGHT_JOIN network_asset_info B
@@ -95,142 +52,6 @@
   </select>
   
   <sql id="whereAssetList">
-         <where>
-			 <choose>
-				 <when test='schMode != null and schMode.equals("menual")'>
-			         <if test='frDt != null and !frDt.equals("")'>
-				      AND A.ASSET_REG_TIME <![CDATA[>=]]> #{frDt}
-			         </if>
-			         <if test='toDt != null and !toDt.equals("")'>
-				      AND A.ASSET_REG_TIME <![CDATA[<=]]> #{toDt}
-			         </if>
-			          <if test='schLargeCategory != null and !schLargeCategory.equals("")'>
-			          AND A.LARGE_CATEGORY IN 
-			          <foreach collection="schLargeCategory" item="item" open="(" close=")" separator="," index="idx">
-			         #{item}
-			          </foreach> 
-			          </if>
-			          <if test='schSmallCategory != null and !schSmallCategory.equals("")'>
-			          AND A.SMALL_CATEGORY IN 
-			          <foreach collection="schSmallCategory" item="item" open="(" close=")" separator="," index="idx">
-			         #{item}
-			          </foreach> 
-			          </if>
-			          <if test='schAssetName != null and !schAssetName.equals("")'>
-			          AND A.ASSET_NAME LIKE CONCAT('%',#{schAssetName},'%')
-			          </if>
-			           <if test='schZoneId != null and !schZoneId.equals("")'>
-			           AND B.ZONE_ID IN 
-			          <foreach collection="schZoneId" item="item" open="(" close=")" separator="," index="idx">
-			          #{item}
-			          </foreach> 
-			          </if>
-			          <if test='schAdmin != null and !schAdmin.equals("")'>
-			           AND A.MANAGER IN 
-			          <foreach collection="schAdmin" item="item" open="(" close=")" separator="," index="idx">
-			          #{item}
-			          </foreach> 
-			          </if>
-				 </when>
-				 <otherwise>
-		         	AND A.ASSET_REG_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR)
-		         </otherwise>
-			 </choose>  
-         </where>
-  </sql>
-  
-   <select id="selectAssetDispCount" parameterType="map" resultType="long">
-        SELECT COUNT(1) 
-         FROM network_asset_info A
-         INNER JOIN asset_status_info C ON A.system_id = C.system_id
-         LEFT JOIN zone_location B
-         ON A.ZONE_ID = B.ZONE_ID
-         <include refid="whereAssetDispList"></include>
-  </select>
-  
-   <select id="selectListAssetAffair" parameterType="map" resultType="CmmnMap">
-       SELECT CI.CODE LARGE_CATEGORY, SUM(CASE WHEN NSI.LARGE_CATEGORY IS NULL THEN 0 ELSE 1 END) CNT
-			FROM (SELECT * FROM code_info 
-			      WHERE MAINGROUP = 'AS' AND SUBGROUP = 'LC') CI
-			LEFT JOIN 
-			( SELECT NSI.LARGE_CATEGORY
-            FROM network_asset_info NSI
-            INNER JOIN (
-             SELECT A.SYSTEM_ID
-             FROM network_asset_info A
-             INNER JOIN asset_status_info C ON A.system_id = C.system_id
-            LEFT JOIN zone_location B
-            ON A.ZONE_ID = B.ZONE_ID
-            <include refid="whereAssetDispList"></include>
-            AND C.ASSET_STATUS != 2
-            ) ASI
-		    ON NSI.SYSTEM_ID = ASI.SYSTEM_ID 
-			) NSI
-            ON CI.CODE = NSI.LARGE_CATEGORY
-            GROUP BY CI.CODE
-  </select>
-  
-
-  <select id="selectAssetDispList" parameterType="map" resultType="CmmnMap">
-
-     	SELECT  RN
-     	      , A.ASSET_ID ID
-     	      , B.LARGE_CATEGORY
-     	      , B.SMALL_CATEGORY
-     	      , B.SYSTEM_ID
-     	      , B.ASSET_NAME
-     	      , B.IP_ADDRESS
-     	      , A.ZONE_ID
-     	      , A.ZONE_NAME
-     	      , B.MANAGER
-     	      , B.CONFIDENTIALITY_LEVEL
-     	      , B.INTEGRITY_LEVEL
-     	      , B.AVAILABILITY_LEVEL
-     	      , B.ASSET_REG_TIME
-     	      , A.DETECTION_TIME
-     	      , A.ASSET_STATUS
-     	      , IF(A.ASSET_STATUS = 1, (SELECT V.statusText FROM reason_v V WHERE V.statusCode = A.reason_id AND V.systemId = A.system_id), NULL) AS STATUS_TEXT
-        FROM ( SELECT A.ASSET_ID
-                    , B.ZONE_ID
-                    , B.ZONE_NAME
-                    , C.DETECTION_TIME
-                    , C.ASSET_STATUS
-                    , C.reason_id
-                    , A.system_id
-                    , ROW_NUMBER() OVER (ORDER BY C.DETECTION_TIME DESC,A.ASSET_ID DESC) AS RN
-               FROM  network_asset_info A
-               INNER JOIN asset_status_info C 
-               ON A.system_id = C.system_id
-               LEFT JOIN zone_location B
-               ON A.ZONE_ID = B.ZONE_ID
-               <include refid="whereAssetDispList"></include>
-               LIMIT #{startRow},#{rowPerPage}) A
-        STRAIGHT_JOIN network_asset_info B
-        ON (A.ASSET_ID = B.ASSET_ID)
-        ORDER BY RN
-  </select>
-  
- <!--  <select id="selectListAssetStatus" parameterType="map" resultType="CmmnMap">
-        SELECT (SELECT COUNT(1)
-				FROM asset_status_info A 
-				INNER JOIN   
-				(SELECT SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
-				FROM asset_status_info 
-				GROUP BY SYSTEM_ID) B
-				ON A.SYSTEM_ID = B.SYSTEM_ID
-				AND A.STATUS_ID = B.STATUS_ID
-				AND ASSET_STATUS != 2) AS ASSET_THREAT_CNT
-              ,(SELECT COUNT(1) 
-                 FROM (SELECTA.ASSET_ID)
-				        FROM network_asset_info A
-				        INNER JOIN asset_status_info C ON A.system_id = C.system_id
-				        LEFT JOIN zone_location B
-				        ON A.ZONE_ID = B.ZONE_ID
-				        <include refid="whereAssetDispList"></include>
-				        GROUP BY A.ASSET_ID) A)  AS ASSET_TOT_CNT
-  </select>
-   -->
-  <sql id="whereAssetDispList">
          <where>
 			 <choose>
 				 <when test='schMode != null and schMode.equals("menual")'>
@@ -256,7 +77,7 @@
 			          AND A.ASSET_NAME LIKE CONCAT('%',#{schAssetName},'%')
 			          </if>
 			          <if test='schIpAddress != null and !schIpAddress.equals("")'>
-			          AND A.IP_ADDRESS LIKE CONCAT('%',#{schIpAddress},'%')
+			          AND B.IP_ADDRESS LIKE CONCAT('%',#{schIpAddress},'%')
 			          </if>
 			           <if test='schZoneId != null and !schZoneId.equals("")'>
 			           AND B.ZONE_ID IN 
@@ -265,7 +86,7 @@
 			          </foreach> 
 			          </if>
 			          <if test='schAdmin != null and !schAdmin.equals("")'>
-			           AND A.MANAGER IN 
+			           AND B.MANAGER IN 
 			          <foreach collection="schAdmin" item="item" open="(" close=")" separator="," index="idx">
 			          #{item}
 			          </foreach> 
@@ -277,19 +98,19 @@
 			          </foreach> 
 			          </if>
 			           <if test='schConfidentialityLevel != null and !schConfidentialityLevel.equals("")'>
-			           AND A.CONFIDENTIALITY_LEVEL IN 
+			           AND B.CONFIDENTIALITY_LEVEL IN 
 			          <foreach collection="schConfidentialityLevel" item="item" open="(" close=")" separator="," index="idx">
 			          #{item}
 			          </foreach> 
 			          </if>
 			           <if test='schIntegrityLevel != null and !schIntegrityLevel.equals("")'>
-			           AND A.INTEGRITY_LEVEL IN 
+			           AND B.INTEGRITY_LEVEL IN 
 			          <foreach collection="schIntegrityLevel" item="item" open="(" close=")" separator="," index="idx">
 			          #{item}
 			          </foreach> 
 			          </if>
 			           <if test='schAvailablityLevel != null and !schAvailablityLevel.equals("")'>
-			           AND A.AVAILABILITY_LEVEL IN 
+			           AND B.AVAILABILITY_LEVEL IN 
 			          <foreach collection="schAvailablityLevel" item="item" open="(" close=")" separator="," index="idx">
 			          #{item}
 			          </foreach> 
@@ -316,7 +137,7 @@
 		WHERE DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -#{intervalHm} HOUR) ) A
   </select>
   
-
+  
   
   <select id="selectAssetDispoList" parameterType="map" resultType="CmmnMap">
 
@@ -374,25 +195,20 @@
   
        SELECT A.ZONE_ID
              ,A.ASSET_ID,A.ASSET_NAME,A.LARGE_CATEGORY
-             ,B.A_GRADE,B.statusText REASON_NAME,C.S_GRADE, C.S_DETECTION_THREAT_NAME
+             ,B.A_GRADE,B.statusText,C.S_GRADE, C.S_DETECTION_THREAT_NAME
              ,D.D_GRADE,D.D_DETECTION_THREAT_NAME
              , CASE WHEN B.SYSTEM_ID IS NULL AND C.SRC_IP IS NULL AND D.DST_IP IS NULL THEN 'N' ELSE 'Y' END IS_PROBLEM
-             , DATE_ADD(NOW(), INTERVAL -1 MINUTE) BASE_TIME
-             , IFNULL((SELECT MAX(DETECTION_TIME) FROM asset_status_info ASI 
-				           WHERE ASI.SYSTEM_ID = A.SYSTEM_ID),DATE_ADD(NOW(), INTERVAL -2 MINUTE)) DETECTION_TIME
 		  FROM network_asset_info A
 		LEFT JOIN
 	    (SELECT A.SYSTEM_ID,0 A_GRADE, B.STATUSTEXT 
 		FROM asset_status_info A
 		LEFT JOIN reason_v B
-		ON A.SYSTEM_ID = B.SYSTEMID
-        AND A.REASON_ID = B.STATUSCODE
-		<!-- ON    A.REASON_ID = B.ID -->
+		ON    A.REASON_ID = B.ID
 		WHERE (A.SYSTEM_ID,A.STATUS_ID)
 		IN (
 		SELECT  SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
 		FROM asset_status_info
-		<!-- WHERE ASSET_STATUS != 2 -->
+		WHERE ASSET_STATUS != 2
 		GROUP BY SYSTEM_ID)
 		AND A.ASSET_STATUS != 2) B
 		ON A.SYSTEM_ID = B.SYSTEM_ID
@@ -428,10 +244,8 @@
       	     , A.START_X,A.START_Y
       	     , A.END_X, A.END_Y
       	     , IFNULL(B.IS_PROBLEM,0) IS_PROBLEM
-      	     , DATE_ADD(NOW(), INTERVAL -1 MINUTE) BASE_TIME
-      	     , C.DETECTION_TIME
 		  FROM zone_location A
-		LEFT JOIN (
+		 LEFT JOIN (
 		SELECT ZONE_ID , MAX(IS_PROBLEM) IS_PROBLEM
 		FROM
 		(SELECT A.ZONE_ID
@@ -441,14 +255,12 @@
 	    (SELECT A.SYSTEM_ID,0 A_GRADE, statusText 
 		FROM asset_status_info A
 		LEFT JOIN reason_v B
-		ON A.SYSTEM_ID = B.SYSTEMID
-        AND A.REASON_ID = B.STATUSCODE
-		<!-- ON    A.REASON_ID = B.ID -->
+		ON    A.REASON_ID = B.ID
 		WHERE (A.SYSTEM_ID,A.STATUS_ID)
 		IN (
 		SELECT  SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
 		FROM asset_status_info
-<!-- 		WHERE ASSET_STATUS != 2 -->
+		WHERE ASSET_STATUS != 2
 		GROUP BY SYSTEM_ID)
 		AND A.ASSET_STATUS != 2) B
 		ON A.SYSTEM_ID = B.SYSTEM_ID
@@ -476,18 +288,6 @@
 		ON A.IP_ADDRESS = D.DST_IP) A
 		GROUP BY A.ZONE_ID) B
 		ON A.ZONE_ID = B.ZONE_ID
-		LEFT JOIN (
-		          SELECT A.ZONE_ID,MIN(B.detection_time) detection_time
-		          FROM network_asset_info A
-		         INNER JOIN 
-					(SELECT a.system_id, MAX(ifnull(b.detection_time,DATE_ADD(NOW(), INTERVAL -2 MINUTE))) detection_time 
-	             FROM network_asset_info a
-		          LEFT JOIN asset_status_info b
-	           	 ON a.system_id = b.system_id
-		          GROUP BY a.system_id) B
-		          ON A.SYSTEM_ID = B.SYSTEM_ID
-	         	GROUP BY A.ZONE_ID) C
-		ON A.ZONE_ID = C.ZONE_ID
 
   </select>
   
@@ -498,41 +298,31 @@
         SELECT (SELECT COUNT(1)
 				FROM asset_status_info A 
 				INNER JOIN   
-				(SELECT SYSTEM_ID, MAX(STATUS_ID) STATUS_ID
+				(SELECT SYSTEM_ID,MAX(DETECTION_TIME) DETECTION_TIME
 				FROM asset_status_info 
 				GROUP BY SYSTEM_ID) B
 				ON A.SYSTEM_ID = B.SYSTEM_ID
-				AND A.STATUS_ID = B.STATUS_ID
+				AND A.DETECTION_TIME = B.DETECTION_TIME
 				AND ASSET_STATUS != 2) AS ASSET_THREAT_CNT
               ,(SELECT COUNT(1) FROM network_asset_info) AS ASSET_TOT_CNT
   </select>
   
-  
-  
-  
   <select id="selectAssetAffair" parameterType="map" resultType="CmmnMap">
-       SELECT CI.CODE LARGE_CATEGORY, SUM(CASE WHEN NSI.LARGE_CATEGORY IS NULL THEN 0 ELSE 1 END) CNT
-			FROM (SELECT * FROM code_info 
-			      WHERE MAINGROUP = 'AS' AND SUBGROUP = 'LC') CI
-			LEFT JOIN 
-			( SELECT NSI.LARGE_CATEGORY
-            FROM network_asset_info NSI
-            INNER JOIN (SELECT A.SYSTEM_ID
+     SELECT LARGE_CATEGORY,SUM(1) CNT
+			FROM (SELECT A.SYSTEM_ID
 				  FROM asset_status_info A 
 			      INNER JOIN   
-				  (SELECT SYSTEM_ID,MAX(STATUS_ID) STATUS_ID
+				  (SELECT SYSTEM_ID,MAX(DETECTION_TIME) DETECTION_TIME
 				  FROM asset_status_info 
 				  GROUP BY SYSTEM_ID) B
 				  ON A.SYSTEM_ID = B.SYSTEM_ID
-				  AND A.STATUS_ID = B.STATUS_ID
+				  AND A.DETECTION_TIME = B.DETECTION_TIME
 				  AND ASSET_STATUS != 2) ASI
-		    ON NSI.SYSTEM_ID = ASI.SYSTEM_ID 
-			) NSI
-            ON CI.CODE = NSI.LARGE_CATEGORY
-            GROUP BY CI.CODE
+			LEFT JOIN network_asset_info NSI
+			ON ASI.SYSTEM_ID = NSI.SYSTEM_ID
+			GROUP BY NSI.LARGE_CATEGORY
+
   </select>
-  
-  
   
   <select id="selectSystemIdCount" parameterType="map" resultType="long">
         SELECT COUNT(1) 
@@ -552,75 +342,6 @@
              , END_Y
              , CASE WHEN  (SELECT COUNT(1) FROM network_asset_info a WHERE a.ZONE_ID = t.ZONE_ID) > 0 THEN 'N' ELSE 'Y' END DEL_YN
         FROM zone_location t
-  </select>
-  
-  <select id="selectAssetHmList" parameterType="map" resultType="CmmnMap">
-          SELECT A.CODE,A.CODE_KR,TM.HM,TM.ORD
-	             , IFNULL(AI.CNT,0) CNT
-	       FROM 
-	       (SELECT CODE,CODE_KR,SORT FROM code_info
-	       WHERE MAINGROUP = 'AS'
-	       AND SUBGROUP = 'LC') A
-	       CROSS JOIN ( 
-	       SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -23 HOUR),"%H"),':00')  HM,  1 ORD
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -22 HOUR),"%H"),':00'),   2  
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -21 HOUR),"%H"),':00'),  3
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -20 HOUR),"%H"),':00'),  4
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -19 HOUR),"%H"),':00'),  5 
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -18 HOUR),"%H"),':00'),  6
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -17 HOUR),"%H"),':00'),  7  
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -16 HOUR),"%H"),':00'),  8
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -15 HOUR),"%H"),':00'),  9  
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -14 HOUR),"%H"),':00'),  10
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -13 HOUR),"%H"),':00'),  11 
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -12 HOUR),"%H"),':00'),  12 
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -11 HOUR),"%H"),':00'),  13 
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -10 HOUR),"%H"),':00'),  14  
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -9 HOUR),"%H"),':00'),   15 
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -8 HOUR),"%H"),':00'),  16 
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -7 HOUR),"%H"),':00'),  17 
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -6 HOUR),"%H"),':00'),  18 
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -5 HOUR),"%H"),':00'),  19
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -4 HOUR),"%H"),':00'),  20  
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -3 HOUR),"%H"),':00'),  21 
-			UNION 
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -2 HOUR),"%H"),':00'),  22 
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 HOUR),"%H"),':00'),  23
-			UNION
-			SELECT CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 0 HOUR),"%H"),':00'),  24 ) TM
-			LEFT JOIN 
-			(SELECT  CONCAT(DATE_FORMAT(AI.DETECTION_TIME,"%H"),':00') HM, NI.LARGE_CATEGORY,SUM(1) CNT
-	         FROM asset_status_info AI
-	        INNER JOIN network_asset_info NI
-	        ON AI.SYSTEM_ID = NI.SYSTEM_ID
-	        AND AI.ASSET_STATUS != 2
-		    AND AI.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -24 HOUR)
-		    GROUP BY CONCAT(DATE_FORMAT(AI.DETECTION_TIME,"%H"),':00'),NI.LARGE_CATEGORY) AI
-		    ON TM.HM = AI.HM
-		    AND A.CODE = AI.LARGE_CATEGORY
-		    ORDER BY A.CODE,ORD
-
   </select>
   
   <update id="insertAsset" parameterType="map">

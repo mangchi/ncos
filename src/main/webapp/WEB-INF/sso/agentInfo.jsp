@@ -3,8 +3,7 @@
     /************************************************************
      *  Web-Agent 환경 설정   (** 수정)
      ************************************************************/
-    
-/**/private static final String AUTH_URL = "https://isign.ncos.mil.kr:20443";     // ISign+ SSO URL
+/**/private static final String AUTH_URL = "https://isign.ncos.mil.kr";     // ISign+ SSO URL
 /**/private static final String agentId = "101";                          // 업무 시스템 고유 번호(관리자가 할당한 번호)
 /**/private static final String requestData = "id";       // 요청 데이터(세션에 저장될 값)
 
@@ -57,7 +56,4 @@
 	
 	// ISign+ WA Version
 	private static final String ISIGN_PLUS_WA_VER = "3.0.19.1";
-%>
-<%
-    System.out.println("agentInfo.jsp call...........");
 %>

@@ -80,12 +80,7 @@
 							</div>
                         </div>
 						<div class="btnWrap">
-							<div class="left"> 
-							<a href="#userReg" class="btn medium darkblue addBtn"><span class="iconBtn icon_btn_02"></span><strong>추가</strong></a> 
-							<a href="#userReg" class="btn medium darkblue modBtn"><span class="iconBtn icon_btn_03"></span><strong>수정</strong></a> 
-							<a href="javascript:;" class="btn medium darkblue delBtn"><span class="iconBtn icon_btn_04"></span><strong>삭제</strong></a> 
-							<a href="javascript:;" class="btn medium darkblue pwdInitBtn"><span class="iconBtn icon_btn_08"></span><strong>비밀번호 초기화</strong></a> 
-							</div>
+							<div class="left"> <a href="#userReg" class="btn medium darkblue addBtn"><span class="iconBtn icon_btn_02"></span><strong>추가</strong></a> <a href="#userReg" class="btn medium darkblue modBtn"><span class="iconBtn icon_btn_03"></span><strong>수정</strong></a> <a href="javascript:;" class="btn medium darkblue delBtn"><span class="iconBtn icon_btn_04"></span><strong>삭제</strong></a> </div>
 							<div class="right"> </div>
 						</div>
 					</div>
@@ -95,21 +90,123 @@
 		<!--//Grid--> 
 	</div>
 </div>
-
+<!--보고서 서식등록 modal popup//-->
+<div class="dim-layer">
+	<div class="dimBg"></div>
+	<div id="userReg" class="pop-layer ssmall"> 
+		<!--Title-->
+		<div class="Popup-title">
+			<h3><span class="iconWrapB icon_03_01"></span><strong>사용자 등록</strong></h3>
+			<button class="icon-close">닫기</button>
+		</div>
+		<div class="Popup-container"> 
+			<!--Contens-->
+			<div class="Popup-contents">
+				<div class="assetWrap">
+					<ul>
+						<li>
+							<label>
+								<span>아이디</span>
+								<input id="userId" type="text" class="form-control engNum" placeholder="아이디">
+								<input id="accountId" type="hidden">
+								<em class="message"></em>
+							</label>
+						</li>
+						<li>
+							<label>
+								<span>이름</span>
+								<input id="username" type="text" class="form-control engKor" placeholder="이름">
+							    <em class="message"></em>
+							</label>
+						</li>
+						<li class="password">
+							<label>
+								<span>비밀번호</span>
+								<input id="password" type="password" class="form-control" placeholder="비밀번호">
+							    <em class="message"></em>
+							</label>
+						</li>
+						<li class="password">
+							<label>
+								<span>비밀번호 확인</span>
+								<input id="confirm" type="password" class="form-control" placeholder="비밀번호">
+							    <em class="message"></em>
+							</label>
+						</li>
+						<li>
+						    <div class="selectWrap" style="z-index:600;">직위
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="classId" >
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap" >소속
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="affiliationId">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+						    <div class="selectWrap">권한
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="authorization">
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<label>
+								<span>연락처</span>
+								<input id="phoneNo" type="text" class="form-control number" placeholder="010883422334">
+							</label>
+						</li>
+						<li>
+						    <div class="selectWrap">계정상태
+								<div class="select">
+									<div class="selected">
+										<div data-value='' class="selected-value">선택</div>
+										<div class="arrow"></div>
+									</div>
+									<ul id="accountActivation">
+									</ul>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="Popup-footer">
+			<a href="javascript:;" class="btn medium darkblue saveBtn"><span class="iconBtn icon_btn_09"></span><strong>확인</strong></a>
+			<a href="javascript:;" class="btn medium darkblue popClose"><span class="iconBtn icon_btn_08"></span><strong>취소</strong></a>
+		</div>
+	</div>
+</div>
 <!--//modal popup--> 
 <script th:inline="javascript"> 
 	window.addEventListener('DOMContentLoaded', () => {
-		ncos.schMode = 'auto';
 		init();
-
+		//setInterval(searchFunc, ncos.interval);//50초
+		   
 	});
-	
     const init = () => {
     	createMultiChk(document.getElementById('schAffiliationId'),'COUT');
-    	gfn_getCodeUser().then((data) => {
-    		createMultiChk(document.getElementById('schAccountId'),'UA', data.info);
-    		gfn_showChkVal(document.getElementById('schAccountId'));
-    	});
+    	createMultiChk(document.getElementById('schAccountId'),'UA');
     	const headColumns = [{data_id:"id",width: "0px"}
     	                    ,{data_id:"chk", width: "45px"}
 					    	,{data_id:"rn",label: "No."}
@@ -119,7 +216,7 @@
 					        ,{data_id:"affiliationId",label:"소속", data_grpCd:"COUT"}
 					        ,{data_id:"authorization",label:"권한", data_grpCd:"URAU"}
 					        ,{data_id:"phoneNo",label:"연락처"}
-                            ,{data_id:"accountActivation",label:"계정 상태",data_grpCd:"ACAT"}
+					        ,{data_id:"accountActivation",label:"계정 상태",data_grpCd:"ACAT"}
 
 					        ];
         gridInit(document.querySelector('.tablewrap'),headColumns);
@@ -134,36 +231,23 @@
     
     document.querySelector('.schBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	ncos.schMode = 'menual';
-    	searchFunc(e.target);
+    	searchFunc();
     });
     
     document.querySelector('.addBtn').addEventListener('click',(e) => {
-		let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
-    	document.querySelector('#userReg').querySelector('.Popup-title').querySelector('strong').textContent = '사용자 등록';
+    	document.querySelector('.Popup-title').querySelector('strong').textContent = '사용자 등록';
     	document.querySelectorAll('.password').forEach(password => {
     		if(password.style.display === 'none')password.style.display = '';
 		});
-    	document.querySelector('#userReg').querySelector('.accountActivation').style.display = '';
     });
     
     document.querySelector('.modBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	let modData = gridClickedData(document.querySelector('.tablewrap'));
-    	document.querySelector('#userReg').querySelector('.Popup-title').querySelector('strong').textContent = '사용자 수정';
+    	document.querySelector('.Popup-title').querySelector('strong').textContent = '사용자 수정';
     	document.querySelectorAll('.password').forEach(password => {
     			password.style.display = 'none';
     	});
-    	document.querySelector('#userReg').querySelector('.accountActivation').style.display = '';
     	let obj = new Object();
     	let isEmpty = Object.entries(modData.row).length === 0;
     	if(!isEmpty){
@@ -213,22 +297,29 @@
     
     document.querySelector('.delBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let chkData = gridCheckedData(document.querySelector('.tablewrap'));
-    	if(chkData.list.length > 0){
-    		gfn_asyncTranDataCall('/delUserAccount','POST',chkData,trncUserAfterFunc,true);
+    	let delData = gridCheckedData(document.querySelector('.tablewrap'));
+    	if(delData.list.length > 0){
+    		gfn_asyncTranDataCall('/delUserAccount','POST',delData,trncUserAfterFunc,true);
     	}
     });
     
-    document.querySelector('.pwdInitBtn').addEventListener('click',(e) => {
+    document.getElementById('userReg').querySelector('.saveBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let chkData = gridCheckedData(document.querySelector('.tablewrap'));
-    	if(chkData.list.length > 0){
-    		gfn_asyncTranDataCall('/pwdInit','POST',chkData,trncUserAfterFunc,true);
-    	}
+    	let requiredParams = {userId: "아이디"
+    			             ,username: "이름"
+    			             ,classId: "직위"
+   			            	 ,affiliationId: "소속"
+   			            	 ,authorization: "권한"
+   			            	 ,phoneNo: "연락처"
+    			             ,accountActivation : "계정상태"};
+ 	    gfn_asyncTranCall('/modUserAccount','POST',requiredParams,document.getElementById('userReg'),trncUserAfterFunc,true);
+
     });
-
-
-   
+    
+    const trncUserAfterFunc = () => {
+    	document.getElementById('userReg').querySelector('.popClose').click();
+    	searchFunc();
+    }
 </script>
 </th:block>
 

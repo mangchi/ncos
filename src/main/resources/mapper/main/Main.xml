@@ -14,53 +14,34 @@
 				INNER JOIN   
 				(SELECT SYSTEM_ID,MAX(DETECTION_TIME) DETECTION_TIME
 				FROM asset_status_info 
-				WHERE detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
 				GROUP BY SYSTEM_ID) B
 				ON A.SYSTEM_ID = B.SYSTEM_ID
 				AND A.DETECTION_TIME = B.DETECTION_TIME
 				AND ASSET_STATUS != 2) UNSTABLE_ASSET
 		     ,(SELECT COUNT(1) FROM network_asset_info) TOT_ASSET
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_DETECTION_METHOD = '1'
-               <if test='day > 0'>
-			   AND T1.detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
-			   </if>
 		      ) WHITE_DETECT
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_DETECTION_METHOD = '2'
-               <if test='day > 0'>
-			   AND T1.detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
-			   </if>
 		      ) AI_DETECT
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_DETECTION_METHOD = '3'
-               <if test='day > 0'>
-			   AND T1.detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
-			   </if>
 		      ) SIGNATURE_DETECT
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND  T1.THREAT_IMPORTANCE = '5'
-               <if test='day > 0'>
-			   AND T1.detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
-			   </if>
 		      ) HIGH_PRIOR
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_IMPORTANCE = '3'
-               <if test='day > 0'>
-			   AND T1.detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
-			   </if>
 		       ) MIDDLE_PRIOR
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_IMPORTANCE = '1'
-			   <if test='day > 0'>
-			   AND T1.detection_time <![CDATA[>=]]> NOW() - interval #{day} DAY 
-			   </if>
 		      ) LOW_PRIOR
 
   </select>
@@ -445,42 +426,24 @@
   </select>
   
   <select id="selectDataTransStatus" parameterType="map" resultType="CmmnMap">
-     <choose>
-     <when test='systemId != null and !systemId.equals("")'>
+        
+         
         SELECT SUM(SRC_BYTES) SRC_BYTES, TIMESTAMPDIFF(second,  SRC_TIME,#{curTime}) SEC
         FROM transmit_data 
         WHERE  SRC_TIME > DATE_ADD(#{curTime}, INTERVAL -60 SECOND) 
         AND SRC_BYTES IS NOT NULL
         GROUP BY TIMESTAMPDIFF(second,  SRC_TIME,#{curTime}) 
-        ORDER BY TIMESTAMPDIFF(second,  SRC_TIME,#{curTime})   
-     </when>
-     <otherwise>
-       SELECT SUM(a.SRC_BYTES)*8 SRC_BITS, TIMESTAMPDIFF(second,  a.SRC_TIME,#{curTime}) SEC
-              , date_format(a.src_time,'%T') SRC_TIME, (SELECT SUM(b.JSON_BYTES+11)*8 FROM transmit_data b WHERE b.DATA_ID > a.DATA_ID) TOT_BITS
-              , (SELECT TRANS_SPEED FROM satellite_trans LIMIT 1) TRANS_SPEED
-        FROM transmit_data a
-        WHERE  a.SRC_TIME > DATE_ADD(#{curTime}, INTERVAL -60 SECOND) 
-        AND a.SRC_BYTES IS NOT NULL
-        AND  TIMESTAMPDIFF(second,  a.SRC_TIME,#{curTime}) <![CDATA[>=]]> 0
-        GROUP BY TIMESTAMPDIFF(second, #{curTime},a.SRC_TIME) 
-        ORDER BY a.SRC_TIME DESC
-        
-     </otherwise>
-     </choose>
+        ORDER BY TIMESTAMPDIFF(second,  SRC_TIME,#{curTime}) DESC
         
     
   </select>
   
-  <select id="selectTotDataTransStatus" parameterType="map" resultType="CmmnMap">
+  <select id="selectTotDataTransStatus" parameterType="map" resultType="long">
         SELECT 
-               SUM(CASE WHEN INSTR(SRC_DATA,'equip_status') > 0 THEN JSON_BYTES+1
-                         WHEN INSTR(SRC_DATA,'asset_status') > 0 THEN JSON_BYTES+3
-                         ELSE JSON_BYTES+11 END)*8 SRC_BYTES
-              , date_format(MIN(src_time),'%T') SRC_TIME
+        IFNULL((SELECT SUM(JSON_BYTES) SRC_BYTES
         FROM transmit_data 
         WHERE  SRC_DATA IS NOT NULL
-        AND SRC_FLAG = 0
+        AND SRC_FLAG = 0),0)
   </select>
-
 
 </mapper>

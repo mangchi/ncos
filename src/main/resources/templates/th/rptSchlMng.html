@@ -135,6 +135,12 @@
 							</label>
 						</li>
 						<li>
+							<label>
+								<span>생성 시간</span>
+								<input id="createTime" style="width:205px;" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control" ></input>
+							</label>
+						</li>
+						<li>
 						    <div class="selectWrap">생성 주기
 								<div class="select" style="width:205px;margin-right: 5px;">
 									<div class="selected">
@@ -145,24 +151,6 @@
 									</ul>
 								</div>
 							</div>
-						</li>
-						<li class="frDate">
-							<label>
-								<span>생성 기간</span>
-								<input id="frDate" style="width:205px;" type="date" data-placeholder="날짜 선택" value="" class="form-control" ></input>
-							</label>
-						</li>
-						<li class="toDate">
-							<label>
-								<span></span>
-								<input id="toDate" style="width:205px;" type="date" data-placeholder="날짜 선택" value="" class="form-control" ></input>
-							</label>
-						</li>
-						<li class="createTime" style="display:none;">
-							<label>
-								<span>생성 시간</span>
-								<input id="createTime" style="width:205px;" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control" ></input>
-							</label>
 						</li>
 						<li>
 							<label>
@@ -207,17 +195,12 @@
 </div>
 <script th:inline="javascript" >
 	window.addEventListener('DOMContentLoaded', () => {
-		ncos.schMode = 'auto';
 		init();
 	});
 
     const init = () => {
     	//gfn_codes().then(() => {
-    		//createMultiChk(document.getElementById('schAccountId'),'UA');
-    		gfn_getCodeUser().then((data) => {
-        		createMultiChk(document.getElementById('schAccountId'),'UA', data.info);
-        		gfn_showChkVal(document.getElementById('schAccountId'));
-        	});
+    		createMultiChk(document.getElementById('schAccountId'),'UA');
     		createChk(document.getElementById('schUseFlag'),'COUSE','전체');
         	const headColumns = [{data_id:"id",width: "0px"}
         	                    ,{data_id:"chk", width: "45px"}
@@ -235,9 +218,6 @@
     					        ];
             gridInit(document.querySelector('.container-wide').querySelector('.tablewrap'),headColumns);
     		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
-    		const selectBoxElement = document.querySelector(".select");
-    		const schUseFlagLis= document.querySelector('#schUseFlag').querySelectorAll('li');
-            selectOption(schUseFlagLis[1]);
     		searchFunc();
     		const modalHeadColumns = [{data_id:"id",label:"",width:"0px"}
 							    	 ,{data_id:"rn",label: "No."}
@@ -258,17 +238,11 @@
 
     document.querySelector('.schBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	ncos.schMode = 'menual';
-    	searchFunc(e.target);
+    	searchFunc();
     });
 
     document.querySelector('.modBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	let modData = gridClickedData(document.querySelector('.container-wide').querySelector('.tablewrap'));
     	let obj = new Object();
     	let isEmpty = Object.entries(modData.row).length === 0;
@@ -285,7 +259,6 @@
     		else{
     			href = e.target.getAttribute('href');
     		}
-    		
     		layerPopup(href);
     	}
 
@@ -301,15 +274,11 @@
     });
 
     const setLayerData = (target,data) => {
-    	
     	gfn_initObj(document.getElementById('reportSchReg'));
     	document.getElementById('createTime').value = '';
-    	createChk(document.getElementById('periodId'),'RECY','선택');
+    	createChk(document.getElementById('periodId'),'RECY');
     	document.getElementById('useFlag').checked = true;
     	if(target.parentNode.classList.contains('modBtn') || target.classList.contains('modBtn')){
-    		document.querySelector('.frDate').style.display = 'none';
-			document.querySelector('.toDate').style.display = 'none';
-			document.querySelector('.createTime').style.display = '';
     		let periodId = document.getElementById('periodId');
     		console.log("data:",data);
     		document.getElementById('scheduleId').value = data.id;
@@ -326,30 +295,6 @@
     			document.getElementById('useFlag').checked = false;
     		}
     	}
-    	else{
-    		document.querySelector('.frDate').style.display = '';
-			document.querySelector('.toDate').style.display = '';
-			document.querySelector('.createTime').style.display = 'none';
-    	}
-    }
-    
-    const changeSelectBox = (target,data) => {
-    	if(target.id === 'periodId'){
-    		if(gfn_nullValue(data ) === ''){
-    			document.querySelector('.frDate').style.display = '';
-    			document.querySelector('.toDate').style.display = '';
-    			document.querySelector('.createTime').style.display = 'none';
-    			document.getElementById('frDate').value = '';
-    			document.getElementById('toDate').value = '';
-    		}
-    		else{
-    			document.querySelector('.frDate').style.display = 'none';
-    			document.querySelector('.toDate').style.display = 'none';
-    			document.querySelector('.createTime').style.display = '';
-    			document.getElementById('createTime').value = '';
-    		}
-    	}
-
     }
 
     // 즉시생성 기능 로직 추가.
@@ -360,20 +305,9 @@
     			    , "threatLevel" : document.getElementById('threatLevel').value
     			    , "assetLevel" : document.getElementById('assetLevel').value
     			    , "username" : gfn_getStorageItem('username',false)
-    			    //, "toDate" : gfn_dateFrmt(document.getElementById('createTime').value,'yy-mm-dd hh:mi:ss')
-    	};
+    			    ,  "toDate" : gfn_dateFrmt(document.getElementById('createTime').value,'yy-mm-dd hh:mi:ss')
 
-    	let requiredParams = {reportTitle: "보고서서식"};
-    	
-    	if(document.querySelector('.frDate').style.display === ''){
-    		
-    		requiredParams.frDate = "생성 기간";
-    		requiredParams.toDate = "생성 기간";
-    	}
-    	else{
-    		requiredParams.periodId = "생성 주기";
-    		requiredParams.createTime = "생성 시간";
-    	}
+    	};
 
 /*
 		let requiredParams = {periodId: "생성 주기"
@@ -397,39 +331,6 @@
     		window.open(encodeURI("/reportView?reportKey="+reportKey), "_blank", "menubar=no, toolbar=no");
 	 	});
 	 	   */
-    	if(!gfn_valid(document.getElementById('reportSchReg'),requiredParams)){
-			return;
-		}
-	 	
-	 	if(document.querySelector('.frDate').style.display === ''){
-	 		let btDay = gfn_getBtDay(document.getElementById('frDate').value,document.getElementById('toDate').value);
-	 		if(btDay < 0){
-	 			msgCall(msg.invalidDay,false,false,() => {
-					document.getElementById('frDate').focus();
-				});
-				return false;
-	 		}
-	 		else if(btDay === 0){
-	 			msgCall(msg.btDayChk2,false,false,() => {
-					document.getElementById('frDate').focus();
-				});
-				return false;
-	 		}
-	 		else if(btDay > 5){
-	 			msgCall(msg.btDayChk1,false,false,() => {
-					document.getElementById('frDate').focus();
-				});
-				return false;
-	 		}
-	 		console.log("btDay:",btDay);
-	 		param.btDay = btDay;
-	 		param.frDate = document.getElementById('frDate').value+" 00:00:00";
-	 		param.toDate = document.getElementById('toDate').value+" 23:59:59";
-	 	}
-	 	else{
-	 		param.toDate = gfn_dateFrmt(document.getElementById('createTime').value,'yy-mm-dd hh:mi:ss');
-	 	}
-
     	gfn_asyncJsonCall('/reportView','POST',param).then((data) => {
     		let reportKey = data.reportKey;
     		window.open(encodeURI("/reportView?reportKey="+reportKey), "_blank", "menubar=no, toolbar=no");
@@ -438,25 +339,17 @@
 
     document.getElementById('reportSchReg').querySelector('.saveBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	if(document.querySelector('.frDate').style.display === ''){
-    		msgCall(msg.invalidPeriodId,false,false,() => {
-    			document.getElementById('periodId').parentNode.querySelector('.selected-value').focus();
-				
-			});
-			return false;
-    	}
-    	console.log("createTime:",document.getElementById('createTime'));
-    	if(document.getElementById('createTime').value != '' && gfn_validDay(new Date().toISOString(),document.getElementById('createTime').value) && document.getElementById('useFlag').checked){
+    	if(gfn_validDay(new Date().toISOString(),document.getElementById('createTime').value) && document.getElementById('useFlag').checked){
 	    	msgCall(msg.invalidTm,false,false,() => {
-	    		document.getElementById('createTime').focus();
+				document.getElementById('createTime').focus();
 			});
 			return false;
     	}
     	else{
     		let requiredParams = {scheduleTitle: "스케쥴명"
-				                 ,reportTitle: "보고서"
-				                 ,createTime: "생성 시간"
-				                 ,periodId: "생성 주기"};
+				             ,reportTitle: "보고서"
+				             ,createTime: "생성 시간"
+				             ,periodId: "생성 주기"};
 			gfn_asyncTranCall('/saveRptSch','POST',requiredParams,document.getElementById('reportSchReg'),trncRptSchAfterFunc,true);
     	}
 

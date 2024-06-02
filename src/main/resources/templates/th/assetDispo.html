@@ -20,40 +20,35 @@
 		<div class="grid-row">
 			<div class="item-box col-12">
 				<div class="inner"> 
-					<div class="canvasWrapMain" style=" width: 1783px; height: 461px; position:relative;">
-	                <canvas id="imgLayerMain" class="labelingImg" style="z-index: 10; position: absolute; width: 1783px; height: 461px;"></canvas>
-	                <canvas id="drawLayerMain" style="z-index: 11; position: absolute; width: 1783px; height: 461px;" > </canvas>    
+					<div class="canvasWrapMain" style=" width: 1783px; height: 456px;">
+	                <canvas id="imgLayerMain" class="labelingImg" style="z-index: 10; position: absolute; width: 1783px; height: 456px;"></canvas>
+	                <canvas id="drawLayerMain" style="z-index: 11; position: absolute; width: 1783px; height: 456px;" > </canvas>    
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div class="grid-row">
+		<div class="grid-row">
 			<div class="item-box col-12">
 				<div class="inner">
 					<div class="btnWrap" style="padding: 10px">
 						<div class="left"> 
 						</div>
-						<div class="right"> -->
-						    <!--  
+						<div class="right">
 							<a href="javascript:;" class="btn medium darkblue active icon_select2"><span class="iconBtn icon_select2"></span><strong>전시 초기화</strong></a>
 							<a href="javascript:;" class="btn medium darkblue icon_enlargement2"><span class="iconBtn icon_enlargement2"></span><strong>확대</strong></a>
 							<a href="javascript:;" class="btn medium darkblue icon_reduction2"><span class="iconBtn icon_reduction2"></span><strong>축소</strong></a> 
 							<a href="javascript:;" class="btn medium darkblue icon_movement2"><span class="iconBtn icon_movement2"></span><strong>이동</strong></a> 
-							
 							<a href="javascript:;" class="btn medium darkblue initBtn"><span class="iconBtn icon_reset"></span><strong>초기화</strong></a>
-							<a href="javascript:;" class="btn medium darkblue pauseBtn"><span class="iconBtn icon_btn_08"></span><strong>일시정지</strong></a> -->
-					<!-- 	</div>
+							<a href="javascript:;" class="btn medium darkblue pauseBtn"><span class="iconBtn icon_btn_08"></span><strong>일시정지</strong></a> 
+						</div>
 					</div>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<div class="grid-row">
 			<div class="item-box col-12">
 				<div class="inner">
-					<h4 class="item-title"><span class="iconWrapB icon_10_02"></span><strong>위협 발생 및 자산 이상 상태 목록</strong>
-					<a href="javascript:;"  style="float:right; margin-left:4px;" class="btn small1 darkblue pauseBtn"><span class="iconBtn icon_btn_08"></span><strong>일시정지</strong></a> 
-					<a href="javascript:;"  style="float:right;" class="btn small1 darkblue initBtn"><span class="iconBtn icon_reset"></span><strong>초기화</strong></a> 
-					</h4>
+					<h4 class="item-title"><span class="iconWrapB icon_10_02"></span><strong>위협 발생 및 자산 이상 상태 목록</strong></h4>
 					<div class="items"> 
 						<!--table//-->
 						<div class="tablewrap">
@@ -66,7 +61,7 @@
 						</div>
 						<div class="page_wrap">
 							<div class="page_nation">
-								<input type="hidden" name="rowPerPage" class="rowPerPage" value="5">
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="4">
 							</div>
 						</div>
 					</div>
@@ -95,11 +90,9 @@
 							<div class="settingBtn">
 								<ul class="clfix">
 									<li class="selectImg"><a href="javascript:;" title="선택" class="active"><span class="iconSetting icon_select">선택</span></a></li>
-									<!-- 
 									<li class="enlargement"><a href="javascript:;" title="확대" ><span class="iconSetting icon_enlargement">확대</span></a></li>
 									<li class="reduction"><a href="javascript:;" title="축소"><span class="iconSetting icon_reduction">축소</span></a></li>
-									
-									<li class="movement"><a href="javascript:;" title="이동"><span class="iconSetting icon_movement">이동</span></a></li>-->
+									<li class="movement"><a href="javascript:;" title="이동"><span class="iconSetting icon_movement">이동</span></a></li>
 									<li class="addition"><a href="javascript:;" title="추가"><span class="iconSetting icon_addition">추가</span></a></li>
 									<li class="delete"><a href="javascript:;" title="삭제"><span class="iconSetting icon_delete">삭제</span></a></li>
 									<li class="correction"><a href="javascript:;" title="수정"><span class="iconSetting icon_correction">수정</span></a></li>
@@ -185,7 +178,7 @@
 	    drawImg(item);
 		init();
 		
-		ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//5초
+		ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
 		document.querySelector('.initBtn').addEventListener('click',e => {
 	    	e.preventDefault();
 	    	ncos.initBtn = true;
@@ -203,7 +196,7 @@
        	const headColumns = [{data_id:"id",width: "0px"}
 					        ,{data_id:"detectionTime",label:"시간",data_dateFrmt:"yy-mm-dd hh:mi:ss"}
 					        ,{data_id:"eventTp",label:"이벤트유형" }
-					        ,{data_id:"impNm",label: "위협중요도", data_grpCd:"IMPS",data_class:"threat"}
+					        ,{data_id:"impNm",label: "위협중요도", data_grpCd:"IMP",data_class:"threat"}
 					        ,{data_id:"detailInfo",label:"세부정보"}
 					        ,{data_id:"detailBtn",label:"상세보기",data_btnNm:"상세보기" }
 					        ];
@@ -212,12 +205,11 @@
 		
 		const labelParentBtn = document.querySelector('.container-wide').querySelector('.right');
 		if(labelParentBtn){
-			/*
+			console.log("parent.......");
 			labelParentBtn.querySelector('.icon_select2').addEventListener('click',selectParentImg,false);
 			labelParentBtn.querySelector('.icon_enlargement2').addEventListener('click',zoominParentImg,false);  //
 		    labelParentBtn.querySelector('.icon_movement2').addEventListener('click',moveParentImg,false);
 		    labelParentBtn.querySelector('.icon_reduction2').addEventListener('click',zoomoutParentImg,false);
-		    */
 		}
 		searchFunc();
     }
@@ -227,7 +219,7 @@
     }
     
     const searchAfterFunc = (appendData) => {
-        //console.log("appendData:",appendData);
+        console.log("appendData:",appendData);
         labelingMain.arRectangle = new Array();
         let assetZoneGroup = appendData.assetZoneGroup;
         let assetZoneList = appendData.assetZoneList;        
@@ -235,17 +227,9 @@
         	idx = parseInt(idx);
 			let itm = assetZoneGroup[idx];
 			if(itm != null){
-				//console.log("itm:",itm);
 				let color = redColor;
 				if(itm.isProblem == '0'){
-					let baseTime = itm.baseTime;
-					let detectionTime = gfn_nullValue(itm.detectionTime);
-					if(detectionTime != '' && baseTime > detectionTime){
-					}
-					else{
-						color = greenColor;
-					}
-					
+					color = greenColor;
 				}
 				
 	       		let rect = new Rectangle(parseFloat(itm.startX), parseFloat(itm.startY), parseFloat(itm.endX),parseFloat(itm.endY),color,idx,itm.zoneId,itm.zoneName); 
@@ -254,7 +238,6 @@
 	       	}
 			 
 	    }
-        assetArray = new Array();
         for(let idx in assetZoneList){
         	let itm = assetZoneList[idx];
         	if(itm != null){
@@ -279,11 +262,6 @@
     
     document.querySelector('.setBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
         labeling.arRectangle = new Array();
         changeOn(document.querySelector('.icon_select'));
     	const headColumns = [{data_id:"id",width: "0px"}
@@ -295,14 +273,15 @@
 					      	,{data_id:"delYn",width: "0px"}				        
 					        ];
 		gridInit(document.querySelector('#assetdisplay').querySelector('.tablewrap'),headColumns);
+		
     	
     	const labelBtn = document.querySelector('.clfix');
 		if(labelBtn){
 			labelBtn.querySelector('.selectImg').addEventListener('click',selectImg,false);
-		    //labelBtn.querySelector('.movement').addEventListener('click',moveImg,false);
-		    //labelBtn.querySelector('.enlargement').addEventListener('click',zoominImg,false);
+		    labelBtn.querySelector('.movement').addEventListener('click',moveImg,false);
+		    labelBtn.querySelector('.enlargement').addEventListener('click',zoominImg,false);
 		    labelBtn.querySelector('.addition').addEventListener('click',drawRect,false);
-		    //labelBtn.querySelector('.reduction').addEventListener('click',zoomoutImg,false);
+		    labelBtn.querySelector('.reduction').addEventListener('click',zoomoutImg,false);
 		    labelBtn.querySelector('.correction').addEventListener('click',editRect,false);
 		    labelBtn.querySelector('.delete').addEventListener('click',deleteRect,false);
 		}
@@ -319,6 +298,7 @@
 	 		for(let idx in list){
 				 idx = parseInt(idx);
 				 let itm = list[idx];
+				 console.log("itm:",itm);
 				 let color = otherColor;
 	        	 if(idx === 0){
 	        		color = choosedColor; 
@@ -349,9 +329,11 @@
 			tds.forEach((td,i) => {
 				let tdVal = '';
 				if(i === 1){
+					console.log("td:",td);
 					let inputs = td.childNodes;
 					console.log("inputs:",inputs);
 					tdVal = inputs[0].value;
+					console.log("tdVal:",tdVal);
 					if(tdVal == undefined || tdVal == ''){
 						valid = false;
 						inputs[0].style.borderColor = 'red'; 
@@ -409,7 +391,7 @@
 					removeObject(tr);
 				}
 				else{
-					msgCall(msg.invalidDelZone,false,false,null);
+					msgCall(msg.invalidDelZone,false,false);
 				}
 				
 				
@@ -481,10 +463,16 @@
 		labelTarget = 'main';
 		let clickX = canvasX(e.clientX)/labelingMain.scaleX;
         let clickY = canvasY(e.clientY)/labelingMain.scaleY;
-        //console.log("clickX:::",clickX,", clickY:::",clickY);
+        console.log("clickX:::",clickX,", clickY:::",clickY);
         let canvas = document.querySelector('#drawLayerMain');
         let bound = canvas.getBoundingClientRect();
-
+        console.log("left:",bound.left,",top:",bound.top);
+        
+        console.log("e.clientX:",e.clientX);
+        console.log("e.clientY:",e.clientY);
+        
+        console.log("labelingMain.layerX:",labelingMain.layerX,"labelingMain.scalX:::",labelingMain.scaleX);
+        console.log("labelingMain.layerY:",labelingMain.layerY,"labelingMain.scaleY:::",labelingMain.scaleY);
         if(labelingMain.layerX > 0){
 			clickX = canvasX(e.clientX-parseInt(labelingMain.layerX))/labelingMain.scaleX;
 		}
@@ -498,8 +486,9 @@
 		else if(labelingMain.layerY < 0){
 			clickY = canvasY(e.clientY-(labelingMain.layerY))/labelingMain.scaleY;
 		}
-
+		console.log("clickX:",clickX,", clickY:",clickY);
         labelingMain.rectIndex = getRectangle(clickX,clickY);
+        console.log("labelingMain.rectIndex:",labelingMain.rectIndex);
         
         if(labelingMain.rectIndex > -1){
         	let zoneId = '';
@@ -522,7 +511,7 @@
          	let existAsset = false;
          	if(assetArray.length > 0){
          		assetArray.forEach((asset,index) => {
-         		    //console.log("asset:",asset);
+         		    console.log("asset:",asset);
          			if(asset.zoneId == zoneId){
          			    popTitle.textContent = zoneName;
          				existAsset = true;
@@ -548,15 +537,7 @@
 							
 						
 						if(asset.isProblem == 'N'){
-							let baseTime = asset.baseTime;
-							let detectionTime = gfn_nullValue(asset.detectionTime);
-							if(detectionTime === '' || baseTime > detectionTime){
-								span.classList.add('assetInfo_'+imgType+'FF');
-							}
-							else{
-								span.classList.add('assetInfo_'+imgType+'00');
-							}
-    			    		
+    			    		span.classList.add('assetInfo_'+imgType+'00');
     			    	}
     			    	else{
 							
@@ -606,6 +587,20 @@
         	if(labelingMain.mode === 'zoomin' || labelingMain.mode === 'zoomout'){
 				let isAct = true;
         		if(labelingMain.mode === 'zoomin'){
+					/*
+    	    		if(labelingMain.scaleX.toFixed(1) ==  1.5){
+    	    			labelingMain.mode = 'zoomout';
+    	    			changeParentOn(document.querySelector('.icon_reduction2'));
+    	            	document.querySelector('.canvasWrapMain').style.cssText = '';
+    	    			document.querySelector('.canvasWrapMain').style.cssText = labelingMain.cssTxt+'cursor:zoom-out;';
+    	    			labelingMain.scaleX -= 0.1;
+    	    			labelingMain.scaleY -= 0.1;
+    	        	}
+    	    		else{
+    	    			labelingMain.scaleX += 0.1;
+    	    			labelingMain.scaleY += 0.1;
+    	    		}
+    	    		*/
     	    		if(labelingMain.scaleX.toFixed(1) >  1.5){
 						isAct = false;
 					}
@@ -616,6 +611,21 @@
     	        	
     	    	}
     	    	else if(labelingMain.mode === 'zoomout'){
+					/*
+    	    		if(labelingMain.scaleX.toFixed(1) ==  0.5){
+    	    			labelingMain.mode = 'zoomin';
+    	    			
+    	    			changeParentOn(document.querySelector('.icon_enlargement2'));
+    	    			document.querySelector('.canvasWrapMain').style.cssText = '';
+    	    			document.querySelector('.canvasWrapMain').style.cssText = labelingMain.cssTxt+'cursor:zoom-in;';
+    	    			labelingMain.scaleX += 0.1;
+    	    			labelingMain.scaleY += 0.1;
+    	        	}
+    	    		else{
+    	    			labelingMain.scaleX -= 0.1;
+    	    			labelingMain.scaleY -= 0.1;
+    	    		}	
+    	    		*/
     	    		if(labelingMain.scaleX.toFixed(1) < 0.5){
 						isAct = false;
 					}
@@ -648,7 +658,7 @@
 	});
 	
 	const showAssetInfo = (name,detailInfo,x,y) =>{
-		//console.log("showAssetInfo detailInfo:",detailInfo);
+		console.log("showAssetInfo");
 		let popTitle = document.querySelector('#assetInfo').querySelector('strong');
      	popTitle.textContent = '자산 정보';
      	let ul = document.querySelector('#assetInfo').querySelector('.warshipWrap');
@@ -682,43 +692,51 @@
     	var clickX = canvasX(e.clientX)/labeling.scaleX;
         var clickY = canvasY(e.clientY)/labeling.scaleY;
     	let drawCvs = document.getElementById('drawLayer');
-    	let isAct = true;
     	if(labeling.mode === 'zoomin' || labeling.mode === 'zoomout'){
 	    	if(labeling.mode === 'zoomin'){
-	    		if(labeling.scaleX.toFixed(1) >  1.5){
-					isAct = false;
-				}
-				else{
-					labeling.scaleX += 0.1;
+	    		if(labeling.scaleX.toFixed(1) ==  1.5){
+	    			labeling.mode = 'zoomout';
+	    			changeOn(document.querySelector('.icon_reduction'));
+	            	document.querySelector('.canvasWrap').style.cssText = '';
+	    			document.querySelector('.canvasWrap').style.cssText = labeling.cssTxt+'cursor:zoom-out;';
+	    			labeling.scaleX -= 0.1;
+	    			labeling.scaleY -= 0.1;
+	        	}
+	    		else{
+	    			labeling.scaleX += 0.1;
 	    			labeling.scaleY += 0.1;
-				}
+	    		}
 	        	
 	    	}
-	    	else if(labeling.mode === 'zoomout'){    		
-	    		if(labeling.scaleX.toFixed(1) < 0.5){
-					isAct = false;
-				}
-				else{
-					labeling.scaleX -= 0.1;
+	    	else if(labeling.mode === 'zoomout'){
+	    		if(labeling.scaleX.toFixed(1) ==  0.5){
+	    			labeling.mode = 'zoomin';
+	    			
+	    			changeOn(document.querySelector('.icon_enlargement'));
+	    			document.querySelector('.canvasWrap').style.cssText = '';
+	    			document.querySelector('.canvasWrap').style.cssText = labeling.cssTxt+'cursor:zoom-in;';
+	    			labeling.scaleX += 0.1;
+	    			labeling.scaleY += 0.1;
+	        	}
+	    		else{
+	    			labeling.scaleX -= 0.1;
 	    			labeling.scaleY -= 0.1;
-				}
+	    		}	
 	    	}
-	    	if(isAct){
-				let imgCvs = document.getElementById('imgLayer');
-		    	let imgCtx = imgCvs.getContext('2d');	
-		    	// 좌표 정규화해서 새로운 도형을 배열에 추가
-		    	imgCvs.width = labeling.img.width;
-		    	imgCvs.height = labeling.img.height;
-		    	imgCtx.scale(labeling.scaleX,labeling.scaleY);
-		    	imgCtx.clearRect(0,0, imgCvs.width, imgCvs.height);
-		    	labeling.layerX = labeling.layerX*labeling.scaleX;
-		    	labeling.layerY = labeling.layerY*labeling.scaleY;
-	
-		    	imgCtx.clearRect(labeling.layerX,labeling.layerY, labeling.img.width/labeling.scaleX, labeling.img.height/labeling.scaleY);
-		       	imgCtx.drawImage(labeling.img,labeling.layerX,labeling.layerY,labeling.img.width,labeling.img.height);
-		       	drawRectsNormal();
-			}
 	    	
+	    	let imgCvs = document.getElementById('imgLayer');
+	    	let imgCtx = imgCvs.getContext('2d');	
+	    	// 좌표 정규화해서 새로운 도형을 배열에 추가
+	    	imgCvs.width = labeling.img.width;
+	    	imgCvs.height = labeling.img.height;
+	    	imgCtx.scale(labeling.scaleX,labeling.scaleY);
+	    	imgCtx.clearRect(0,0, imgCvs.width, imgCvs.height);
+	    	labeling.layerX = labeling.layerX*labeling.scaleX;
+	    	labeling.layerY = labeling.layerY*labeling.scaleY;
+
+	    	imgCtx.clearRect(labeling.layerX,labeling.layerY, labeling.img.width/labeling.scaleX, labeling.img.height/labeling.scaleY);
+	       	imgCtx.drawImage(labeling.img,labeling.layerX,labeling.layerY,labeling.img.width,labeling.img.height);
+	       	drawRectsNormal();
     	}
     	clickX = canvasX(e.clientX)/labeling.scaleX;
         clickY = canvasY(e.clientY)/labeling.scaleY;
@@ -734,7 +752,7 @@
 
         labelingMain.ex = canvasX(e.clientX)/labelingMain.scaleX - labelingMain.layerX/labelingMain.scaleX;
         labelingMain.ey = canvasY(e.clientY)/labelingMain.scaleY - labelingMain.layerY/labelingMain.scaleY;
-        
+        /*
         if(labelingMain.sx < 0 || labelingMain.sx > 1783){
         	return false;
         }
@@ -747,7 +765,7 @@
         if(labelingMain.ey < 0 || labelingMain.ey > 456){
           	return false;
         }
-        
+        */
         if(labelingMain.mode === 'move' && labelingMain.active){
 		
 			labelingMain.currentX = canvasX(e.clientX)/labelingMain.scaleX ;
@@ -772,7 +790,7 @@
       	
       	let clickX = canvasX(e.clientX)/labelingMain.scaleX;
         let clickY = canvasY(e.clientY)/labelingMain.scaleY;
-        
+        /*
         if(labelingMain.sx < 0 || labelingMain.sx > 1783){
         	return false;
         }
@@ -788,7 +806,7 @@
       		//msgCall('선택영역이 문제가 있습니다.',false);
       		return;
       	}
-      	
+      	*/
         labelingMain.rectIndex = getRectangle(labelingMain.sx, labelingMain.sy);
         
         if(labelingMain.mode === 'move' && labelingMain.rectIndex === -1){
@@ -801,7 +819,7 @@
     
     document.querySelector('.canvasWrapMain').addEventListener('mouseup',(e) => {
     	e.preventDefault();
-    	
+    	/*
     	if(labelingMain.sx < 0 || labelingMain.sx > 1783){
           	return false;
         }	
@@ -814,7 +832,7 @@
         if(labelingMain.ey < 0 || labelingMain.ey > 456){
           	return false;
         }
-        
+        */
         if(labelingMain.mode === 'move'){
 	        labelingMain.active = false;    
     	}

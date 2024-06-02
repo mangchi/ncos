@@ -80,26 +80,22 @@ const gridInit = (comp,headColumns,gridHeight,gridClass) => {
 	}
 }	
 
-const gridBind = (list,gridComp,appendYn) => {
+const gridBind = (list,gridComp) => {
 	try{
 	let tBody = gridComp.querySelector('.tBody');
-	if(appendYn === undefined){
-	    while(tBody.hasChildNodes())
-		{   
-			tBody.removeChild( tBody.firstChild );       
-		}
+	while(tBody.hasChildNodes())
+	{
+		tBody.removeChild( tBody.firstChild );       
 	}
-
 	let modBtn = document.querySelector('.modBtn');
 	let popModBtn = document.querySelector('.popModBtn');
 	for(let key in list){
 		let item = list[key];
-		//console.log("item:",item);
 		let thCols = gridComp.querySelector('.tHead').querySelectorAll("th");
 		let tr = document.createElement('TR');
-		if(modBtn || popModBtn && appendYn === undefined){
+		if(modBtn || popModBtn){
 			tr.addEventListener('click', (e) =>{ 
-				//console.log("target:",e.target);
+				console.log("target:",e.target);
 				let trs = tBody.querySelectorAll('tr');
 				trs.forEach((trItm) => {
 					if(trItm === e.target || trItm === e.target.parentNode || trItm === e.target.parentNode.parentNode){
@@ -129,7 +125,6 @@ const gridBind = (list,gridComp,appendYn) => {
 				chkbox.setAttribute("type", "checkbox");
 				td.appendChild(chkbox);
   				chkbox.addEventListener('click', (e) =>{ 
-					let threatList = document.getElementById('threatList');
    					if(e.target.checked){
 					    let checkCnt = 0;
 					    for(let row of tBody.children){
@@ -141,9 +136,6 @@ const gridBind = (list,gridComp,appendYn) => {
 									}
 								}
 							});
-						}
-						if(threatList){
-							gridCheckRow(e.target);
 						}
 						if(tBody.children.length === checkCnt){
 							thCol.children[0].checked = e.target.checked;
@@ -268,8 +260,7 @@ const gridBind = (list,gridComp,appendYn) => {
 							tdMiddleSpan.classList.add("threat-middle");
 							td.appendChild(tdMiddleSpan);
 					    }
-					    else if(item[thCol.getAttribute("data-id")] == "1"){
-							
+					    else {
 							const tdLowSpan = document.createElement('SPAN');
 					        tdLowSpan.append(gfn_getCodeVal('COIM','1'));
 							tdLowSpan.classList.add("threat-low");
@@ -283,8 +274,8 @@ const gridBind = (list,gridComp,appendYn) => {
 					
 					td.setAttribute("data-value",gfn_nullValue(item[thCol.getAttribute("data-id")]));
 					td.setAttribute("data-id",thCol.getAttribute("data-id"));
-					if(gfn_nullValue(item[thCol.getAttribute("data-id")]).trim().length > 0){
-						td.append(gfn_getCodeVal(thCol.getAttribute("data-grpCd"),gfn_nullValue(item[thCol.getAttribute("data-id")]).trim()));
+					if(gfn_nullValue(item[thCol.getAttribute("data-id")]) != ''){
+						td.append(gfn_getCodeVal(thCol.getAttribute("data-grpCd"),gfn_nullValue(item[thCol.getAttribute("data-id")])));
 					}
 					
 				}
@@ -322,7 +313,6 @@ const gridBind = (list,gridComp,appendYn) => {
 					if(gfn_nullValue(item[thCol.getAttribute("data-id")]) == '1'){
 						chkbox.checked = true;
 					}
-					
 					//td.setAttribute("data-id",thCol.getAttribute("data-id"));
 					td.appendChild(chkbox);
 				}
@@ -356,7 +346,7 @@ const gridBind = (list,gridComp,appendYn) => {
 				else if(thCol.getAttribute("data-type") === 'int'){
 				    td.setAttribute("data-value",gfn_nullValue(item[thCol.getAttribute("data-id")]));
 				    td.setAttribute("data-id",thCol.getAttribute("data-id"));
-				    td.append(parseFloat(gfn_nullValue(item[thCol.getAttribute("data-id")])).toFixed(0));
+				    td.append(gfn_nullValue(item[thCol.getAttribute("data-id")]).toFixed(0));
 				}
 			}
 			else{
@@ -400,39 +390,6 @@ const gridCheckedRow = (thCols,gridRow) => {
 		}
 	});
 	detailFunc(jsonParam);
-}
-
-const gridCheckRow = (target) => {
-    let chkTr = target.parentNode.parentNode;
-    const chkTds = chkTr.querySelectorAll('td');
-    let chkVal = '';
-    chkTds.forEach((td,i) => {
-		if(i === 4 || i === 5 || i === 9){
-			chkVal += gfn_nullValue(td.getAttribute("data-value")).trim();
-		}
-	});
-	let tBody = chkTr.parentNode;
-	let allChk = true;
-	tBody.querySelectorAll('tr').forEach((tr) => {
-		const tds = tr.querySelectorAll('td');
-		let rData = gfn_nullValue(tds[4].getAttribute("data-value")).trim() + gfn_nullValue(tds[5].getAttribute("data-value")).trim()
-		            + gfn_nullValue(tds[9].getAttribute("data-value")).trim();
-		if(rData === chkVal){
-			tds[2].children[0].checked = true;
-		}
-		if(!tds[2].children[0].checked){
-			allChk = false;
-		}
-	});	
-	
-	let thCols = tBody.parentNode.querySelector('.tHead').querySelectorAll("th");
-	if(allChk){
-		thCols[2].children[0].checked = true;
-	}
-	else{
-		thCols[2].children[0].checked = false;
-	}
-
 }
 
 const gridCheckedData = (gridComp) => {

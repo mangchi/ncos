@@ -6,7 +6,6 @@
 <title>사이버 위협 전시</title>
 </head>
 <th:block layout:fragment="content">
-
 <div class="container-wide">
 	<div class="container">
 		<div class="grid-row">
@@ -59,6 +58,7 @@
 				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_search"></span><strong>조회조건</strong></h4>
 					<div class="items" style="overflow: visible"> 
+						<!-- item contnets // -->
 						<div class="schwrap">
 							<ul>
 								<li>
@@ -66,11 +66,12 @@
 									<input id="frDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
 									   ~
 									<input id="toDt" type="datetime-local" data-placeholder="날짜 선택" value="" class="form-control"></input>
+									<!-- 	<input type="text" class="form-control" placeholder="2023-01-01 10:00"> 
+										~
+										<input type="text" class="form-control" placeholder="2023-01-01 10:00">-->
 									</label>
 									<label>송신 IP
-										<input id="schSrcIp" type="text" class="form-control" placeholder="192.168.100.102" style="margin-right:10px;">
-									     수신 IP
-										<input id="schDstIp" type="text" class="form-control" placeholder="192.168.100.102">
+										<input id="schSrcIp" type="text" class="form-control" placeholder="192.168.100.102">
 									</label>
 								</li>
 								<li>
@@ -88,8 +89,8 @@
 											</div>
 										</div> 
 									</div>
-									<label>송신 IP Port
-										<input type="text" id="schSrcPort" class="form-control number" maxlength="5" placeholder="8500">
+									<label>수신 IP
+										<input id="schDstIp" type="text" class="form-control" placeholder="192.168.100.102">
 									</label>
 								</li>
 								<li>
@@ -107,8 +108,8 @@
 											</div>
 										</div> 
 									</div>
-									<label>수신 IP Port
-										<input type="text" id="schDstPort" class="form-control number" maxlength="5" placeholder="6500">
+									<label>송신 IP Port
+										<input type="text" id="schSrcPort" class="form-control number" maxlength="5" placeholder="8500">
 									</label>
 								</li>
 								<li>
@@ -126,8 +127,8 @@
 											</div>
 										</div> 
 									</div>
-									<label 	>탐지위협명
-										<input type="text" id="schDetectionThreatName" class="form-control" style="width:172px;" placeholder="Whitelist">
+									<label>수신 IP Port
+										<input type="text" id="schDstPort" class="form-control number" maxlength="5" placeholder="6500">
 									</label>
 								</li>
 							</ul>
@@ -136,6 +137,7 @@
 							<button class="btn medium darkblue schBtn"><span class="iconBtn icon_btn_01"></span><strong>검색</strong></button>
 							</div>
 						</div>
+						<!-- // item contnets --> 
 					</div>
 				</div>
 			</div>
@@ -143,11 +145,7 @@
 		<div class="grid-row">
 			<div class="item-box col-12">
 				<div class="inner">
-					<h4 class="item-title"><span class="iconWrapB icon_list"></span>
-					<strong>조회목록</strong>
-					<a class="btn small darkblue totCnt" style="float:right;display:none;"><span class="iconBtn icon_btn_01"></span><strong id="cntVal"></strong></a>
-					</h4>
-					
+					<h4 class="item-title"><span class="iconWrapB icon_list"></span><strong>조회목록</strong></h4>
 					<div class="items" style="height:380px; overflow:hidden"> 
 						<div class="tablewrap">
 							<table>
@@ -169,286 +167,7 @@
 		<!--//Grid--> 
 	</div>
 </div>
- <div class="dim-layer">
-	<div class="dimBg"></div>
-	<div id="threatList" class="pop-layer xxxlarge" >
-		<div class="Popup-title">
-			<h3><strong>위협 목록</strong></h3>
-			<button class="icon-close">닫기</button>
-		</div>
-		<div class="Popup-container">
-		<div class="grid-row">
-			<div class="item-box col-5" style="padding:0 5px 15px 0;">
-				<div class="inner">
-					<h4 class="item-title"><span class="iconWrapB icon_06_02"></span><strong>탐지 이벤트 등급</strong></h4>
-					<div class="items"> 
-						<!-- item contnets // -->
-						<div class="eventRatingPop ac">
-							<ul>
-								<li class="high"><span>상</span><strong></strong></li>
-								<li class="middle" ><span>중</span><strong></strong></li>
-								<li class="low" ><span>하</span><strong></strong></li>
-							</ul>
-						</div>
-						<!-- // item contnets --> 
-					</div>
-				</div>
-			</div>
-			<div class="item-box col-22" style="padding:0 0 15px 5px;">
-				<div class="inner">
-					<h4 class="item-title"><span class="iconWrapB icon_06_03"></span><strong>탐지 이벤트 수</strong></h4>
-					<div class="items"> 
-						<!-- item contnets // -->
-						<div class="eventNumPop ac">
-							<ul>
-								<li class="high"><strong></strong><span></span></li>
-							</ul>
-						</div>
-						<!-- // item contnets --> 
-					</div>
-				</div>
-			</div>
-		</div>
-			<!--Contens-->
-			<div class="Popup-contents">
-				<div class="tablewrap" style="height:580px; overflow:auto;">
-					<table >
-						<thead class="tHead">
-						</thead>
-						<tbody class="tBody" >
-						</tbody>
-					</table>
-				</div>
-<!-- 			    <input type="hidden" name="pageNo" class="pageNo" value="1">
-				<input type="hidden" name="rowPerPage" class="rowPerPage" value="15"> -->
-			</div>
-		</div>
-		<div class="Popup-footer">
-		<div class="btnWrap">
-		<div class="left"></div>
-		<div class="right">
-		    <a href="javascript:setAnalysisPop();" class="btn medium darkblue btnAnalysis"><span class="iconBtn icon_btn_03"></span><strong>정오탐 판정</strong></a>
-			<a href="javascript:;" class="btn medium darkblue popClose"><span class="iconBtn icon_btn_08"></span><strong>닫기</strong></a>
-		</div>
-		</div>
-		</div>
-	</div>
-</div>
-<!--정오탐 판정 modal popup//-->
-<div class="dim-layer">
-	<div class="dimBg"></div>
-	<div id="tfpositive" class="pop-layer large">
-		<!--Title-->
-		<div class="Popup-title">
-			<h3><span class="iconWrapB icon_08_01"></span><strong>정오탐판정</strong></h3>
-			<button class="icon-close">닫기</button>
-		</div>
-		<div class="Popup-container">
-			<!--Contens-->
-			<div class="Popup-contents">
-				<div class="assetWrap tfpositive">
-					<ul class="clfix">
-					    <li>
-							<label>
-								<span th:if="${!(activeProfile.equals('hmmLand') || activeProfile.equals('hmmNavy') || activeProfile.equals('lnsystem-hmm-land') || activeProfile.equals('lnsystem-hmm-navy'))}">부대명</span>
-								<span th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('hmmNavy') || activeProfile.equals('lnsystem-hmm-land') || activeProfile.equals('lnsystem-hmm-navy')}">회사명</span>
-								<input type="text" id="unitId" class="form-control" readonly>
-								<input type="hidden" id="threatId">
-								<input type="hidden" id="analysisId">
-							</label>
-						</li>
-						<li>
-							<label>
-								<span th:if="${!(activeProfile.equals('hmmLand') || activeProfile.equals('hmmNavy') || activeProfile.equals('lnsystem-hmm-land') || activeProfile.equals('lnsystem-hmm-navy'))}">함명</span>
-								<span th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('hmmNavy') || activeProfile.equals('lnsystem-hmm-land') || activeProfile.equals('lnsystem-hmm-navy')}">선박명</span>
-								<input type="text" id="shipId" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-							<label>
-								<span>탐지시간</span>
-								<input type="text" id="detectionTime" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-							<label>
-								<span>송신IP</span>
-								<input type="text" id="srcIp" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>송신Port</span>
-								<input type="text" id="srcPort" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-							<label>
-								<span>수신IP</span>
-								<input type="text" id="dstIp" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>수신Port</span>
-								<input type="text" id="dstPort" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>전송 프로토콜</span>
-								<input type="text" id="protocol" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>페이로드 크기</span>
-								<input type="text" id="payloadSize" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>파편화 유무</span>
-								<input type="text" id="fragmentation" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>파편화 ID</span>
-								<input type="text" id="fragmentId" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>탐지 위협명</span>
-								<input type="text" id="detectionThreatName" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>탐지방식</span>
-								<input type="text" id="threatDetectionMethod" class="form-control" readonly>
-							</label>
-						</li>
-						<li>
-						    <label>
-								<span>위협 중요도</span>
-								<input type="text" id="threatImportance" class="form-control" readonly>
-							</label>
-						</li>
-						<li th:if="${auth.equals('2') || auth.equals('3')}">
-						    <div>정오탐 판정
-						        <div  class="select" style="padding-left: 35px">
-									<div class="selected">
-										<div data-value='' class="selected-value">선택</div>
-										<div class="arrow"></div>
-									</div>
-									<ul id="analysisResult">
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li th:if="${!auth.equals('2') && !auth.equals('3')}">
-						    <label>
-								<span>정오탐 판정</span>
-								<input type="text" id="analysisResult" class="form-control" readonly>
-							</label>
-						</li>
-						<li th:if="${auth.equals('2') || auth.equals('3')}">
-						    <div>조치결과
-						        <div class="select" style="padding-left: 35px">
-									<div class="selected">
-										<div data-value='' class="selected-value">선택</div>
-										<div class="arrow"></div>
-									</div>
-									<ul id="actionResult">
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li th:if="${!auth.equals('2') && !auth.equals('3')}">
-						    <label>
-								<span>조치결과</span>
-								<input type="text" id="actionResult" class="form-control" readonly>
-							</label>
-						</li>
-						<li style="float: nont; width: 100%; display: block">
-						    <label>
-								<span>페이로드</span>
-							    <textarea id="payloadContent" cols="10" rows="5" readonly="readonly" style="height:80px;"></textarea>
-							</label>
-						</li>
-						<li th:if="${(activeProfile.equals('navy') || activeProfile.equals('land')) && (auth.equals('2') || auth.equals('3'))}" style="float: nont; width: 100%; height:50%; display: block">
-						    <label>
-								<span>사유(비고)</span>
-							    <textarea id="reason" cols="10" rows="3" style="height:50px;"></textarea>
-							</label>
-						</li>
-						<li th:if="${(activeProfile.equals('navy') || activeProfile.equals('land')) && !auth.equals('2') && !auth.equals('3')}" style="float: nont; width: 100%; height:50%; display: block">
-						    <label>
-								<span>사유(비고)</span>
-							    <textarea id="reason" cols="10" rows="3" readonly="readonly" maxlength="100" style="height:50px;"></textarea>
-							</label>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="Popup-footer">
-			<a th:if="${auth.equals('2') || auth.equals('3')}" href="javascript:;" class="btn medium darkblue saveBtn"><span class="iconBtn icon_btn_09"></span><strong>확인</strong></a>
-			<a href="javascript:;" class="btn medium darkblue popClose"><span class="iconBtn icon_btn_08"></span><strong>취소</strong></a>
-		</div>
-	</div>
-</div>
-<!--//modal popup-->
-<!--정오탐 판정 복수 modal popup//-->
-<div class="dim-layer">
-	<div class="dimBg"></div>
-	<div id="analysisPop" class="pop-layer large" style="min-height:120px;">
-		<!--Title-->
-		<div class="Popup-title">
-			<h3><span class="iconWrapB icon_08_01"></span><strong>정오탐판정</strong></h3>
-			<button class="icon-close">닫기</button>
-		</div>
-		<div class="Popup-container">
-			<div class="Popup-contents">
-				<div class="assetWrap tfpositive">
-					<ul class="clfix">
-						<li>
-						    <div>정오탐 판정
-						        <div  class="select" style="padding-left: 35px">
-									<div class="selected">
-										<div data-value='' class="selected-value">선택</div>
-										<div class="arrow"></div>
-									</div>
-									<ul id="analysisResults">
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-						    <div>조치결과
-						        <div class="select" style="padding-left: 35px">
-									<div class="selected">
-										<div data-value='' class="selected-value">선택</div>
-										<div class="arrow"></div>
-									</div>
-									<ul id="actionResults">
-									</ul>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="Popup-footer">
-			<a href="javascript:;" class="btn medium darkblue saveBtn"><span class="iconBtn icon_btn_09"></span><strong>확인</strong></a>
-			<a href="javascript:;" class="btn medium darkblue popClose"><span class="iconBtn icon_btn_08"></span><strong>취소</strong></a>
-		</div>
-	</div>
-</div>
-<!--//modal popup-->
+
 
 
 <script th:inline="javascript"> 
@@ -469,7 +188,7 @@
 	    	e.preventDefault();
 	    	ncos.schMode = 'menual';
 	    	clearInterval(ncos.intervalFunc);
-	    	searchFunc(e.target);
+	    	searchFunc();
 	    });
 	});
 
@@ -480,41 +199,18 @@
     	createMultiChk(document.getElementById('schThreatDetectionMethod'),'THTY');
     	createMultiChk(document.getElementById('schAnalysisResult'),'THRES');
     	createMultiChk(document.getElementById('schThreatImportance'),'THIM');
-    	let headColumns =null;
-    	if(activeProfile === 'navy' || activeProfile === 'hmmNavy'){
-    		 headColumns = [{data_id:"id",label:"id",width:"0px"}
-		        ,{data_id:"detectionTime",label:"탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
-		        ,{data_id:"srcIp",label:"송신IP"}
-		        ,{data_id:"dstIp",label:"수신IP"}
-		        ,{data_id:"srcPort",label:"송신Port"}
-		        ,{data_id:"dstPort",label:"수신Port"}
-		        ,{data_id:"threatDetectionMethod",label:"탐지방식", data_grpCd:"THTY"}
-		        ,{data_id:"detectionThreatName",label:"탐지 위험명"}
-		        ,{data_id:"analysisResult",label:"정오탐판정",data_grpCd:"THRES"}
-		        ,{data_id:"threatImportance",label: "위협중요도",data_grpCd:"THIM", data_class:"threat"}
-		        ,{data_id:"detailBtn",label: "상세보기", data_btnNm:"상세보기"}
-		       ];
-    	}
-    	else{
-    		 headColumns = [{data_id:"id",label:"id",width:"0px"}
-		        ,{data_id:"detectionTime",label:"탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
-		     //   ,{data_id:"shipId",width:"0px"} 
-			  //  ,{data_id:"shipNm",label:"함명",data_grpCd:"COSH"}
-			    ,{data_id:"shipId",label:"함명",data_grpCd:"COSH"}
-		        ,{data_id:"srcIp",label:"송신IP"}
-		        ,{data_id:"dstIp",label:"수신IP"}
-		        ,{data_id:"srcPort",label:"송신Port"}
-		        ,{data_id:"dstPort",label:"수신Port"}
-		        ,{data_id:"threatDetectionMethod",label:"탐지방식", data_grpCd:"THTY"}
-		        ,{data_id:"detectionThreatName",label:"탐지 위험명"}
-		        ,{data_id:"analysisResult",label:"정오탐판정",data_grpCd:"THRES"}
-		        ,{data_id:"threatImportance",label: "위협중요도",data_grpCd:"THIM", data_class:"threat"}
-		        ,{data_id:"detailBtn",label: "상세보기", data_btnNm:"상세보기"}
-		       ];
-
-
-    	}
-       
+    	const headColumns = [{data_id:"id",label:"id",width:"0px"}
+					        ,{data_id:"detectionTime",label:"탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
+					        ,{data_id:"srcIp",label:"송신IP"}
+					        ,{data_id:"dstIp",label:"수신IP"}
+					        ,{data_id:"srcPort",label:"송신Port"}
+					        ,{data_id:"dstPort",label:"수신Port"}
+					        ,{data_id:"threatDetectionMethod",label:"탐지방식", data_grpCd:"THTY"}
+					        ,{data_id:"detectionThreatName",label:"탐지 위험명"}
+					        ,{data_id:"analysisResult",label:"정오탐판정",data_grpCd:"THRES"}
+					        ,{data_id:"threatImportance",label: "위협중요도",data_grpCd:"THIM", data_class:"threat"}
+					        ,{data_id:"detailBtn",label: "상세보기", data_btnNm:"상세보기"}
+					       ];
 		gridInit(document.querySelector('.tablewrap'),headColumns);
 		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
 		searchFunc();
@@ -525,23 +221,8 @@
     }
     
     const searchAfterFunc = (appendData) => {
-    	
-    	if(ncos.schMode == 'menual'){
-    		document.querySelector('.totCnt').style.display = '';
-    		if(appendData.totCount > 0){
-        		document.querySelector('.totCnt').setAttribute("href","javascript:searchThreatAllList();");
-        	}
-        	else{
-        		document.querySelector('.totCnt').removeAttribute("href");
-        	}
-        	document.querySelector('#cntVal').textContent = '건수 : '+appendData.totCount+'';
-    	}
-    	else{
-    		setStatus(appendData.eventStatusInfo);
-        	drawLineChart(appendData.detectPriorList);
-    		document.querySelector('.totCnt').style.display = 'none';
-    	}
-    	
+    	setStatus(appendData.eventStatusInfo);
+    	drawLineChart(appendData.detectPriorList);
     }
     
     const detailFunc = (data) => {
@@ -694,108 +375,6 @@
     	lineChart = new Chart(document.getElementById('lineChart').getContext("2d"),config);	 
     	
     }
-    
-    const searchThreatAllList = () => {
-    	const headColumns = [{data_id:"id",label:"id",width:"0px"}
-    	                    ,{data_id:"analysisId",label:"analysisId",width:"0px"}
-                         	,{data_id:"chk", width: "45px"}
-					        ,{data_id:"detectionTime",label:"탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
-					        ,{data_id:"srcIp",label:"송신IP"}
-					        ,{data_id:"dstIp",label:"수신IP"}
-					        ,{data_id:"srcPort",label:"송신Port"}
-					        ,{data_id:"dstPort",label:"수신Port"}
-					        ,{data_id:"threatDetectionMethod",label:"탐지방식", data_grpCd:"THTY"}
-					        ,{data_id:"detectionThreatName",label:"탐지 위험명"}
-					        ,{data_id:"analysisResult",label:"정오탐판정",data_grpCd:"THRES"}
-					        ,{data_id:"threatImportance",label: "위협중요도",data_grpCd:"THIM", data_class:"threat"}
-					        ,{data_id:"detailBtn",label: "상세보기", data_btnNm:"상세보기"}
-					       ];
-     
-   		gridInit(document.querySelector('#threatList').querySelector('.tablewrap'),headColumns);
-   		/*
-   		document.querySelector('#threatList').querySelector('.pageNo').setAttribute("value",1);
-   		
-   		document.querySelector('#threatList').querySelector('.btnMore').setAttribute("href","javascript:searchThreatMore();");
-   		let param = { "pageNo" : document.querySelector('#threatList').querySelector('.pageNo').getAttribute("value")
-	                , "rowPerPage" : Number(document.querySelector('#threatList').querySelector('.rowPerPage').getAttribute("value"))
-    		        };
-   		
-    	gfn_schParam(param);
-    	
-    	*/
-    	let param = {};
-    	gfn_schParam(param);
-	 	gfn_asyncJsonCall('/getThreatAllList','POST',param).then((data) => {
-	 		
-	 		let appendData = data['appendData'].listEventStatusInfo;
-	 		console.log("appendData:",appendData);
-	 		let eventRating = document.querySelector('.eventRatingPop');
-	    	let eventLis = eventRating.querySelectorAll('li');
-	    	eventLis.forEach((li,index) => {
-	    		let strong = li.querySelector('strong');
-	    		strong.innerHTML = '';
-	    		if(li.classList.contains('high')){
-	    			strong.append(appendData.highPrior);
-	    		}
-	    		else if(li.classList.contains('middle')){
-	    			strong.append(appendData.middlePrior);
-	    		}
-	            else if(li.classList.contains('low')){
-	            	strong.append(appendData.lowPrior);
-	    		}
-	    	});
-	    	
-	    	let eventNum = document.querySelector('.eventNumPop');
-	    	let eventStrong = eventNum.querySelector('strong');
-	    	let eventSpan = eventNum.querySelector('span');
-	    	eventStrong.innerHTML = '';
-	    	eventSpan.innerHTML = '';
-	    	eventStrong.append(appendData.detectEventCnt); 
-	    	/*
-	    	if(appendData.updownCnt > 0) {
-	    		eventSpan.append('(↑'+appendData.updownCnt+')');
-	    	}
-	    	else if(appendData.updownCnt === 0) {
-	    		eventSpan.append('('+appendData.updownCnt+')');
-	    	}
-	    	else{
-	    		eventSpan.append('(↓'+appendData.updownCnt*(-1)+')');
-	    	}
-	    	*/
-	 		let list = data['list'];
-	 		gridBind(list,document.querySelector('#threatList').querySelector('.tablewrap'));
-	 		return list;
-	 	}).then((data) => {
-	 		/*
-            if(data.length < 15){
-            	document.querySelector('#threatList').querySelector('.btnMore').removeAttribute("href");
-	 		}
-	 		*/
-	 		layerPopup('#threatList');
-	 	});
-
-    }
-    /*
-    const searchThreatMore = () => {
-    	let pageNo = Number(document.querySelector('#threatList').querySelector('.pageNo').getAttribute("value"));
-    	pageNo++;
-    	let param = { pageNo
-                    , "rowPerPage" : Number(document.querySelector('#threatList').querySelector('.rowPerPage').getAttribute("value"))
-			        };
-		gfn_schParam(param);
-	 	gfn_asyncJsonCall('/getThreatAllList','POST',param).then((data) => {
-	 		let list = data['list'];
-	 		gridBind(list,document.querySelector('#threatList').querySelector('.tablewrap'),'Y');
-	 		return list;
-	 	}).then((data) => {
-	 		if(data.length < 15){
-	 			document.querySelector('#threatList').querySelector('.btnMore').removeAttribute("href");
-	 		}
-	 		document.querySelector('#threatList').querySelector('.pageNo').setAttribute("value",pageNo);
-	 		
-	 	});
-    }
-	*/
   
 </script>
 </th:block>

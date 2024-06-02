@@ -18,7 +18,6 @@
               , DETECTION_TIME
      	      , UNIT_ID
      	      , SHIP_ID
-     	      , A.SHIP_NM
      	      , SRC_IP
      	      , DST_IP
      	      , SRC_PORT
@@ -31,14 +30,10 @@
         FROM ( SELECT A.THREAT_ID
                     , B.ANALYSIS_ID
                     , B.ANALYSIS_RESULT
-                    , C.affiliation SHIP_NM
                     , ROW_NUMBER() OVER (ORDER BY A.DETECTION_TIME DESC, A.THREAT_ID DESC) AS RN
                FROM threat_info A
                LEFT JOIN threat_analysis B
                ON A.THREAT_ID = B.THREAT_ID
-               LEFT JOIN affiliation C
-               ON A.SHIP_ID = C.affiliation_id
-               AND C.is_ship = 1
                <include refid="whereThreatList"></include>
                LIMIT #{startRow},#{rowPerPage}) A
         STRAIGHT_JOIN threat_info B
@@ -46,88 +41,6 @@
         ORDER BY RN
 
   </select>
-  
-  <select id="selectThreatAllList" parameterType="map" resultType="CmmnMap">
-
-     	SELECT  RN
-     	      , B.THREAT_ID ID
-              , DETECTION_TIME
-     	      , UNIT_ID
-     	      , SHIP_ID
-     	      , A.SHIP_NM
-     	      , SRC_IP
-     	      , DST_IP
-     	      , SRC_PORT
-     	      , DST_PORT
-     	      , ANALYSIS_ID
-     	      , ANALYSIS_RESULT
-     	      , DETECTION_THREAT_NAME
-     	      , THREAT_DETECTION_METHOD
-     	      , THREAT_IMPORTANCE
-        FROM ( SELECT A.THREAT_ID
-                    , B.ANALYSIS_ID
-                    , B.ANALYSIS_RESULT
-                    , C.affiliation SHIP_NM
-                    , ROW_NUMBER() OVER (ORDER BY A.DETECTION_TIME DESC, A.THREAT_ID DESC) AS RN
-               FROM threat_info A
-               LEFT JOIN threat_analysis B
-               ON A.THREAT_ID = B.THREAT_ID
-               LEFT JOIN affiliation C
-               ON A.SHIP_ID = C.affiliation_id
-               AND C.is_ship = 1
-               <include refid="whereThreatList"></include>
-               ) A
-        STRAIGHT_JOIN threat_info B
-        ON (A.THREAT_ID = B.THREAT_ID)
-        ORDER BY RN
-
-  </select>
-  
-    <select id="selectListEventStatus" parameterType="map" resultType="CmmnMap">
-
-     	SELECT 
-              (SELECT COUNT(1) FROM threat_info A
-               LEFT JOIN threat_analysis B
-               ON A.THREAT_ID = B.THREAT_ID
-               <include refid="whereThreatList"></include>
-               <!-- AND NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = A.THREAT_ID AND T2.ACTION_RESULT = 2) -->
-               AND  A.THREAT_IMPORTANCE = '5'
-		      ) HIGH_PRIOR
-		     ,(SELECT COUNT(1) FROM threat_info A
-		       LEFT JOIN threat_analysis B
-               ON A.THREAT_ID = B.THREAT_ID
-              
-              <include refid="whereThreatList"></include>
-              <!--  AND NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = A.THREAT_ID AND T2.ACTION_RESULT = 2) -->
-               AND A.THREAT_IMPORTANCE = '3'
-		       ) MIDDLE_PRIOR
-		     ,(SELECT COUNT(1) FROM threat_info A
-		       LEFT JOIN threat_analysis B
-               ON A.THREAT_ID = B.THREAT_ID
-              
-               <include refid="whereThreatList"></include>
-               <!-- AND NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = A.THREAT_ID AND T2.ACTION_RESULT = 2) -->
-               AND A.THREAT_IMPORTANCE = '1'
-		      ) LOW_PRIOR
-		      
-             , (SELECT COUNT(1) FROM threat_info A
-               LEFT JOIN threat_analysis B
-               ON A.THREAT_ID = B.THREAT_ID
-                
-               <include refid="whereThreatList"></include>
-               <!-- AND NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = A.THREAT_ID AND T2.ACTION_RESULT = 2) -->
-               ) AS DETECT_EVENT_CNT
-         <!--     , (SELECT COUNT(1) FROM threat_info A
-                LEFT JOIN threat_analysis B
-                ON A.THREAT_ID = B.THREAT_ID
-                
-                <include refid="whereThreatList"></include>
-                AND NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = A.THREAT_ID AND T2.ACTION_RESULT = 2)
-                AND A.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -1 HOUR)
-               )  AS UPDOWN_CNT
- -->
-  </select>
-  
   
   <sql id="whereThreatList">
          <where>
@@ -150,9 +63,6 @@
 		         </if>
 		         <if test='schDstPort != null and !schDstPort.equals("")'>
 		         AND A.DST_PORT = #{schDstPort}
-		         </if>
-		         <if test='schDetectionThreatName != null and !schDetectionThreatName.equals("")'>
-		         AND A.DETECTION_THREAT_NAME LIKE CONCAT('%',#{schDetectionThreatName},'%')
 		         </if>
 		         <if test='schThreatDetectionMethod != null'>
                  AND A.THREAT_DETECTION_METHOD IN 
@@ -186,7 +96,6 @@
               , DETECTION_TIME
      	      , UNIT_ID
      	      , SHIP_ID
-     	      , C.affiliation SHIP_NM
      	      , SRC_IP
      	      , DST_IP
      	      , SRC_PORT
@@ -199,9 +108,6 @@
   FROM  threat_info A
    LEFT JOIN threat_analysis B
    ON A.THREAT_ID = B.THREAT_ID
-   LEFT JOIN affiliation C
-   ON A.SHIP_ID = C.affiliation_id
-   AND C.is_ship = 1
    ORDER BY A.THREAT_ID DESC
    LIMIT 5
 
@@ -227,9 +133,6 @@
               ,PAYLOAD
               ,ANALYSIS_RESULT
               ,IFNULL(ACTION_RESULT,1) ACTION_RESULT
-              <if test='systemId == null'>
-              ,REASON
-              </if>
           FROM threat_info A
           LEFT JOIN threat_analysis B
           ON A.THREAT_ID = B.THREAT_ID
@@ -242,27 +145,27 @@
 
      	SELECT 
               (SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND  T1.THREAT_IMPORTANCE = '5'
 <!--                AND T1.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -24 HOUR) -->
 		      ) HIGH_PRIOR
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_IMPORTANCE = '3'
 <!--                AND T1.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -24 HOUR) -->
 		       ) MIDDLE_PRIOR
 		     ,(SELECT COUNT(1) FROM threat_info T1
-               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+               WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                AND T1.THREAT_IMPORTANCE = '1'
 <!--                AND T1.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -24 HOUR) -->
 		      ) LOW_PRIOR
 		      
              , (SELECT COUNT(1) FROM threat_info T1
-                WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+                WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
 <!--                 AND T1.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -24 HOUR) -->
                ) AS DETECT_EVENT_CNT
              , (SELECT COUNT(1) FROM threat_info T1
-                WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID AND T2.ACTION_RESULT = 2)
+                WHERE NOT EXISTS (SELECT T2.THREAT_ID FROM threat_analysis T2 WHERE T2.THREAT_ID = T1.THREAT_ID)
                 AND T1.DETECTION_TIME > DATE_ADD(NOW(), INTERVAL -1 HOUR)
                )  AS UPDOWN_CNT
 
@@ -426,24 +329,18 @@
 
   </select>
   
-  <update id="insertThreatAnalysis" parameterType="map" useGeneratedKeys="true"  keyProperty="analysisId" keyColumn="analysis_id">
+  <update id="insertThreatAnalysis" parameterType="map">
         INSERT INTO threat_analysis(THREAT_ID
                                   , ANALYST
                                   , ANALYSIS_TIME
                                   , ANALYSIS_RESULT
                                   , ACTION_RESULT
-                                  <if test='reason != null and !reason.equals("")'>
-                                  , REASON
-                                  </if>
                                     )
                                VALUES(#{threatId}
                                      ,#{analyst}
                                      ,SYSDATE()
                                      ,#{analysisResult}
                                      ,#{actionResult}
-                                     <if test='reason != null and !reason.equals("")'>
-							          ,#{reason}
-						             </if>
                                      )
   </update>
   
@@ -453,22 +350,16 @@
                           , ANALYSIS_TIME = SYSDATE()
                           , ANALYSIS_RESULT = #{analysisResult}
                           , ACTION_RESULT = #{actionResult}
-                          <if test='reason != null and !reason.equals("")'>
-				          , REASON =#{reason}
-			              </if>
         WHERE ANALYSIS_ID = #{analysisId}
   </update>
   
-  <update id="insertThreatAnalysisNcos" parameterType="map" useGeneratedKeys="true"  keyProperty="analysisId" keyColumn="analysis_id">
+  <update id="insertThreatAnalysisNcos" parameterType="map">
         INSERT INTO threat_analysis(THREAT_ID
                                   , ANALYST
                                   , ANALYSIS_TIME
                                   , ANALYSIS_RESULT
                                   , ACTION_RESULT
                                   , THREAT_INTEGRITY
-                                  <if test='reason != null and !reason.equals("")'>
-                                  , REASON
-                                  </if>
                                     )
                                VALUES(#{threatId}
                                      ,#{analyst}
@@ -476,9 +367,6 @@
                                      ,#{analysisResult}
                                      ,#{actionResult}
                                      ,#{integrity}
-                                     <if test='reason != null and !reason.equals("")'>
-							          ,#{reason}
-						             </if>
                                      )
   </update>
   
@@ -488,15 +376,7 @@
                           , ANALYSIS_TIME 		= STR_TO_DATE(#{analysisTime}, '%Y-%m-%d %H:%i.%s')
                           , ANALYSIS_RESULT 	= #{analysisResult}
                           , ACTION_RESULT 		= #{actionResult}
-                          <if test='reason != null and !reason.equals("")'>
-				          , REASON =#{reason}
-			              </if>
-        WHERE ANALYSIS_ID = #{analysisId}
-  </update>
-  
-  <update id="updateThreatAnalysisIntegrity" parameterType="map">
-        UPDATE threat_analysis
-                        SET THREAT_INTEGRITY 	= #{integrity}
+                          , THREAT_INTEGRITY 	= #{integrity}
         WHERE ANALYSIS_ID = #{analysisId}
   </update>
   

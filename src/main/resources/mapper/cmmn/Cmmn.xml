@@ -14,17 +14,15 @@
 	            , SORT
 	        FROM code_info
 	        WHERE USE_FLAG = 1
+	        UNION ALL
+	        SELECT ACCOUNT_ID
+	              ,'UA'
+	              , ACCOUNT_ID
+	              , USERNAME
+	              , CAST(ACCOUNT_ID AS INTEGER)
+	        FROM user_account
 	        ) A
        ORDER BY GRP_CD,CD ,SORT
-  </select>
-  
-  <select id="selectUserCodeList" parameterType="HashMap" resultType="CmmnMap">
-          SELECT A.ACCOUNT_ID CD
-              , USERNAME CD_NM
-        FROM user_account A
-        JOIN account_status B
-        ON A.ACCOUNT_ID = B.ACCOUNT_ID
-        AND B.ACCOUNT_ACTIVATION = 1
   </select>
 
   <select id="selectEquipList" parameterType="HashMap" resultType="CmmnMap">
@@ -46,31 +44,12 @@
         SELECT MANAGER CD
              , MANAGER CD_NM
         FROM network_asset_info
-        WHERE MANAGER IS NOT NULL
         GROUP BY MANAGER
         ORDER BY MANAGER
   </select>
-  
-  <select id="selectAccountSetting" parameterType="UserVo" resultType="CmmnMap">
-
-        SELECT ACCOUNT_ID
-             , ALARM_STATUS
-             , WARNING_STATUS
-             , SESSION_CONTROL_STATUS
-             , ALARM_LEVEL
-             , WARNING_LEVEL
-        FROM account_setting
-        WHERE ACCOUNT_ID = #{accountId}
-  </select>
-  
 
   <select id="selectEquipStatusList" parameterType="HashMap" resultType="CmmnMap">
-	    SELECT DISTINCT ID
-            , UPPER_ID
-		    , CLASS_NM
-		    , IS_SHIP
-		    , ASSET_STATUS
-		    , COUNT
+	    SELECT *
 	     FROM
 		     (SELECT '0' AS ID
 			       , NULL AS UPPER_ID
@@ -83,8 +62,8 @@
 		          , CASE WHEN BELONGPARENTID IS NULL THEN '0' ELSE BELONGPARENTID END  UPPER_ID
 		          , affiliation AS CLASS_NM
 		          , IS_SHIP
-		          , ASSET_STATUS
-		          , COUNT
+		          , replace(ASSET_STATUS,'비','') asset_status  <!-- 가라 -->
+		          , 0 COUNT <!-- 가라 -->
 		    FROM v_tree_data
 		     ) A
 	     ORDER BY ID DESC
@@ -115,7 +94,7 @@
 		         FROM v_tree_data P
 		         INNER JOIN V_TREE C ON C.AFFILIATION_ID = P.BELONGPARENTID
 		   )
-		   SELECT  distinct AFFILIATION_ID
+		   SELECT  AFFILIATION_ID
 		        , affiliation
 		        , ID_PATH
 		        , ASSET_STATUS
@@ -129,23 +108,20 @@
 
 
    <select id="selectLinkInfoList" parameterType="HashMap" resultType="CmmnMap">
-         SELECT * FROM 
-	     (SELECT LINK_ID ID
+	     SELECT LINK_ID ID
 	          , CASE WHEN UPPER_LINK_ID = 0 THEN NULL ELSE UPPER_LINK_ID END UPPER_ID
-	          , B.ASSET_ID
-              , B.ASSET_NAME  CLASS_NM
+	          , A.ASSET_ID
+              , CASE WHEN C.CODE_KR IS NULL THEN '장비 연결' ELSE B.ASSET_NAME END CLASS_NM
 	          , LINK_TYPE
 	          , C.CODE_KR
-	          , B.SYSTEM_ID
 	       FROM link_info A
-	       INNER JOIN network_asset_info B
-	       ON A.ASSET_ID = B.SYSTEM_ID
+	       LEFT JOIN network_asset_info B
+	       ON A.ASSET_ID = B.ASSET_ID
 	       LEFT JOIN  code_info C
 	       ON  B.SMALL_CATEGORY = C.CODE
 	       AND C.MAINGROUP = 'AS'
-	       AND C.SUBGROUP = 'SC') A
-	       WHERE A.CLASS_NM IS NOT NULL
-	       ORDER BY ID DESC
+	       AND C.SUBGROUP = 'SC'
+	       ORDER BY LINK_ID DESC
   </select>
 
   <select id="selectZoneList" parameterType="HashMap" resultType="CmmnMap">
@@ -227,9 +203,9 @@
 			</otherwise>
 			</choose>
 		</if>
-     <!--    AND  NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID) -->
+        AND  NOT EXISTS (SELECT B.THREAT_ID FROM threat_analysis B WHERE B.THREAT_ID = A.THREAT_ID)
         </where>
-        ORDER BY A.THREAT_ID 
+        ORDER BY A.THREAT_ID DESC
         LIMIT 1
         <!--
 
@@ -251,6 +227,7 @@
 		WHERE A.ASSET_STATUS != 2
          AND A.DETECTION_TIME > IFNULL((SELECT MAX(CONFIRM_TIME) FROM alarm_check WHERE ACCOUNT_ID = #{accountId} AND EVENT_ID = 1)
                                        , (SELECT LAST_SUCCESS_ACCESS_DATE FROM account_status WHERE ACCOUNT_ID = #{accountId}))
+
          <if test='alarmSch != null and alarmSch.equals("Y") and alarmLevel != null'>
         <choose>
 		<when test='alarmLevel == 9'>
@@ -289,7 +266,7 @@
 		</otherwise>
 		</choose>
 		</if>
-		ORDER BY B.ASSET_ID 
+		ORDER BY B.ASSET_ID DESC
 		LIMIT 1
       <!--   <if test='login != null and !login.equals("")'>
         LIMIT 1
@@ -311,7 +288,7 @@
          AND A.PRINT_YN = 0
          AND B.ACCOUNT_ID = #{accountId}
          </where>
-         ORDER BY A.MANAGE_ID
+         ORDER BY A.MANAGE_ID DESC
          <if test='login != null and !login.equals("")'>
          LIMIT 1
          </if>
@@ -464,12 +441,14 @@
 
    <update id="insertTransmitData" parameterType="map">
          INSERT INTO transmit_data(COLLECTION_TIME
+                                  , SRC_TIME
                                   , SRC_FLAG
                                   , THREAT_ID
                                   , SRC_BYTES
                                   )
 					        VALUES( FROM_UNIXTIME(#{detectionTime})
-					              , #{srcFlag}
+					              , SYSDATE()
+					              , 1
 					              , #{threatId}
 					              , #{srcBytes}
 					              )
@@ -477,7 +456,7 @@
 
     <update id="updateTransmitData" parameterType="map">
          UPDATE transmit_data SET SRC_TIME = SYSDATE()
-                                , SRC_FLAG  = #{srcFlag}
+                                , SRC_FLAG  = 1
                                 , SRC_BYTES = #{srcBytes}
          WHERE DATA_ID = #{dataId}
    </update>
@@ -528,7 +507,7 @@
 					              , DST_MASK = #{dstMask}
 					              , SRC_START_PORT = #{srcStartPort}
 					              , SRC_END_PORT = #{srcEndPort}
-					              , DST_START_PORT = #{dstStartPort}
+					              , DST_START_PORT = #{srcStartPort}
 					              , DST_END_PORT = #{dstEndPort}
 					              , PROTOCOL = #{protocol}
 					              , POLICY = #{policy}
@@ -536,7 +515,7 @@
 
   </update>
 
-  <update id="insertWhiteListNcos" parameterType="map" useGeneratedKeys="true"  keyProperty="policyId" keyColumn="policy_id">
+  <update id="insertWhiteListNcos" parameterType="map">
        INSERT INTO whitelist_policy(POLICY_NAME
                                   , SRC_IP
                                   , SRC_MASK
@@ -571,16 +550,11 @@
 					              , DST_MASK 			= #{dstMask}
 					              , SRC_START_PORT 		= #{srcStartPort}
 					              , SRC_END_PORT 		= #{srcEndPort}
-					              , DST_START_PORT 		= #{dstStartPort}
+					              , DST_START_PORT 		= #{srcStartPort}
 					              , DST_END_PORT 		= #{dstEndPort}
 					              , PROTOCOL 			= #{protocol}
 					              , POLICY 				= #{policy}
-       WHERE POLICY_ID = #{policyId}
-
-  </update>
-  
-  <update id="updateWhiteListIntegrity" parameterType="map">
-       UPDATE whitelist_policy SET POLICY_INTEGRITY = #{integrity}
+					              , POLICY_INTEGRITY 	= #{integrity}
        WHERE POLICY_ID = #{policyId}
 
   </update>
@@ -600,12 +574,12 @@
 
   <update id="insertLinkInfo" parameterType="map">
 		INSERT INTO link_info(LINK_ID
-		                    , UPPER_LINK_ID
+		                    ,  UPPER_LINK_ID
 		                    , ASSET_ID
                               )
 				        VALUES( #{id}
 				              , #{upperId}
-				              , (SELECT SYSTEM_ID FROM network_asset_info WHERE ASSET_ID = #{assetId} LIMIT 1) )
+				              , #{assetId} )
    </update>
 
    <delete id="deleteLinkInfo" parameterType="map">
@@ -635,6 +609,7 @@
                                   , SETTER
                                   , TRANS_SPEED
                                   , SYSTEM_OP_STATUS
+                                  , SYSTEM_OP_STATUS_DELAY
                                   , UNIT_ID
                                   , SHIP_ID
                                   , ASSET_STATUS
@@ -657,6 +632,7 @@
 					              , #{setter}
 					              , #{transSpeed}
 					              , #{systemOpStatus}
+					              , #{systemOpStatusDelay}
 					              , #{unitId}
 					              , #{shipId}
 					              , #{assetStatus}
@@ -673,8 +649,7 @@
 					              , #{detectionThreatName}
 					              , #{threatDetectionMethod}
 					              , #{threatImportance}
-					              , #{payload}
-					               )
+					              , #{payload} )
 
   </update>
 
@@ -683,6 +658,7 @@
 					              , SETTER = #{setter}
                                   , TRANS_SPEED  = #{transSpeed}
                                   , SYSTEM_OP_STATUS = #{systemOpStatus}
+                                  , SYSTEM_OP_STATUS_DELAY = #{systemOpStatusDelay}
                                   , UNIT_ID = #{unitId}
                                   , SHIP_ID = #{shipId}
                                   , ASSET_STATUS = #{assetStatus}
@@ -704,11 +680,12 @@
 
   </update>
 
-   <update id="insertSatelliteTransNcos" parameterType="map" useGeneratedKeys="true"  keyProperty="settingId" keyColumn="setting_id">
+   <update id="insertSatelliteTransNcos" parameterType="map">
        INSERT INTO satellite_trans(SETTING_TIME
                                   , SETTER
                                   , TRANS_SPEED
                                   , SYSTEM_OP_STATUS
+                                  , SYSTEM_OP_STATUS_DELAY
                                   , UNIT_ID
                                   , SHIP_ID
                                   , ASSET_STATUS
@@ -725,12 +702,14 @@
                                   , DETECTION_THREAT_NAME
                                   , THREAT_DETECTION_METHOD
                                   , THREAT_IMPORTANCE
+                                  , PAYLOAD
                                   , SATELLITE_INTEGRITY
                                    )
 					        VALUES( STR_TO_DATE(#{settingTime}, '%Y-%m-%d %H:%i.%s')
 					              , #{setter}
 					              , #{transSpeed}
 					              , #{systemOpStatus}
+					              , #{systemOpStatusDelay}
 					              , #{unitId}
 					              , #{shipId}
 					              , #{assetStatus}
@@ -747,8 +726,8 @@
 					              , #{detectionThreatName}
 					              , #{threatDetectionMethod}
 					              , #{threatImportance}
-					              , #{integrity}
-					              )
+					              , #{payload}
+					              , #{integrity} )
 
   </update>
 
@@ -757,6 +736,7 @@
 					              , SETTER = #{setter}
                                   , TRANS_SPEED  = #{transSpeed}
                                   , SYSTEM_OP_STATUS = #{systemOpStatus}
+                                  , SYSTEM_OP_STATUS_DELAY = #{systemOpStatusDelay}
                                   , UNIT_ID = #{unitId}
                                   , SHIP_ID = #{shipId}
                                   , ASSET_STATUS = #{assetStatus}
@@ -773,29 +753,11 @@
                                   , DETECTION_THREAT_NAME = #{detectionThreatName}
                                   , THREAT_DETECTION_METHOD = #{threatDetectionMethod}
                                   , THREAT_IMPORTANCE = #{threatImportance}
+                                  , PAYLOAD = #{payload}
+                                  , SATELLITE_INTEGRITY = #{integrity}
        WHERE SETTING_ID = #{settingId}
 
   </update>
-  
-   <update id="insertAggregationStandard" parameterType="map">
-       INSERT INTO aggregation_standard(DAY)
-                   VALUES(#{day})
-
-  </update>
-  
-  <update id="updateAggregationStandard" parameterType="map">
-       UPDATE aggregation_standard SET DAY = #{day}
-
-  </update>
-  
-   <update id="updateSatelliteTransIntegrity" parameterType="map">
-       UPDATE satellite_trans SET SATELLITE_INTEGRITY = #{integrity}
-       WHERE SETTING_ID = #{settingId}
-  </update>
-  
-  <select id="selectAggregationStandard" resultType="int">
-      SELECT DAY FROM aggregation_standard
-  </select>
 
   <select id="selectIntegritySalt" parameterType="map" resultType="CmmnMap">
 	  SELECT ACCOUNT_SETTINGS
@@ -803,8 +765,7 @@
 	       , THREAT_ANALYSIS
 		   , USER_ACTION
 		   , WHITELIST_POLICY
-		   , THREAT_INFO
-	  FROM integrity_salt
+	  FROM INTEGRITY_SALT
 	  LIMIT 1
   </select>
    <sql id="selectRecursiveAffiliation">
@@ -814,7 +775,7 @@
 				, AFFILIATION
 				, IS_SHIP
 				, BELONGPARENTID
-			FROM affiliation
+			FROM AFFILIATION
 			WHERE BELONGPARENTID IS NULL
 			<if test='affiliationId != null and !affiliationId.equals("")'>
 				AND AFFILIATION_ID=#{affiliationId}
@@ -825,44 +786,20 @@
 				, A.AFFILIATION
 				, A.IS_SHIP
 				, A.BELONGPARENTID
-			FROM affiliation A
+			FROM AFFILIATION A
 			INNER JOIN AFFI ON A.BELONGPARENTID=AFFI.AFFILIATION_ID
 			WHERE A.BELONGPARENTID IS NOT NULL
 		)
    </sql>
   <select id="selectUnitInfos" parameterType="map" resultType="CmmnMap">
-    <choose>
-    <when test='systemId != null and !systemId.equals("")'>
-    SELECT CODE CD,CODE_KR CD_NM
-    FROM code_info
-    WHERE MAINGROUP = 'CO'
-    AND   SUBGROUP = 'UT'
-    </when>
-    <otherwise>
-    <include refid="selectRecursiveAffiliation"></include>
-	SELECT AFFILIATION_ID CD, AFFILIATION CD_NM 
-	FROM AFFI WHERE BELONGPARENTID IS NULL
+	<include refid="selectRecursiveAffiliation"></include>
+	SELECT * FROM AFFI WHERE BELONGPARENTID IS NULL
 	ORDER BY AFFILIATION_ID ASC
-    </otherwise>
-    </choose>
-	
   </select>
-  
   <select id="selectShipInfos" parameterType="map" resultType="CmmnMap">
-   <choose>
-    <when test='systemId != null and !systemId.equals("")'>
-       SELECT CODE CD,CODE_KR CD_NM
-	    FROM code_info
-	    WHERE MAINGROUP = 'CO'
-	    AND   SUBGROUP = 'SH'
-    </when>
-    <otherwise>
-    <include refid="selectRecursiveAffiliation"></include>
-	SELECT AFFILIATION_ID CD , AFFILIATION CD_NM
-	FROM AFFI WHERE IS_SHIP = 1
+	<include refid="selectRecursiveAffiliation"></include>
+	SELECT * FROM AFFI WHERE IS_SHIP = 1
 	ORDER BY AFFILIATION_ID ASC
-    </otherwise>
-    </choose>
   </select>
 
 </mapper>

@@ -292,25 +292,15 @@
     
     document.querySelector('.schBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	searchFunc(e.target);
+    	searchFunc();
     });
     
     document.querySelector('.addBtn').addEventListener('click',(e) => {
-		let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	document.querySelector('.Popup-title').querySelector('strong').textContent = '자산 등록';
     });
     
     document.querySelector('.modBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	document.querySelector('.Popup-title').querySelector('strong').textContent = '자산 수정';
     	let modData = gridClickedData(document.querySelector('.tablewrap'));
     	console.log("modData:",modData.row);

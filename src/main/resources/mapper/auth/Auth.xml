@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="Auth">
+  
+
+  
    <select id="selectUserAccount" parameterType="UserVo" resultType="UserVo">
 
      	SELECT  A.ACCOUNT_ID
@@ -9,7 +12,6 @@
      	      , A.AFFILIATION_ID
      	      , A.USER_ID
      	      , A.PASSWORD
-              , A.SALT 
      	      , A.TERMINAL_IP
      	      , A.USERNAME
      	      , A.AUTHORIZATION
@@ -22,33 +24,45 @@
      	      , C.SESSION_CONTROL_STATUS
      	      , C.ALARM_LEVEL
      	      , C.WARNING_LEVEL
-     	      , B.LAST_SUCCESS_ACCESS_DATE
-     	      , B.IS_LOGIN
      	  FROM user_account A
      	  INNER JOIN account_status B
      	  ON A.ACCOUNT_ID = B.ACCOUNT_ID
      	  LEFT JOIN account_setting C
      	  ON A.ACCOUNT_ID = C.ACCOUNT_ID
      	 WHERE A.USER_ID = #{userId}
-         <if test='systemId != null and !systemId.equals("")'>
-          AND A.PASSWORD = #{password} 
+     	 <if test='systemId != null and !systemId.equals("")'>
+           AND A.PASSWORD = #{password}
          </if>
      	 LIMIT 1
   </select>
   
-  <select id="selectAccountSalt" parameterType="String" resultType="String">
+   <select id="selectSsoUserAccount" parameterType="UserVo" resultType="UserVo">
 
-     	SELECT  A.SALT
+     	SELECT  A.ACCOUNT_ID
+     	      , A.CLASS_ID
+     	      , A.AFFILIATION_ID
+     	      , A.USER_ID
+     	      , A.PASSWORD
+     	      , A.TERMINAL_IP
+     	      , A.USERNAME
+     	      , A.AUTHORIZATION
+     	      , A.PHONE_NO
+     	      , A.EMAIL
+     	      , A.MILITARY_SERVICE_NUMBER
+     	      , B.ACCOUNT_ACTIVATION
+     	      , C.ALARM_STATUS
+     	      , C.WARNING_STATUS
+     	      , C.SESSION_CONTROL_STATUS
+     	      , C.ALARM_LEVEL
+     	      , C.WARNING_LEVEL
      	  FROM user_account A
-     	  INNER JOIN account_status B
+     	  LEFT JOIN account_status B
      	  ON A.ACCOUNT_ID = B.ACCOUNT_ID
      	  LEFT JOIN account_setting C
      	  ON A.ACCOUNT_ID = C.ACCOUNT_ID
      	 WHERE A.USER_ID = #{userId}
      	 LIMIT 1
-  </select>
-  
- 
+  </select>  
   
   <update id="updateLogin" parameterType="UserVo">
        UPDATE account_status SET IS_LOGIN = #{isLogin}

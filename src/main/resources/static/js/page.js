@@ -21,6 +21,7 @@ const pageInit = (comp,pageFunc,perPage) => {
 	compPageNum.setAttribute("name","compPageNum");
 	compPageNum.classList.add("compPageNum");
 	compPageNum.setAttribute("value",1);
+	
 	comp.appendChild(compPageNum);
 	
 	const pprev = document.createElement('a');
@@ -278,7 +279,6 @@ const pageGridSet = (data,gridComp,pageComp,pageFunc,callBackFn) => {
 	gridBind(list,gridComp);
 	pageBind(pageComp,pageInfo,pageFunc);
 	if(callBackFn != undefined){
-		appendData.totCount = pageInfo.totCount;
 		callBackFn(appendData);
 	}
 }

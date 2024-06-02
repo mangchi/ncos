@@ -126,7 +126,7 @@
 
 	window.addEventListener('DOMContentLoaded', () => {
 		ncos.schMode = 'auto';
-		if(document.body.clientWidth < 1921 ){
+		if(document.body.clientWidth == 1920 ){
 			document.getElementById("map-wrapper").style.width = '880px';
 			document.getElementById("map-wrapper").style.height = '478px';
 		}
@@ -162,8 +162,7 @@
 	    	                    ,{data_id:"id",width:"0px"}
 	                            ,{data_id:"detectionTime",label:"탐지시간" ,data_dateFrmt:"yy-mm-dd hh:mi:ss"}
 			     	            ,{data_id:"unitId",label:"부대명",data_grpCd:"COUT"}
-					            ,{data_id:"shipNm",label:"함명"} 
-					            ,{data_id:"shipId",width:"0px"}
+					            ,{data_id:"shipId",label:"함명",data_grpCd:"COSH"} 
 					            ,{data_id:"srcIp",label:"송신IP"}
 					            ,{data_id:"dstIp",label:"수신IP"}
 					            ,{data_id:"srcPort",label:"송신Port"}
@@ -182,14 +181,7 @@
 	}
 	
 	const searchFunc = (invoker) => {
-    	//pageSearch("/landIntro",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,searchAfterFunc);
-		gfn_asyncJsonCall('/landIntro','GET').then((data) => {
-   		    let list = data['list'];
-	 		gridBind(list,document.querySelector('.tablewrap'));
-    		return data['appendData'];
-    	}).then((appendData) => {
-    		searchAfterFunc(appendData);
-    	}); 
+    	pageSearch("/landIntro",document.querySelector(".tablewrap"),document.querySelector(".page_nation"),invoker,searchFunc,searchAfterFunc);
     }
     
 	const initMap = (appendData) => {
@@ -203,30 +195,16 @@
     		initMap(appendData);
     	}
     	
-    	let treeBox = document.querySelector('.treeBox');
-    	while(treeBox.hasChildNodes())
-    	{
-    		treeBox.removeChild(treeBox.firstChild );       
-    	}
-    	
+    	document.querySelector('.treeBox').innerHTML = '';
+    	document.querySelector('.treeBoxAsset').innerHTML = '';
     	let vesselList = appendData.vesselList;
     	let shipList = appendData.shipList;
-    	console.log("appendData.vesselList:",appendData.vesselList);
-    	console.log("appendData.shipList:",appendData.shipList);
-    	//let treejs1 = createInitTree(document.querySelector('.treeBox'),vesselList,false);
-    	let treejs1 = createInitTree(treeBox,vesselList,false);
+    	//console.log("appendData.vesselList:",appendData.vesselList);
+    	let treejs1 = createInitTree(document.querySelector('.treeBox'),vesselList,false);
 		if(vesselList != null && vesselList.length > 0){
 			createTreeNoChk(vesselList,treejs1,null,'asset');
 		}
-		
-		let treeBoxAsset = document.querySelector('.treeBoxAsset');
-    	while(treeBoxAsset.hasChildNodes())
-    	{
-    		treeBoxAsset.removeChild(treeBoxAsset.firstChild );       
-    	}
-		
-    	//let treejs2 = createInitTree(document.querySelector('.treeBoxAsset'),vesselList,false);
-    	let treejs2 = createInitTree(treeBoxAsset,vesselList,false);
+    	let treejs2 = createInitTree(document.querySelector('.treeBoxAsset'),vesselList,false);
 		if(vesselList != null && vesselList.length > 0){
 			createTreeNoChk(vesselList,treejs2,null,'threat');
 		}
@@ -296,7 +274,7 @@
     }
     
     const detailFunc = (data) => {
-    	pageFunc('/threatDisp');
+    	setThreatAnalysis(data);
     }
 
     const drawMap = (data,obj) =>{

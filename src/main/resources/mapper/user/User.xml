@@ -73,7 +73,6 @@
    <update id="insertUserAccount" parameterType="UserVo" useGeneratedKeys="true" keyProperty="accountId">
        INSERT INTO user_account (USER_ID
                                , PASSWORD
-                               , SALT
                                , TERMINAL_IP
                                , USERNAME
                                , CLASS_ID
@@ -84,7 +83,6 @@
                                , MILITARY_SERVICE_NUMBER)
 				        VALUES( #{userId}
 				              , #{password}
-				              , #{salt}
 				              , #{terminalIp, jdbcType=INTEGER}
 				              , #{username}
 				              , #{classId}
@@ -100,9 +98,7 @@
         UPDATE user_account SET USERNAME  = #{username, jdbcType=VARCHAR}
 				              , CLASS_ID = #{classId, jdbcType=VARCHAR}
                               , AFFILIATION_ID = #{affiliationId, jdbcType=VARCHAR}
-         <if test='authorization != null'>
 				              , AUTHORIZATION = #{authorization, jdbcType=VARCHAR}
-		 </if>
 				              , PHONE_NO = #{phoneNo, jdbcType=VARCHAR}
 				              , EMAIL = #{email, jdbcType=VARCHAR}
 				              , MILITARY_SERVICE_NUMBER = #{militaryServiceNumber, jdbcType=VARCHAR}
@@ -123,12 +119,6 @@
 	   WHERE ACCOUNT_ID = #{accountId}
    </update>
    
-    <update id="updateUserPwd" parameterType="UserVo">
-        UPDATE user_account SET PASSWORD  = #{password, jdbcType=VARCHAR}
-        WHERE ACCOUNT_ID = #{accountId}
-     
-   </update>
-
    <delete id="deleteAccountSetting" parameterType="map">
         DELETE FROM account_setting
         WHERE ACCOUNT_ID IN

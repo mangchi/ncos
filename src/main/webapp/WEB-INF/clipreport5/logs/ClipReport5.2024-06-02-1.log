@@ -1,0 +1,716 @@
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.267|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.268|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.392|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 63ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.434|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.442|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 2ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.442|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.442|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.443|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.446|!|DEBUG|!|     |!|dataset read end|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.446|!|DEBUG|!|     |!|reportpage build start|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.506|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.506|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.507|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.508|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.508|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.508|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.509|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.571|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.571|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.571|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.572|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.578|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.578|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.578|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.578|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.587|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.591|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.591|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 4ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.655|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.669|!|DEBUG|!|     |!|report build end|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.673|!|INFO|!|     |!|Report creation complete.|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.673|!|INFO|!|     |!|Report Build Time : TimeMillis : 239ms, HH:MM:SS : 00:00:00|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.673|!|DEBUG|!|     |!|report end|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.674|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.674|!|DEBUG|!|     |!|Last Document saved!|@|
+cd45adcd702464ff3bde4d6f1415f3ab8|!|2024-06-02 04:26:24.675|!|INFO|!|     |!|Report generation completed.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.406|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.406|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.423|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 15ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.425|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.425|!|DEBUG|!|     |!|dataset read end|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.425|!|DEBUG|!|     |!|reportpage build start|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.432|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.432|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.432|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.433|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.433|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.433|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.433|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.434|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.434|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.434|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.434|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.439|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.439|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.439|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.439|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.444|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.444|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.444|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.445|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.450|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.450|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.450|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.455|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.455|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.455|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.455|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.459|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.459|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.459|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.459|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.465|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.465|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.465|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.465|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.470|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.470|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.470|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.475|!|DEBUG|!|     |!|report build end|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.477|!|INFO|!|     |!|Report creation complete.|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.477|!|INFO|!|     |!|Report Build Time : TimeMillis : 52ms, HH:MM:SS : 00:00:00|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.477|!|DEBUG|!|     |!|report end|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.477|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.478|!|DEBUG|!|     |!|Last Document saved!|@|
+ca64463ee9a8b4572961dd5c69187a2d5|!|2024-06-02 04:26:32.478|!|INFO|!|     |!|Report generation completed.|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.104|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.104|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.114|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 9ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|DEBUG|!|     |!|dataset read end|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.117|!|DEBUG|!|     |!|reportpage build start|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.121|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.121|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.121|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.122|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.122|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.122|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.122|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.123|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.123|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.123|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.123|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.124|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.124|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.124|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.124|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.125|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.125|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.125|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.139|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.139|!|DEBUG|!|     |!|report build end|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.141|!|INFO|!|     |!|Report creation complete.|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.141|!|INFO|!|     |!|Report Build Time : TimeMillis : 24ms, HH:MM:SS : 00:00:00|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.141|!|DEBUG|!|     |!|report end|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.141|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.142|!|DEBUG|!|     |!|Last Document saved!|@|
+c3973f1a73e8b4a2c83afa89b9067f810|!|2024-06-02 04:26:42.142|!|INFO|!|     |!|Report generation completed.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.266|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.267|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.282|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 13ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.284|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.284|!|DEBUG|!|     |!|dataset read end|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.284|!|DEBUG|!|     |!|reportpage build start|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.288|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.288|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.288|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.289|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.289|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.289|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.289|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.290|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.290|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.290|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.290|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.291|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.291|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.291|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.291|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.292|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.292|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.292|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.292|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.293|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.293|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.293|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.297|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.297|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.297|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.297|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.300|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.300|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.300|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.300|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.301|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.301|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.301|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.301|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.302|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.302|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.302|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.306|!|DEBUG|!|     |!|report build end|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.307|!|INFO|!|     |!|Report creation complete.|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.307|!|INFO|!|     |!|Report Build Time : TimeMillis : 23ms, HH:MM:SS : 00:00:00|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.307|!|DEBUG|!|     |!|report end|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.307|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.308|!|DEBUG|!|     |!|Last Document saved!|@|
+cdcaac53bcb834bafb3ee4d41d5e97bc2|!|2024-06-02 04:26:59.308|!|INFO|!|     |!|Report generation completed.|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.604|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.604|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.614|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 9ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.616|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.616|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.616|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.616|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.616|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.617|!|DEBUG|!|     |!|dataset read end|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.617|!|DEBUG|!|     |!|reportpage build start|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.620|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.620|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.620|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.620|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.620|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.621|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.621|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.622|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.622|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.622|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.622|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.623|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.623|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.623|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.623|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.624|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.624|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.624|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.635|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.635|!|DEBUG|!|     |!|report build end|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.637|!|INFO|!|     |!|Report creation complete.|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.637|!|INFO|!|     |!|Report Build Time : TimeMillis : 20ms, HH:MM:SS : 00:00:00|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.637|!|DEBUG|!|     |!|report end|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.637|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.637|!|DEBUG|!|     |!|Last Document saved!|@|
+c983f412df79e447cb041c0677767867c|!|2024-06-02 04:27:16.637|!|INFO|!|     |!|Report generation completed.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.794|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.794|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.805|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 11ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.808|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.808|!|DEBUG|!|     |!|dataset read end|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.808|!|DEBUG|!|     |!|reportpage build start|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.811|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.812|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.813|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.813|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.813|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.813|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.813|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.814|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.814|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.814|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.814|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.815|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.815|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.815|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.818|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.818|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.818|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.818|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.820|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.820|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.820|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.821|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.821|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.821|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.821|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.822|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.822|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.822|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.822|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.826|!|DEBUG|!|     |!|report build end|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.827|!|INFO|!|     |!|Report creation complete.|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.827|!|INFO|!|     |!|Report Build Time : TimeMillis : 19ms, HH:MM:SS : 00:00:00|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.827|!|DEBUG|!|     |!|report end|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.828|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.828|!|DEBUG|!|     |!|Last Document saved!|@|
+cbf1c7a4084ef4a228fc2240604742fb1|!|2024-06-02 04:27:28.828|!|INFO|!|     |!|Report generation completed.|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.454|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.454|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.460|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 6ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.462|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.463|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.463|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.463|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.463|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.463|!|DEBUG|!|     |!|dataset read end|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.463|!|DEBUG|!|     |!|reportpage build start|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.465|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.466|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.466|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.466|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.466|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.466|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.466|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.467|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.467|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.467|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.467|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.468|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.468|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.468|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.468|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.469|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.469|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.469|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.480|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.480|!|DEBUG|!|     |!|report build end|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.481|!|INFO|!|     |!|Report creation complete.|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.482|!|INFO|!|     |!|Report Build Time : TimeMillis : 19ms, HH:MM:SS : 00:00:00|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.482|!|DEBUG|!|     |!|report end|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.482|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.482|!|DEBUG|!|     |!|Last Document saved!|@|
+c0d47fd4e1ec546bf939ef3bce3cfc19e|!|2024-06-02 04:27:46.482|!|INFO|!|     |!|Report generation completed.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.584|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.584|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.594|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 9ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.596|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.596|!|DEBUG|!|     |!|dataset read end|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.596|!|DEBUG|!|     |!|reportpage build start|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.599|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.600|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.600|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.600|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.600|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.601|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.601|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.601|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.601|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.602|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.602|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.602|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.602|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.602|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.603|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.603|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.606|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.606|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.606|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.606|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.609|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.609|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.609|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.609|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.610|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.610|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.610|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.611|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.611|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.612|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.612|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.616|!|DEBUG|!|     |!|report build end|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.617|!|INFO|!|     |!|Report creation complete.|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.617|!|INFO|!|     |!|Report Build Time : TimeMillis : 21ms, HH:MM:SS : 00:00:00|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.617|!|DEBUG|!|     |!|report end|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.617|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.618|!|DEBUG|!|     |!|Last Document saved!|@|
+cd5f8eab2805645acaf3f14c18f93f0f6|!|2024-06-02 04:27:58.618|!|INFO|!|     |!|Report generation completed.|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.945|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.945|!|INFO|!|     |!|Report Thread pool Active: 0  ,Wait User : 1|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.951|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 6ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.953|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.954|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.954|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.954|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.954|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.954|!|DEBUG|!|     |!|dataset read end|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.955|!|DEBUG|!|     |!|reportpage build start|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.959|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.960|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.960|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.960|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.960|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.960|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.960|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.961|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.961|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.961|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.961|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.962|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.962|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.962|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.962|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.963|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.963|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.963|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.973|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.973|!|DEBUG|!|     |!|report build end|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.975|!|INFO|!|     |!|Report creation complete.|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.975|!|INFO|!|     |!|Report Build Time : TimeMillis : 22ms, HH:MM:SS : 00:00:00|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.975|!|DEBUG|!|     |!|report end|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.975|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.975|!|DEBUG|!|     |!|Last Document saved!|@|
+c0244f35319ec46258a7c722c6b0da7dd|!|2024-06-02 04:28:15.975|!|INFO|!|     |!|Report generation completed.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.043|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.043|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.056|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 12ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.059|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.059|!|DEBUG|!|     |!|dataset read end|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.059|!|DEBUG|!|     |!|reportpage build start|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.063|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.064|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.064|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.064|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.064|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.065|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.065|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.065|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.065|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.066|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.066|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.066|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.066|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.067|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.067|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.067|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.069|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.070|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.070|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.070|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.072|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.072|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.072|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.072|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.074|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.074|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.074|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.074|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.075|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.075|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.075|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.078|!|DEBUG|!|     |!|report build end|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.079|!|INFO|!|     |!|Report creation complete.|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.079|!|INFO|!|     |!|Report Build Time : TimeMillis : 20ms, HH:MM:SS : 00:00:00|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.079|!|DEBUG|!|     |!|report end|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.079|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.080|!|DEBUG|!|     |!|Last Document saved!|@|
+c31fac4effdc84485a28f41636264217d|!|2024-06-02 04:29:06.080|!|INFO|!|     |!|Report generation completed.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.130|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.130|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.140|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 9ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.142|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.142|!|DEBUG|!|     |!|dataset read end|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.142|!|DEBUG|!|     |!|reportpage build start|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.145|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.145|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.145|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.146|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.147|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.148|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.148|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.148|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.148|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.151|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.151|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.151|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.151|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.153|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.153|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.153|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.153|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.154|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.154|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.154|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.154|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.155|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.155|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.155|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.158|!|DEBUG|!|     |!|report build end|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.159|!|INFO|!|     |!|Report creation complete.|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.159|!|INFO|!|     |!|Report Build Time : TimeMillis : 17ms, HH:MM:SS : 00:00:00|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.159|!|DEBUG|!|     |!|report end|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.160|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.160|!|DEBUG|!|     |!|Last Document saved!|@|
+c9a2fb75224b2450da43e1372356c534e|!|2024-06-02 04:29:16.160|!|INFO|!|     |!|Report generation completed.|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.703|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.703|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.713|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 9ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.715|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.715|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.715|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.715|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.716|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.716|!|DEBUG|!|     |!|dataset read end|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.716|!|DEBUG|!|     |!|reportpage build start|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.718|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.719|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.719|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.719|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.719|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.719|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.719|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.720|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.720|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.720|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.720|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.721|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.721|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.721|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.721|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.721|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.722|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.722|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.731|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.731|!|DEBUG|!|     |!|report build end|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.732|!|INFO|!|     |!|Report creation complete.|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.732|!|INFO|!|     |!|Report Build Time : TimeMillis : 17ms, HH:MM:SS : 00:00:00|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.732|!|DEBUG|!|     |!|report end|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.733|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.733|!|DEBUG|!|     |!|Last Document saved!|@|
+c8e4628b6c55949eabab2828b5479284e|!|2024-06-02 04:29:23.733|!|INFO|!|     |!|Report generation completed.|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.257|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.257|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.265|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 7ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.267|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.268|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.268|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.268|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.268|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.268|!|DEBUG|!|     |!|dataset read end|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.268|!|DEBUG|!|     |!|reportpage build start|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.271|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.272|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.272|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.272|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.272|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.273|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.273|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.273|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.273|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.274|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.274|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.274|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.282|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.282|!|DEBUG|!|     |!|report build end|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.284|!|INFO|!|     |!|Report creation complete.|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.284|!|INFO|!|     |!|Report Build Time : TimeMillis : 17ms, HH:MM:SS : 00:00:00|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.284|!|DEBUG|!|     |!|report end|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.284|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.284|!|DEBUG|!|     |!|Last Document saved!|@|
+c2f6704a391094d7097445a9d683bc0dc|!|2024-06-02 04:29:29.284|!|INFO|!|     |!|Report generation completed.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.586|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.586|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.598|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 11ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.601|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.601|!|DEBUG|!|     |!|dataset read end|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.601|!|DEBUG|!|     |!|reportpage build start|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.604|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.604|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.604|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.605|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.606|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.606|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.606|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.606|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.607|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.607|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.607|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.607|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.607|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.608|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.608|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.611|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.611|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.611|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.611|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.613|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.613|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.613|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.613|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.618|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.618|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.619|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.619|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.619|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.619|!|DEBUG|!|     |!|[JSONDS7] JSON data load rows : 7|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.619|!|DEBUG|!|     |!|[JSONDS7] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.622|!|DEBUG|!|     |!|report build end|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.623|!|INFO|!|     |!|Report creation complete.|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.624|!|INFO|!|     |!|Report Build Time : TimeMillis : 23ms, HH:MM:SS : 00:00:00|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.624|!|DEBUG|!|     |!|report end|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.624|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.624|!|DEBUG|!|     |!|Last Document saved!|@|
+cc709a058871f4afa967d92f6c3fd0510|!|2024-06-02 04:29:42.624|!|INFO|!|     |!|Report generation completed.|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.226|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.226|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.235|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 7ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|DEBUG|!|     |!|dataset read end|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.236|!|DEBUG|!|     |!|reportpage build start|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.240|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.240|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.240|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.242|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.242|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.242|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.242|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.243|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.243|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.243|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.243|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.244|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.244|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.244|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.244|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.245|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.245|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.245|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.253|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.253|!|DEBUG|!|     |!|report build end|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.255|!|INFO|!|     |!|Report creation complete.|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.255|!|INFO|!|     |!|Report Build Time : TimeMillis : 18ms, HH:MM:SS : 00:00:00|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.255|!|DEBUG|!|     |!|report end|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.255|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.255|!|DEBUG|!|     |!|Last Document saved!|@|
+cdfb98517b2e54076aa32f188ff622da8|!|2024-06-02 04:29:47.255|!|INFO|!|     |!|Report generation completed.|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.562|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.562|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.569|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 7ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_REPORT_DETAIL.crf|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|DEBUG|!|     |!|dataset read end|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.571|!|DEBUG|!|     |!|reportpage build start|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.572|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.572|!|DEBUG|!|     |!|[JSONDS6] JSON data load rows : 1|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.572|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.573|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.573|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.573|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.573|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.574|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.574|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.574|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.574|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.575|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.575|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.575|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.575|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.575|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.576|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 25|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.576|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.584|!|DEBUG|!|     |!|[JSONDS5] JSONMemo RecordSet reUse : JSONDS5|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.584|!|DEBUG|!|     |!|report build end|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.585|!|INFO|!|     |!|Report creation complete.|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.585|!|INFO|!|     |!|Report Build Time : TimeMillis : 14ms, HH:MM:SS : 00:00:00|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.585|!|DEBUG|!|     |!|report end|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.585|!|DEBUG|!|     |!|Total Page Count (2) saved!|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.585|!|DEBUG|!|     |!|Last Document saved!|@|
+c04c48d75263d48bf83632de96520441b|!|2024-06-02 04:29:52.585|!|INFO|!|     |!|Report generation completed.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.657|!|INFO|!|     |!|Report Put in a Thread Pool !!|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.657|!|INFO|!|     |!|Report Thread pool Active: 1  ,Wait User : 0|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.666|!|DEBUG|!|     |!|Report Read Time : TimeMillis : 8ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.667|!|INFO|!|     |!|Start generating reports. ReportFileName : /Users/donghokang/vs-workspace/java/ncos/ncos/src/main/webapp/WEB-INF/clipreport5/crf/THREAT_ASSET_REPORT_SUMMARY.crf|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.667|!|DEBUG|!|     |!|dataset read end|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.667|!|DEBUG|!|     |!|reportpage build start|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.669|!|DEBUG|!|     |!|[JSONDS10] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|DEBUG|!|     |!|[JSONDS10] JSON data load rows : 1|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|DEBUG|!|     |!|[JSONDS10] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|DEBUG|!|     |!|[JSONDS5] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|WARN|!|     |!|[JSONDS5] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|WARN|!|     |!|[JSONDS5] Not Found Dataset JsonPath - json5|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|DEBUG|!|     |!|[JSONDS5] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|DEBUG|!|     |!|[JSONDS1] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|WARN|!|     |!|[JSONDS1] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|WARN|!|     |!|[JSONDS1] Not Found Dataset JsonPath - json1|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.670|!|DEBUG|!|     |!|[JSONDS1] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.671|!|DEBUG|!|     |!|[JSONDS3] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.671|!|WARN|!|     |!|[JSONDS3] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.671|!|WARN|!|     |!|[JSONDS3] Not Found Dataset JsonPath - json3|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.671|!|DEBUG|!|     |!|[JSONDS3] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.672|!|DEBUG|!|     |!|[JSONDS2] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.672|!|WARN|!|     |!|[JSONDS2] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.672|!|WARN|!|     |!|[JSONDS2] Not Found Dataset JsonPath - json2|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.672|!|DEBUG|!|     |!|[JSONDS2] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.673|!|DEBUG|!|     |!|[JSONDS4] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.673|!|DEBUG|!|     |!|[JSONDS4] JSON data load rows : 7|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.673|!|DEBUG|!|     |!|[JSONDS4] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.675|!|DEBUG|!|     |!|[JSONDS9] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.676|!|WARN|!|     |!|[JSONDS9] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.676|!|WARN|!|     |!|[JSONDS9] Not Found Dataset JsonPath - json9|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.676|!|DEBUG|!|     |!|[JSONDS9] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.677|!|DEBUG|!|     |!|[JSONDS6] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|WARN|!|     |!|[JSONDS6] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|WARN|!|     |!|[JSONDS6] Not Found Dataset JsonPath - json6|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|DEBUG|!|     |!|[JSONDS6] JSONMemo read RecordSet TimeMillis : 1ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|DEBUG|!|     |!|[JSONDS8] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|WARN|!|     |!|[JSONDS8] There is no JSON data.|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|WARN|!|     |!|[JSONDS8] Not Found Dataset JsonPath - json8|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.678|!|DEBUG|!|     |!|[JSONDS8] JSONMemo read RecordSet TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074ff8b92906d|!|2024-06-02 04:29:58.679|!|DEBUG|!|     |!|[JSONDS7] JSONFile load : TimeMillis : 0ms, HH:MM:SS : 00:00:00|@|
+cd39306cd89c145bd8d7074

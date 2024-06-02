@@ -202,38 +202,26 @@
 <!--//modal popup-->
 <script th:inline="javascript">
 	window.addEventListener('DOMContentLoaded', () => {
-		ncos.schMode = 'auto';
 		init();
 	});
     const init = () => {
     	createMultiChk(document.getElementById('schReportType'),'RETY');
-    	gfn_getCodeUser().then((data) => {
-    		createMultiChk(document.getElementById('schAccountId'),'UA', data.info);
-    		gfn_showChkVal(document.getElementById('schAccountId'));
-    	});
+    	createMultiChk(document.getElementById('schAccountId'),'UA');
     	createChk(document.getElementById('schUseFlag'),'COUSE','전체');
-    	/*
-    	 const isOptionElement = targetElement.classList.contains("option");
-         if (isOptionElement) {
- 			selectOption(targetElement);
-         }
-         toggleSelectBox(selectBoxElement);
-         */
+
     	const headColumns = [{data_id:"id",width: "0px"}
     	                    ,{data_id:"chk", width: "45px"}
 					    	,{data_id:"rn",label: "No."}
 					        ,{data_id:"reportTitle",label: "보고서 제목"}
 					        ,{data_id:"reportType",label:"보고서 유형", data_grpCd:"RETY"}
 					        ,{data_id:"threatAnalysis",label:"위험 분석",data_grpCd:"COIN"}
-					        ,{data_id:"threatLevel",label: "위협등급" ,data_grpCd:"COIMS", data_class:"threat"}	
+					        ,{data_id:"threatLevel",label: "위협등급" ,data_grpCd:"COIMS", data_class:"threat"}
 					        ,{data_id:"assetStatus",label:"자산 분석",data_grpCd:"COIN"}
 					        ,{data_id:"assetLevel",label: "자산등급" ,data_grpCd:"COIM", data_class:"threat"}
  					        ,{data_id:"createTime",label:"생성일시",data_dateFrmt:"yy-mm-dd hh:mi:ss"}
 					        ,{data_id:"username",label:"등록자", }
 					        ,{data_id:"useFlag",label:"사용여부" , data_grpCd:"COUSE"}
-					        ,{data_id:"accountId",width: "0px"}
 					        ];
-        
         if(activeProfile.indexOf('hmm') > -1){
         	document.getElementById('reportReg').querySelector('.assetCheck').remove();
         	document.getElementById('reportReg').querySelector('.assetSelect').remove();
@@ -241,21 +229,12 @@
         	headColumns.splice(7,1);
         	headColumns.splice(7,1);
     	}
-        else{
-        	if(activeProfile.toLowerCase().indexOf('land') >= 0){
-            	document.getElementById('reportReg').querySelector('.assetCheck').remove();
-            	document.getElementById('reportReg').querySelector('.assetSelect').remove();
-            	headColumns.splice(7,1);
-            	headColumns.splice(7,1);
-        	}
-        }
-        
+        if(activeProfile.toLowerCase().indexOf('land') >= 0){
+        	document.getElementById('reportReg').querySelector('.assetCheck').remove();
+        	document.getElementById('reportReg').querySelector('.assetSelect').remove();
+    	}
         gridInit(document.querySelector('.tablewrap'),headColumns);
 		pageInit(document.querySelector(".page_nation"),searchFunc,page.rowPerPage);
-		const selectBoxElement = document.querySelector(".select");
-		const schUseFlagLis= document.querySelector('#schUseFlag').querySelectorAll('li');
-        selectOption(schUseFlagLis[1]);
-
 		searchFunc();
     }
 
@@ -266,17 +245,11 @@
 
     document.querySelector('.schBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	ncos.schMode = 'menual';
-    	searchFunc(e.target);
+    	searchFunc();
     });
 
     document.querySelector('.modBtn').addEventListener('click',(e) => {
     	e.preventDefault();
-    	let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	let modData = gridClickedData(document.querySelector('.tablewrap'));
     	console.log("modData:",modData.row);
     	let obj = new Object();
@@ -361,17 +334,8 @@
     				}
     			}
     		}
-    
     		if(data.assetLevel != '1' && assetLevel){
-    			if(document.getElementById('assetLevel')){
-    				document.getElementById('assetLevel').checked = false;
-    			}
-    		}
-    		if(data.assetStatus != '1'){
-    			if(document.getElementById('assetStatus')){
-    				document.getElementById('assetStatus').checked = false;
-    			}
-    			
+    			document.getElementById('assetLevel').checked = false;
     		}
     		if(data.threatAnalysis != '1'){
     			document.getElementById('threatAnalysis').checked = false;
@@ -418,11 +382,9 @@
     	let invalidCnt = 0;
     	let accountId = gfn_getStorageItem('accountId',false);
     	let auth = gfn_getStorageItem('auth',false);
-    
     	if(delData.list.length > 0){
     		for(let item of delData.list){
-    			console.log("item:",item);
-    			if(accountId != item.accountId && auth == '1'){
+    			if(accountId != item.accountId && auth != '2'){
     				invalidCnt++;
     			}
 
@@ -473,6 +435,7 @@
     		 delete requiredParams.assetStatus;
     		 delete requiredParams.assetLevel;
     	 }
+    	 console.log("requiredParams:",requiredParams);
  	     gfn_asyncTranCall('/saveRptFrm','POST',requiredParams,document.getElementById('reportReg'),trncRptFrmAfterFunc,true);
 
     });

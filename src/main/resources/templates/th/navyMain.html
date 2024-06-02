@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{th/cmmn/layout}">
@@ -28,14 +28,10 @@
 				</div>
 			</div>
 			<div class="item-box col-2">
-				<div class="inner">
-				     <h4 class="item-title">
-				    <a href="javascript:pageFunc('/assetDisp');">
-					   <span class="iconWrapB icon_11_02"></span><strong>자산 이상 탐지</strong>
-					</a>
-					</h4>
+				<div class="inner"><a href="javascript:pageFunc('/assetDisp');">
+					<h4 class="item-title"><span class="iconWrapB icon_11_02"></span><strong>자산 이상 탐지</strong></h4></a>
 					<a href="javascript:pageFunc('/assetDisp');">
-						<div class="items dashtop"><div class="dataNum ac assetDetect"></div></div>
+						<div class="items dashtop"> <!-- item contnets // --><div class="dataNum ac assetDetect"></div><!-- // item contnets --> </div>
 					</a>
 				</div>
 			</div>
@@ -44,33 +40,33 @@
 						<h4 class="item-title">
 							<a href="javascript:pageFunc('/threatDisp');">
 								<span class="iconWrapB icon_11_03"></span><strong>화이트리스트 기반 탐지</strong></a>
-						<a th:if="${auth.equals('3') }" href="javascript:popWhiteList();" class="iconWrapB setting icon_setting">설정</a></h4>
+						<a href="javascript:popWhiteList();" class="iconWrapB setting icon_setting">설정</a></h4>
 						<a href="javascript:pageFunc('/threatDisp');">
-							<div class="items dashtop"><div class="dataNum ac whiteDetect"></div></div>
+							<div class="items dashtop"> <!-- item contnets // --><div class="dataNum ac whiteDetect"></div><!-- // item contnets --> </div>
 						</a>
 					</div>				
 			</div>
 			<div class="item-box col-2">
 				<div class="inner">
-				    <h4 class="item-title">
 					<a href="javascript:pageFunc('/threatDisp');">
-						<span class="iconWrapB icon_11_04"></span><strong>AI기반 위협 탐지</strong></a></h4>
+						<h4 class="item-title"><span class="iconWrapB icon_11_04"></span><strong>AI기반 위협 탐지</strong></a></h4>
 					<a href="javascript:pageFunc('/threatDisp');">
-						<div class="items dashtop"><div class="dataNum ac aiDetect"></div></div></a>
-				</div>
-			</div>
-			<div class="item-box col-2">
-				<div class="inner"><h4 class="item-title">
-					<a href="javascript:pageFunc('/threatDisp');">
-						<span class="iconWrapB icon_11_05"></span><strong>시그니처 기반 위협 탐지</strong></a></h4>
-					<a href="javascript:pageFunc('/threatDisp');">
-						<div class="items dashtop"><div class="dataNum ac signatureDetect"></div></div></a>
+						<div class="items dashtop"> <!-- item contnets // --><div class="dataNum ac aiDetect"></div><!-- // item contnets --> </div></a>					
 				</div>
 			</div>
 			<div class="item-box col-2">
 				<div class="inner">
-					<h4 class="item-title"><a href="javascript:pageFunc('/threatDisp');"><span class="iconWrapB icon_11_06"></span><strong>위협 중요도</strong></a></h4>
+					<a href="javascript:pageFunc('/threatDisp');">
+						<h4 class="item-title"><span class="iconWrapB icon_11_05"></span><strong>시그니처 기반 위협 탐지</strong></h4></a>
+					<a href="javascript:pageFunc('/threatDisp');">
+						<div class="items dashtop"> <!-- item contnets // --><div class="dataNum ac signatureDetect"></div><!-- // item contnets --> </div></a>
+				</div>
+			</div>
+			<div class="item-box col-2">
+				<div class="inner">
+					<h4 class="item-title"><a href="javascript:pageFunc('/threatDisp');"><span class="iconWrapB icon_11_06"></span><strong>위협 중요도</strong></h4>
 					<div class="items dashtop"> <a href="javascript:pageFunc('/threatDisp');">
+						<!-- item contnets // -->
 						<div class="threatImportance ac">
 							<ul>
 								<li class="high"><span>상</span><strong></strong></li>
@@ -78,6 +74,7 @@
 								<li class="low"><span>하</span><strong></strong></li>
 							</ul>
 						</div></a>
+						<!-- // item contnets -->
 					</div>
 				</div>
 			</div>
@@ -102,7 +99,7 @@
 			<div class="item-box col-4">
 				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_09"></span><strong>위성 데이터 전송 속도</strong>
-					<a th:if="${auth.equals('3') }" href="javascript:popDataTransConfig();" class="iconWrapB setting icon_setting">설정</a></h4>
+					<a href="javascript:popDataTransConfig();" class="iconWrapB setting icon_setting">설정</a></h4>
 					<div class="items"> <!-- item contnets // -->
 					<span class="imgWrap"><canvas id="lineChart3" width="528" height="250"></canvas></span><!-- // item contnets --> 
 					</div>
@@ -136,11 +133,11 @@
 								</tbody>
 							</table>
 						</div>
-				<!-- 		<div class="page_wrap">
+						<div class="page_wrap">
 							<div class="page_nation"> 
-								<input type="hidden" name="rowPerPage" class="rowPerPage" value="5">
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="4">
 							</div>
-						</div> -->
+						</div>
 					</div>
 				</div>
 			</div>
@@ -167,7 +164,6 @@
 	    */  
 		   
 	});
-	let bpsY = 10000;
 	let lineChart1 = null;
     let lineChart2 = null;
     let lineChart3 = null;
@@ -218,15 +214,9 @@
     
     const searchAfterFunc = (appendData) => {
     	//console.log("appendData:",appendData);
-    	let transSpeed = appendData.satelliteInfo.transSpeed;
-    	//console.log("transSpeed:",transSpeed);
-    	bpsY = parseInt(transSpeed)*3;
     	setStatus(appendData.statusInfo);
     	drawLineChart1(appendData.threatStatusList);
     	drawLineChart2(appendData.assetStatusList);
-    	
-    	
-    	
     }
     
     const setStatus = (data) => {
@@ -488,12 +478,12 @@
     }
     
     const drawDataTrans = (chartData) => {
-    	   let lineLabels = new Array();
-    	   let transData = new Array();
-    	   let totTransData = new Array();
+    	let lineLabels = new Array();
+    	let transData = new Array();
+    	let totTransData = new Array();
     	gfn_asyncJsonCall('/dataTrans','GET').then((data) => {
-			
-			let date = new Date(data.curTime);
+   		    //console.log("data:",data);
+ 			let date = new Date(data.curTime);
  			//date.setSeconds(date.getSeconds() -60);
  			date.setSeconds(date.getSeconds());
  		    lineLabels.push(gfn_dateFrmt(date,'hh:mi:ss'));
@@ -507,92 +497,48 @@
  				totTransData.push(0);
  			}
  			let totSrcBits = 0;
- 			let totSrcTime = "";
- 			let totLastTime = "";
- 			if(null !=  data.totInfo.srcBytes){
-				 //console.log("totInfo:",data.totInfo);
-				 totSrcBits = parseInt(data.totInfo.srcBytes);
-				 totSrcTime = data.totInfo.srcTime;
+ 			if(null !=  data.totSrcBytes){
+				 totSrcBits = parseInt(data.totSrcBytes)*8;
 			 }
  			
  			//console.log("totSrcBits:",totSrcBits);
  			let list = data['list'];
  			let sumSrcBits = 0;
- 			let sumSentBits = 0;
- 			let srcBits = 0;
- 			let sentBits = 0;
- 			
- 			if(list != null && list != undefined && list.length > 0){
-				 let sessionTime = gfn_getStorageItem('sessionTm',false);
-				 if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-					 clearInterval(loginInterval);
-					 setTimer(sessionTime);
-				 }
-				 //console.log("list:",list);
-				 let maxTotIdx = 0;
-				 for(let i =0;i<lineLabels.length;i++){
-					 let existMin = false;
-					 let srcBits = 0;
-					 let totBits = 0;
-					 let sumBits = 0;
-					 for(let key in list){
-						 let srcTime = list[key].srcTime;
-						 let sec = parseInt(list[key].sec);
-						 srcBits = parseInt(list[key].srcBits);
-					     totBits = parseInt(list[key].totBits);
-						 //console.log("lineLabel i:",lineLabels[i]);
-						// console.log("srcTime:",srcTime);
-						 sumBits = sumBits + srcBits;
-						 if(lineLabels[i] >= srcTime){
-							 if(lineLabels[i] == srcTime){
-								 existMin = true;
-								 sentBits = srcBits;
-							 }
-							// console.log("i:",i,",key:",key);							 
-							 break;							 
-						 }
-					     //srcBits = parseInt(list[key].srcBits);
-					     //totBits = parseInt(list[key].totBits);
-	
-					 }
-					 if(existMin){
-						 transData[i] = srcBits;
-						 if(list.length ==0){
-							 totTransData[i] = 0;
+ 			if(list != null && list != undefined){
+	 			for(let key in list){
+				//for(let i=list.length-1;i>=0;i--){
+	 			    let sec = parseInt(list[key].sec);
+	 				let srcBits = parseInt(list[key].srcBytes)*8;
+	 				sumSrcBits += srcBits;
+	 				//transData[60-parseInt(key)] = srcBits;
+	 				//transData[key] = srcBits;
+	 				if(totSrcBits > 0){
+						 if(totSrcBits - sumSrcBits < 0){
+							  totTransData[sec] = 0;
 						 }
 						 else{
-							 totTransData[i] = totSrcBits + sumBits;
+							  totTransData[sec] = totSrcBits - sumSrcBits;
 						 }
 						 
-						 
-					 }
-					 else{
-						 transData[i] = 0;
-						 if(list.length ==0){
-							 totTransData[i] = 0;
-						 }
-						 else{
-							 totTransData[i] = totSrcBits + sumBits;
-						 }
-
-					 }
-					
-				 }
-				 
-				 for(let i =0;i<totTransData.length;i++){
-					if(totTransData[i] == sentBits){
-						totTransData[i] = 0;
+						
+						// totTransData[60-parseInt(key)] = totSrcBits - sumSrcBits;
 					}
-				 }
+					else{
+						totTransData[sec] = 0
+						 //totTransData[60-parseInt(key)] = 0;
+					}
+	 				
+	 				transData[sec] = srcBits;
+	 				
+	 			}
  			}
- 			else{
- 				if(totSrcBits > 0){
- 					for (let idx = 0; idx < 60; idx++){
- 						totTransData[idx] = totSrcBits;
- 					}
- 				}
- 			}
-
+ 			
+ 			console.log("transData:",transData);
+ 			//console.log("totTransData:",totTransData);
+ 			
+ 			
+ 			
+	 		
 	 		let lineDataSets = new Array();
 		    let lineDataSet = {label: '송신',
 				                data: transData,
@@ -652,7 +598,7 @@
 	    			        	 
 	    			        	                y: {
 	    			        	                     min : 0,
-	    			        	                     max : bpsY, 
+	    			        	                     max : 10000, 
 	    			        	                	 ticks: {
 	    			        	                         color: 'black',
 	    			        	                         suggestedMin: 0,
@@ -695,34 +641,25 @@
     }
     
     const popWhiteList = (data) => {
-		let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	searchWhiteList();
     }
 
+    //gfn_asyncJsonCall('/saveUserAccount','POST',params,requiredParams,regUserPop,trncAfterFunc);
     document.querySelector('.defenseStep').querySelectorAll('li').forEach((li,index) => {
-    	let auth = gfn_getStorageItem('auth',false);
-    	console.log("auth:",auth);
-    	if(auth == '3'){
-    		li.addEventListener('click',(e) => {
-        		let param = {cyberDefGrade: index+1};
-        		gfn_asyncJsonCall('/saveCyberDefense','POST',param,null,null).then((data)=>{
-        			if(data["success_msg"] != undefined){
-        				document.querySelector('.defenseStep').querySelectorAll('span').forEach((span) => {
-        	    			if(span.classList.contains('step')){
-        	    				span.classList.remove('step');
-        	    				return false;
-        	    			}
-        	    		});	
-        	    		li.querySelector('span').classList.add('step');
-        			}
-        		});
-        	});
-    	}
-    	
+    	li.addEventListener('click',(e) => {
+    		let param = {cyberDefGrade: index+1};
+    		gfn_asyncJsonCall('/saveCyberDefense','POST',param,null,null).then((data)=>{
+    			if(data["success_msg"] != undefined){
+    				document.querySelector('.defenseStep').querySelectorAll('span').forEach((span) => {
+    	    			if(span.classList.contains('step')){
+    	    				span.classList.remove('step');
+    	    				return false;
+    	    			}
+    	    		});	
+    	    		li.querySelector('span').classList.add('step');
+    			}
+    		});
+    	});
     });
     
 

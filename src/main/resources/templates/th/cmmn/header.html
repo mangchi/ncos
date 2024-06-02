@@ -4,17 +4,15 @@
 <header class="navbar bg-light">
 <div class="navbar-nav">
 	<div class="nav-item"> <a href="#totalMenu" class="nav-link" onClick="getShow();"><span class="iconWrapT hambuger icon_total_menu"></span></a>
-<!-- 		<h1 th:if="${activeProfile.equals('land') || activeProfile.equals('navy')}"><a href="javascript:pageFunc('/');"> -->
 		<h1><a href="javascript:pageFunc('/');">
-		<span th:if="${activeProfile.equals('land') || activeProfile.equals('navy')}" class="iconWrapT icon_sub_top" ></span>
-		<strong th:if="${activeProfile.equals('land')}" >육상 사이버부대 원격관제 체계</strong>
-        <strong th:if="${activeProfile.equals('navy')}" >함정 사이버방호 체계</strong>
-        <!-- <strong th:if="${activeProfile.equals('hmmLand')}" >SecuAider v1.5</strong>
-        <strong th:if="${activeProfile.equals('hmmNavy')}" >SecuAider v1.5</strong> -->
+		<span class="iconWrapT icon_sub_top"></span>
+		<strong th:if="${activeProfile.equals('land') || activeProfile.equals('lnsysteLand')}" >육상 사이버부대 원격관제 체계</strong>
+        <strong th:if="${activeProfile.equals('navy') || activeProfile.equals('lnsystemNavy')}" >함정 사이버방호 체계</strong>
+        <strong th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmLand')}" >SecuAider v1.5</strong>
+        <strong th:if="${activeProfile.equals('hmmNavy') || activeProfile.equals('lnsystemHmmNavy')}" >SecuAider v1.5</strong>
+        <strong th:if="${activeProfile.equals('local')}" >함정 사이버방호 체계</strong>
 		</a>
- 		<img th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('hmmNavy') }" src="/img/SecuAider.png" style="width:100px;height:35px;">
 		</h1>
-		
 	</div>
 	<div class="snbMenuWrap" id="mainSnbMenu">
 		<a href="javascript:;" class="btn_snbClose" onClick="getHide();"><span class="icon_snbClose"></span></a>
@@ -24,35 +22,35 @@
 					<a href="javascript:;"><span class="iconWrapSnb icon_snb_01_02"></span><strong>관제정보</strong><span class="arrow"></span></a>
 					<ul class="items">
 						<li><a href="javascript:pageFunc('/threatDisp');"><span class="iconWrapSnb icon_snb_02_02"></span><strong class="threatDisp">사이버 위협 전시</strong></a></li>
-						<li th:if="${activeProfile.equals('navy')}">
+						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('lnsystemNavy')
+						|| activeProfile.equals('lnsystemLand') || activeProfile.equals('local')}">
 						<a href="javascript:pageFunc('/assetDisp');"><span class="iconWrapSnb icon_snb_02_03"></span><strong class="assetDisp">자산상태 전시</strong></a>
 						</li>
-						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy') || activeProfile.equals('land')}">
+						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
 						<a href="javascript:pageFunc('/funcDisp');"><span class="iconWrapSnb icon_snb_02_04"></span><strong class="funcDisp">기능 동작 전시</strong></a>
 						</li>
-						<li th:if="${activeProfile.equals('hmmLand')}">
+						<li th:if="${activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmLand') || activeProfile.equals('local')}">
 						<a href="javascript:pageFunc('/funcDisp');"><span class="iconWrapSnb icon_snb_02_04"></span><strong class="funcDisp">선박 상태 전시</strong></a>
 						</li>
-						<li th:if="${auth.equals('2') || auth.equals('3')}" >
-						<a href="javascript:pageFunc('/userAudit');"><span class="iconWrapSnb icon_snb_02_05"></span><strong class="userAudit">사용자 행위 정보 전시</strong></a>
-						</li>		
-					    <li th:if="${activeProfile.equals('navy')}">
+						<li><a href="javascript:pageFunc('/userAudit');"><span class="iconWrapSnb icon_snb_02_05"></span><strong class="userAudit">사용자 행위 정보 전시</strong></a></li>
+						<li th:if="${activeProfile.equals('local')}" >
+						<a href="javascript:pageFunc('/landMain');"><span class="iconWrapSnb icon_snb_02_06"></span><strong class="landMain">네트워크 정비상태 전시</strong></a>
+						</li>
+					    <li th:if="${activeProfile.equals('navy') || activeProfile.equals('lnsystemNavy')
+						|| activeProfile.equals('lnsystemLand') || activeProfile.equals('local')}">
 						<a href="javascript:pageFunc('/assetDispo');"><span class="iconWrapSnb icon_snb_02_07"></span><strong class="assetDispo">함내 자산위치 전시</strong></a>
 						</li>
-						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')}">
+						<li th:if="${activeProfile.equals('navy') || activeProfile.equals('hmmNavy')|| activeProfile.equals('lnsystemNavy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('local')}">
 						<a href="javascript:pageFunc('/netTopo');"><span class="iconWrapSnb icon_snb_02_08"></span><strong class="netTopo">네트워크 토플로지 전시</strong></a>
-						</li>
-						<li th:if="${activeProfile.equals('navy') &&  authorization.equals('3')}">
-						<a href="javascript:pageFunc('/trainResult');"><span class="iconWrapSnb icon_snb_02_13"></span><strong class="trainResult">AI 학습 전시</strong></a>
 						</li>
 
 
 					</ul>
 				</li>
-				<li th:if="${(activeProfile.equals('hmmNavy')|| activeProfile.equals('hmmLand')) && auth.equals('3') }" class="list">
+				<li th:if="${activeProfile.equals('hmmNavy')|| activeProfile.equals('hmmLand') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('lnsystemHmmLand') || activeProfile.equals('local')}" class="list">
 					<a href="javascript:;"><span class="iconWrapSnb icon_snb_01_02"></span><strong>환경설정</strong><span class="arrow"></span></a>
 					<ul class="items">
-					    <li th:if="${activeProfile.equals('hmmNavy')}">
+					    <li>
 						<a href="javascript:pageFunc('/assetMng');"><span class="iconWrapSnb icon_snb_02_08"></span><strong class="assetMng">자산관리</strong></a>
 						</li>
 						<li>
@@ -61,7 +59,7 @@
 						<a href="javascript:pageFunc('/userList');"><span class="iconWrapSnb icon_snb_02_07"></span><strong class="userList">사용자관리</strong></a></li>
 					</ul>
 				</li>
-				<li th:if="${!activeProfile.equals('hmmNavy')}" class="list">
+				<li class="list">
 					<a href="javascript:;"><span class="iconWrapSnb icon_snb_01_03"></span><strong>관제보고서</strong><span class="arrow"></span></a>
 					<ul class="items">
 						<li><a href="javascript:pageFunc('/rptFrmMng');"><span class="iconWrapSnb icon_snb_02_09"></span><strong class="rptFrmMng">보고서 서식 관리</strong></a></li>
@@ -76,14 +74,8 @@
 			</form>
 		</div>
 	</div>
-	<div th:if="${activeProfile.equals('navy') || activeProfile.equals('land')}" id="actTouch" style="display:none;"></div>
-	<div th:if="${activeProfile.equals('navy') || activeProfile.equals('land')}"  class="nav-item"> <span class="timer"></span> <a href="javascript:logout();" class="btn small red">로그아웃</a>
-	&nbsp;&nbsp;<a href="https://act.ncos.mil.kr" class="btn small blue">체계관리</a>
-	</div>
-	<div th:if="${activeProfile.equals('hmmNavy') || activeProfile.equals('hmmLand')}" class="nav-item"> <span class="timer"></span> <a href="javascript:logout();" class="btn small red">로그아웃</a>
-	&nbsp;<a href="javascript:changePwd()" class="btn small blue">비밀번호</a>&nbsp;<img src="/img/hanwha_system.png" style="width:160px;height:24px;">
-	</div>
-	
+	<div id="actTouch" style="display:none;"></div>
+	<div class="nav-item"> <span class="timer"></span> <a href="javascript:logout();" class="btn small red">로그아웃</a>&nbsp;&nbsp;<a href="https://act.ncos.mil.kr" class="btn small blue">체계관리</a></div>
 </div>
 <div class="navbar-location">
 	<ul class="navigation">
@@ -91,9 +83,7 @@
 		<li>Sub</li>
 		<li>Page</li> -->
 	</ul>
-	<div th:if="${activeProfile.equals('navy') || activeProfile.equals('land')}" id="setPeriod" style="display:none;"><a href="javascript:popAggregation();" class="iconWrapB setting icon_setting"></a></div>
 </div>
-
 </header>
 <script th:inline="javascript">
 	let list = document.querySelectorAll('.list');
@@ -108,6 +98,9 @@
 	let alarmThreatCnt = 0;
 	let audio = document.createElement("AUDIO");
 	window.addEventListener('beforeunload', (e) => {
+    	e.preventDefault();
+    	//gfn_removeStorage(ncos.storageKey);
+    	//logout();
    	});
 	window.addEventListener('load', (e) => {
 
@@ -115,16 +108,10 @@
 		audio.src = "/js/beep.wav";
 
 		let sessionData = /*[[${sessionData}]]*/"";
-		
-		//console.log("sessionData:",sessionData);
 
 		try {
 			ncos.watchFunc = setInterval(watchSystem, ncos.interval);
 			if (sessionData != null && sessionData != "") {
-				let jSessionData = JSON.parse(sessionData);
-				if(jSessionData.isLogin != '1'){
-					logout();
-				}
 				watchSystem();
 				gfn_setStorage(ncos.storageKey, CryptoJS.AES.encrypt(sessionData, ncos.cryptKey));
 				gfn_setStorageItem("curUrl",'/');
@@ -141,7 +128,6 @@
 				document.querySelector('.footbar-nav').querySelector('.connectTime').textContent = gfn_getStorageItem('connectTime',false);
 			}
 			else{
-				gfn_setStorage(ncos.storageKey, CryptoJS.AES.encrypt(sessionData, ncos.cryptKey));
 				sessionData = gfn_getStorage(ncos.storageKey);
 				//console.log("userId:",gfn_getStorageItem('userId',false));
 				if(sessionData === null || sessionData === undefined){
@@ -159,11 +145,8 @@
 
 				}
 			}
-			console.log("activeProfile:",activeProfile);
-			if(activeProfile.indexOf('hmm') == -1){
-				//gfn_actTouch();//SW접근관리(아우토) 접속으로 인해 추가.
-			}
-			
+			gfn_actTouch();//SW접근관리(아우토) 접속으로 인해 추가.
+			//gfn_formCall(document.sessionFrm); //통합로그인 서버 콜
 			navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
 		        AudioContext = window.AudioContext || window.webkitAudioContext;
 		        audioContext = new AudioContext();
@@ -200,34 +183,19 @@
 			if(document.querySelector(menuCls)){
 				menuNm = document.querySelector(menuCls).innerHTML;
 			}
-			else{
-				menuNm = '메인';
-			}
+			menuNm = '메인';
 			//console.log("menuNm:",menuNm);
 			let menuLi = document.createElement('LI');
 			menuLi.append(menuNm);
 			naviUl.appendChild(menuLi);
-		}
-		let period = document.getElementById('setPeriod');
-		if(period){
-			let naviUl = document.querySelector('.navigation');
-			if(naviUl.textContent === '메인'){
-				period.style.display = '';
 
-			}
-			else{
-				period.style.display = 'none';
-			}
 		}
 
 	});
 
 	const watchSystem= () => {
-		
-		//return;
 		//console.log("watchSystem");
 		let alarmStatus = gfn_getStorageItem('alarmStatus',false);
-		//console.log("watchSystem alarmStatus:",alarmStatus);
 		//console.log("alarmStatus:",alarmStatus);
 		let param = {sch:"watchList"};
 		if(alarmStatus === '') {
@@ -239,8 +207,7 @@
    	 		let alarmThreatCount = data['alarmThreatCount'];
 	   	 	if(alarmThreatCount != null && alarmThreatCount != undefined && alarmThreatCount != ''){
 	   	 	    alarmThreatCount = parseInt(alarmThreatCount);
-	   	 	    //console.log("alarmThreatCount:",alarmThreatCount,", alarmThreatCnt:",alarmThreatCnt);
-	   	 	    //if(alarmThreatCount > alarmThreatCnt){
+	   	 	    if(alarmThreatCount > alarmThreatCnt){
 	   	 	        let promise = audio.play();
 		   	 	    if (promise !== undefined) {
 			   	 	    promise.then(_ => {
@@ -252,12 +219,12 @@
 		   	 	    }
 	   	 	    	//audio.play();
 	   	 	        alarmThreatCnt = alarmThreatCount;
-	   	 	    //}
+	   	 	    }
 	   	 	}
 	   	    let alarmAssetCount = data['alarmAssetCount'];
 	   	    if(alarmAssetCount != null && alarmAssetCount != undefined && alarmAssetCount != ''){
 	   	    	alarmAssetCount = parseInt(alarmAssetCount);
-	   	        ///if(alarmAssetCount > alarmAssetCnt){
+	   	        if(alarmAssetCount > alarmAssetCnt){
 	   	 	    	let promise = audio.play();
 		   	 	    if (promise !== undefined) {
 			   	 	    promise.then(_ => {
@@ -268,7 +235,7 @@
 			   	 	    });
 		   	 	    }
 	   	 	        alarmAssetCnt = alarmAssetCount;
-	   	 	    //}
+	   	 	    }
 
 	   	    }
 
@@ -469,15 +436,12 @@
 
 	};
 
-	const setTimer = (sTm) => {
-		if(sTm != undefined){
-			sessionTime = sTm;
-		}
+	const setTimer = () => {
+		//세션종료 00:09:21
 		let timer = document.querySelector('.timer');
 		rMinute = parseInt(sessionTime / 60);
 	    rMinute = rMinute % 60;
 	    rSecond = sessionTime % 60;
-	    //console.log("rSecond:",rSecond);
 		if(sessionTime >= 0){
 			while (rMinute.length < 2) {
 		        rMinute = "0" + rMinute;
@@ -494,15 +458,6 @@
 			msgCall("로그아웃 되었습니다.",true,false,logout);
 		}
 	}
-	
-    const popAggregation = () => {
-		let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
-    	searchAggregation();
-    }
 
 	const getShow = () => {
 		document.getElementById("mainSnbMenu").style.display = "block";
@@ -562,28 +517,13 @@
 	const logout = () => {
 		//console.log("logout");
 		try{
-			gfn_removeStorage(ncos.codeKey);
 			gfn_removeStorage(ncos.storageKey);
-			location.href = "/logout";
+			location.href = "/sso/logout";
 		}catch(e){
 			console.error("logout error:",e);
 		}
 
 	}
-	
-	
-	const changePwd = () => {
-		document.querySelectorAll('.password').forEach(password => {
-			password.style.display = '';
-		});
-		layerPopup('#userPwd');
-	}
-	
-	
-	const trncUserPwdAfterFunc = () => {
-		document.getElementById('userPwd').querySelector('.popClose').click();
-	}
-
 
 </script>
 </div>

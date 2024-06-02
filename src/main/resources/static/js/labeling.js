@@ -487,7 +487,6 @@ const deleteRect = () => {
 }
 
 const changeOn = (obj) => {
-	initSession();
 	if(obj.tagName === 'SPAN'){
 		obj = obj.parentNode.parentNode;
 	}
@@ -507,7 +506,6 @@ const changeOn = (obj) => {
 }
 
 const changeParentOn = (obj) => {
-	initSession();
 	if(obj.tagName === 'SPAN'){
 		obj = obj.parentNode;
 	}
@@ -700,15 +698,6 @@ const editXy = () => {
 		});
 	}
 	
-}
-
-const initSession = () => {
-	let sessionTime = gfn_getStorageItem('sessionTm',false);
-	if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-		clearInterval(loginInterval);
-		setTimer(sessionTime);
-		
-	}
 }
 
 

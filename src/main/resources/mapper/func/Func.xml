@@ -3,10 +3,6 @@
 
 <mapper namespace="Func">
 
-  <select id="selectHeartbeatDb" resultType="int">
-      SELECT 1 FROM dual
-  </select>
-
   <select id="selectFuncCount" parameterType="map" resultType="long">
         SELECT COUNT(1)
           FROM func_operation_state A
@@ -64,27 +60,12 @@
 
 
   <select id="selectCscStatus" parameterType="map" resultType="CmmnMap">
-    <choose>     
-    <when test='systemId != null and !systemId.equals("")'>
-       SELECT CSC_ID, STATUS
+
+     	SELECT CSC_ID
+     	     , CAST(STATUS as VARCHAR(1)) STATUS
          FROM csc_status
-       ORDER BY CSC_ID
-    </when>
-    <otherwise>
-       select a.code CSC_ID,a.code_kr CSC_NAME,ifnull(b.status,2) STATUS
-         from  (select * from code_info where maingroup = 'FN'  and subgroup = 'CSC') a 
-         left join (SELECT CSC_NAME CSC_ID, STATUS
-                   FROM  func_operation_state A 
-                   JOIN  (SELECT MAX(OP_STATUS_ID) OP_STATUS_ID
-                          FROM func_operation_state 
-                          GROUP BY CSC_NAME) B 
-                    on A.OP_STATUS_ID = B.OP_STATUS_ID
-         
-         ) b
-         on a.code = b.csc_id
-    </otherwise>
-    </choose>
-	
+         ORDER BY CSC_ID
+
   </select>
 
   <select id="selectShipStatusList" parameterType="HashMap" resultType="CmmnMap">
@@ -105,26 +86,15 @@
          ON A.WORK_UI_ID = B.CODE
          AND B.MAINGROUP = 'WO'
          AND B.SUBGROUP = 'UI'
-         AND B.CODE <![CDATA[<]]> '17'
+         AND B.CODE != '16'
          GROUP BY WORK_UI_ID) B
        ON A.ACTION_ID = B.ACTION_ID
 
   </select>
 
 
-  <update id="insertFuncOperationState" parameterType="HashMap">
-        <choose>
-	    <when test='systemId != null and !systemId.equals("")'>
-	    INSERT INTO csc_status( CSC_ID
-                               , STATUS
-					 ) VALUES( #{cscName}
-							 , #{status}
-					  )
-					 ON DUPLICATE KEY UPDATE
-					 STATUS = #{status}
-	    </when>
-	    <otherwise>
-	    INSERT INTO func_operation_state( COLLECTION_TIME
+  <insert id="insertFuncOperationState" parameterType="HashMap">
+        INSERT INTO func_operation_state( COLLECTION_TIME
 			                              , CSC_NAME
 			                              , WORK_TYPE
 			                              , STATUS
@@ -136,13 +106,7 @@
 							              , #{status}
 							              , #{reason}
 							             )
-	    </otherwise>
-	    </choose>
-	
-        
-							    
-       
-  </update>
+  </insert>
 
 
 

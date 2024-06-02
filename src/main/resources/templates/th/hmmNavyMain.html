@@ -10,33 +10,33 @@
 	<div class="container">
 		<div class="grid-row">
 			<div class="item-box col-20">
-				<div class="inner" style="height:230px;">
+				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_02"></span><strong>위협 탐지</strong></h4>
 					<div class="items"> <!-- item contnets // --><div class="dataNum ac threatDetect"></div><!-- // item contnets --> </div>
 				</div>
 			</div>
 			<div class="item-box col-20">
-				<div class="inner" style="height:230px;">
+				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_03"></span><strong>화이트리스트 기반 탐지</strong>
-					<a th:if="${activeProfile.equals('hmmNavy') && auth.equals('3') }" href="javascript:popWhiteList();" class="iconWrapB setting icon_setting">설정</a></h4>
+					<a href="javascript:popWhiteList();" class="iconWrapB setting icon_setting">설정</a></h4>
 					<div class="items"> <!-- item contnets // --><div class="dataNum ac whiteDetect"></div><!-- // item contnets --> </div>
 				</div>
 			</div>
 			<div class="item-box col-20">
-				<div class="inner" style="height:230px;">
+				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_04"></span><strong>방화벽 위협 탐지</strong>
 					</h4>
 					<div class="items"> <!-- item contnets // --><div class="dataNum ac aiDetect"></div><!-- // item contnets --> </div>
 				</div>
 			</div>
 			<div class="item-box col-20">
-				<div class="inner" style="height:230px;">
+				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_05"></span><strong>IPS 위협 탐지</strong></h4>
 					<div class="items"> <!-- item contnets // --><div class="dataNum ac signatureDetect"></div><!-- // item contnets --> </div>
 				</div>
 			</div>
 			<div class="item-box col-20">
-				<div class="inner" style="height:230px;">
+				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_06"></span><strong>위협 중요도</strong></h4>
 					<div class="items"> 
 						<!-- item contnets // -->
@@ -58,7 +58,7 @@
 				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_07"></span><strong>정책별 위협 발생 현황</strong></h4>
 				     <div class="items"> 
-					<span class="imgWrap"><canvas id="lineChart1" width="528" height="168"></canvas></span>
+					<span class="imgWrap"><canvas id="lineChart1" width="528" height="270"></canvas></span>
 					</div>
 				</div>
 			</div>
@@ -73,14 +73,14 @@
 			<div class="item-box col-6">
 				<div class="inner">
 					<h4 class="item-title"><span class="iconWrapB icon_11_09"></span><strong>위성 데이터 전송 속도(BPS)</strong>
-					<a th:if="${activeProfile.equals('hmmNavy') && auth.equals('3') }" href="javascript:popDataTransConfig();" class="iconWrapB setting icon_setting">설정</a></h4>
+					<a th:if="${activeProfile.equals('hmmNavy')|| activeProfile.equals('navy') || activeProfile.equals('lnsystemHmmNavy') || activeProfile.equals('lnsystemNavy') || activeProfile.equals('local')}" href="javascript:popDataTransConfig();" class="iconWrapB setting icon_setting">설정</a></h4>
 					<div class="items"> <!-- item contnets // -->
-					<span class="imgWrap"><canvas id="lineChart3" width="528" height="168"></canvas></span><!-- // item contnets --> 
+					<span class="imgWrap"><canvas id="lineChart3" width="528" height="270"></canvas></span><!-- // item contnets --> 
 					</div>
 				</div>
 			</div>
 		</div>
-	<!-- 	<div class="grid-row">
+		<div class="grid-row">
 			<div class="item-box col-12">
 				<div class="inner">
 					<div class="items"  style="float:right">
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<div class="grid-row">
 			<div class="item-box col-12">
 				<div class="inner">
@@ -106,9 +106,9 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="page_wrap" style="display:none;">
-						    <div class="page_nation"> 
-								<input type="hidden" name="rowPerPage" class="rowPerPage" value="5">
+						<div class="page_wrap">
+							<div class="page_nation"> 
+								<input type="hidden" name="rowPerPage" class="rowPerPage" value="10">
 							</div>
 						</div>
 					</div>
@@ -127,14 +127,13 @@
 		init();
 		initWhiteList();
 		ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//5초
-		/*
 		document.querySelector('.initBtn').addEventListener('click',e => {
 			e.preventDefault();
 			ncos.initBtn = true;
 			searchFunc();
-			ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//5초
+			ncos.intervalFunc = setInterval(searchFunc, ncos.interval);//50초
 	    });	    
-		*/ 
+		   
 	});
 	let lineChart1 = null;
     let lineChart2 = null;
@@ -148,7 +147,7 @@
     const init = () => {
     	uiMode = gfn_getStorage(ncos.uiMode);
     	let tablewrap = document.querySelector('.tablewrap');
-    	//console.log("uiMode:",uiMode);
+    	console.log("uiMode:",uiMode);
         if(uiMode != 'white'){
         	legendOption.color = 'white';
         }
@@ -493,17 +492,10 @@
     }
     
     const detailFunc = (data) => {
-		
-    	//setThreatAnalysis(data);
-    	pageFunc('/threatDisp');
+    	setThreatAnalysis(data);
     }
     
     const popWhiteList = (data) => {
-		let sessionTime = gfn_getStorageItem('sessionTm',false);
-		if(gfn_nullValue(sessionTime) != '' && sessionTime > -1){
-			clearInterval(loginInterval);
-			setTimer(sessionTime);
-		}
     	searchWhiteList();
     }
     

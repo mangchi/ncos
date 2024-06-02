@@ -47,10 +47,8 @@ public class CmmnServiceImpl implements CmmnService {
 
 	@Value("${cryptoMode}")
 	private String cryptoMode;
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-	@Value("${crypto.key1}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	@Override
 	@CacheEvict(value = "codeCacheData", allEntries = true)
@@ -66,11 +64,9 @@ public class CmmnServiceImpl implements CmmnService {
 		if (cryptoMode.equals("Y")) {
 			for (CodeVo vo : list) {
 				if (vo.getGrpCd().equals("UA")) {
-					if (activeProfile.equals("navy")) {
-						vo.setCdNm(ScpDbUtil.scpDec(vo.getCdNm(), cryptoModeKey1));
-					} else {
-						vo.setCdNm(ScpDbUtil.scpDec(vo.getCdNm(), cryptoModeKey2));
-					}
+
+					vo.setCdNm(ScpDbUtil.scpDec(vo.getCdNm(), cryptoModeKey));
+
 				}
 
 			}
@@ -123,11 +119,8 @@ public class CmmnServiceImpl implements CmmnService {
 				String classNm = String.valueOf(m.get("classNm"));
 				if (m.containsKey("codeKr")) {
 					log.debug("classNm:{}", classNm);
-					if (activeProfile.equals("navy")) {
-						classNm = ScpDbUtil.scpDec(classNm, cryptoModeKey1);
-					} else {
-						classNm = ScpDbUtil.scpDec(classNm, cryptoModeKey2);
-					}
+
+					classNm = ScpDbUtil.scpDec(classNm, cryptoModeKey);
 
 					classNm = classNm + "(" + m.get("codeKr") + ")";
 					m.put("classNm", classNm);
@@ -322,21 +315,15 @@ public class CmmnServiceImpl implements CmmnService {
 					+ (map.get("dstEndPort") == null ? "" : ((String) map.get("dstEndPort")))
 					+ (map.get("protocol") == null ? "" : ((String) map.get("protocol")))
 					+ (map.get("policy") == null ? "" : ((String) map.get("policy")));
-			if (activeProfile.equals("navy")) {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey1);
-			} else {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey2);
-			}
+
+			integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey);
+
 			String integrity = ScpDbUtil.AgentCipherHashStringB64(integrityKey);
 
 			map.put("integrity", integrity);
-			if (activeProfile.equals("navy")) {
-				map.put("srcIpEnc", ScpDbUtil.scpEnc("" + map.get("srcIp"), cryptoModeKey1));
-				map.put("dstIpEnc", ScpDbUtil.scpEnc("" + map.get("dstIp"), cryptoModeKey1));
-			} else {
-				map.put("srcIpEnc", ScpDbUtil.scpEnc("" + map.get("srcIp"), cryptoModeKey2));
-				map.put("dstIpEnc", ScpDbUtil.scpEnc("" + map.get("dstIp"), cryptoModeKey2));
-			}
+
+			map.put("srcIpEnc", ScpDbUtil.scpEnc("" + map.get("srcIp"), cryptoModeKey));
+			map.put("dstIpEnc", ScpDbUtil.scpEnc("" + map.get("dstIp"), cryptoModeKey));
 
 			if (map.containsKey("policyId") && map.get("policyId") != null
 					&& !map.get("policyId").toString().trim().equals("")) {
@@ -412,11 +399,9 @@ public class CmmnServiceImpl implements CmmnService {
 					+ (String) map.get("threatDetectionMethod")
 					+ (String) map.get("threatImportance")
 					+ (String) map.get("payload");
-			if (activeProfile.equals("navy")) {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey1);
-			} else {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey2);
-			}
+
+			integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey);
+
 			String integrity = ScpDbUtil.AgentCipherHashStringB64(integrityKey);
 			map.put("settingTime", settingTime);
 			map.put("integrity", integrity);
@@ -517,12 +502,7 @@ public class CmmnServiceImpl implements CmmnService {
 			for (Map<String, Object> m : list) {
 				String classNm = String.valueOf(m.get("classNm"));
 				if (m.containsKey("upperId")) {
-					if (activeProfile.equals("navy")) {
-						classNm = ScpDbUtil.scpDec(classNm, cryptoModeKey1);
-					} else {
-						classNm = ScpDbUtil.scpDec(classNm, cryptoModeKey2);
-					}
-
+					classNm = ScpDbUtil.scpDec(classNm, cryptoModeKey);
 					m.put("classNm", classNm);
 				}
 

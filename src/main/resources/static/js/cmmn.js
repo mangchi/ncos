@@ -4,8 +4,8 @@
 let ncos = { storageKey : "ncosStorage"
 	      , cryptKey   : "ncosAuth"
 	      , codeKey   : "codeKey"
-	      , interval  :  5000   //5000
-	      , intervalTrans  :  1000   //1000
+	      , interval  :  50000000   //5000
+	      , intervalTrans  :  10000000   //1000
 	      , diffDay   : -100  
 	      , uiMode    : "ncosUiMode"
 	      , diffDay   : -30

@@ -24,10 +24,8 @@ public class AuthServiceImpl implements AuthService {
 
 	@Value("${cryptoMode}")
 	private String cryptoMode;
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-	@Value("${crypto.key1}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	@Override
 	public UserVo getUserAccount(UserVo vo, HttpServletRequest req) throws Exception {
@@ -35,11 +33,9 @@ public class AuthServiceImpl implements AuthService {
 			vo.setSystemId("hmm");
 		}
 		if (cryptoMode.equals("Y")) {
-			if (activeProfile.equals("navy")) {
-				vo.setUserId(ScpDbUtil.scpEnc(vo.getUserId(), cryptoModeKey1));
-			} else {
-				vo.setUserId(ScpDbUtil.scpEnc(vo.getUserId(), cryptoModeKey2));
-			}
+
+			vo.setUserId(ScpDbUtil.scpEnc(vo.getUserId(), cryptoModeKey));
+
 		}
 		UserVo userVo = (UserVo) dao.selectOptionalObject("Auth.selectUserAccount", vo).orElseGet(() -> null);
 		log.debug("userVo::::{}", userVo);
@@ -65,18 +61,12 @@ public class AuthServiceImpl implements AuthService {
 				}
 			} else {
 				if (cryptoMode.equals("Y")) {
-					if (activeProfile.equals("navy")) {
-						userVo.setUserId(ScpDbUtil.scpDec(userVo.getUserId(), cryptoModeKey1));
-						userVo.setUsername(ScpDbUtil.scpDec(userVo.getUsername(), cryptoModeKey1));
-						userVo.setPhoneNo(ScpDbUtil.scpDec(userVo.getPhoneNo(), cryptoModeKey1));
-						userVo.setEmail(ScpDbUtil.scpDec(userVo.getEmail(), cryptoModeKey1));
-					} else {
-						userVo.setUserId(ScpDbUtil.scpDec(userVo.getUserId(), cryptoModeKey2));
-						userVo.setUsername(ScpDbUtil.scpDec(userVo.getUsername(), cryptoModeKey2));
-						userVo.setPhoneNo(ScpDbUtil.scpDec(userVo.getPhoneNo(), cryptoModeKey2));
-						userVo.setEmail(ScpDbUtil.scpDec(userVo.getEmail(), cryptoModeKey2));
 
-					}
+					userVo.setUserId(ScpDbUtil.scpDec(userVo.getUserId(), cryptoModeKey));
+					userVo.setUsername(ScpDbUtil.scpDec(userVo.getUsername(), cryptoModeKey));
+					userVo.setPhoneNo(ScpDbUtil.scpDec(userVo.getPhoneNo(), cryptoModeKey));
+					userVo.setEmail(ScpDbUtil.scpDec(userVo.getEmail(), cryptoModeKey));
+
 				}
 				if (userVo.getSessionControlStatus() == 0) {
 					session.setMaxInactiveInterval(-1);

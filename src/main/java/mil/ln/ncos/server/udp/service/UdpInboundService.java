@@ -36,11 +36,8 @@ public class UdpInboundService {
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
 
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	private final FuncService funcService;
 
@@ -95,13 +92,8 @@ public class UdpInboundService {
 						ConvertUtil.UnsignedShortParse(Arrays.copyOfRange((byte[]) msg.getPayload(), 2, 4), 0));
 				param.put("detectionTime", jsonObj.get("detection_time"));
 				if (cryptoMode.equals("Y")) {
-					if (activeProfile.equals("navy")) {
-						param.put("srcIp", ScpDbUtil.scpEnc("" + jsonObj.get("src_ip"), cryptoModeKey1));
-						param.put("dstIp", ScpDbUtil.scpEnc("" + jsonObj.get("dst_ip"), cryptoModeKey1));
-					} else {
-						param.put("srcIp", ScpDbUtil.scpEnc("" + jsonObj.get("src_ip"), cryptoModeKey2));
-						param.put("dstIp", ScpDbUtil.scpEnc("" + jsonObj.get("dst_ip"), cryptoModeKey2));
-					}
+					param.put("srcIp", ScpDbUtil.scpEnc("" + jsonObj.get("src_ip"), cryptoModeKey));
+					param.put("dstIp", ScpDbUtil.scpEnc("" + jsonObj.get("dst_ip"), cryptoModeKey));
 
 				} else {
 					param.put("srcIp", jsonObj.get("src_ip"));

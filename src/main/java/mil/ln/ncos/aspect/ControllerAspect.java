@@ -1,7 +1,5 @@
 package mil.ln.ncos.aspect;
 
-
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,12 +56,8 @@ public class ControllerAspect {
 	@Value("${cryptoMode}")
 	private String cryptoMode;
 
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
-
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	private final LogService logService;
 
@@ -82,13 +76,13 @@ public class ControllerAspect {
 			for (Object obj : joinPoint.getArgs()) {
 				if (obj instanceof HttpServletRequest) {
 					/*
-					 HttpServletRequest request = (HttpServletRequest) obj;
-					 Enumeration<String> enu = request.getParameterNames();
-					 while(enu.hasMoreElements()) {
-						 String name = enu.nextElement();
-						 log.debug("name:{}",name,",value:{}",request.getParameter(name));
-					 }
-				    */
+					 * HttpServletRequest request = (HttpServletRequest) obj;
+					 * Enumeration<String> enu = request.getParameterNames();
+					 * while(enu.hasMoreElements()) {
+					 * String name = enu.nextElement();
+					 * log.debug("name:{}",name,",value:{}",request.getParameter(name));
+					 * }
+					 */
 					if (!methodSignature.getName().equals("logout")) {
 						/*
 						 * HttpServletRequest request = (HttpServletRequest) obj; String refer =
@@ -122,16 +116,11 @@ public class ControllerAspect {
 						if (param.containsKey("schIpAddress")) {
 							param.put("schIpAddress", StringUtil.ipToLong(String.valueOf(param.get("schIpAddress"))));
 						}
-						if(activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1) {
-							if (cryptoMode.equals("Y") && param.containsKey("userId") ) {
-								if(activeProfile.equals("navy")) {
-									param.put("userId",
-											ScpDbUtil.scpEnc(String.valueOf(param.get("userId")),cryptoModeKey1));
-								}
-								else {
-									param.put("userId",
-											ScpDbUtil.scpEnc(String.valueOf(param.get("userId")),cryptoModeKey2));
-								}
+						if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1) {
+							if (cryptoMode.equals("Y") && param.containsKey("userId")) {
+
+								param.put("userId",
+										ScpDbUtil.scpEnc(String.valueOf(param.get("userId")), cryptoModeKey));
 
 							}
 						}
@@ -151,16 +140,11 @@ public class ControllerAspect {
 						if (param.containsKey("ipAddress")) {
 							param.put("ipAddress", StringUtil.ipToLong(String.valueOf(param.get("ipAddress"))));
 						}
-						if(activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1) {
-							if (cryptoMode.equals("Y") && param.containsKey("userId") ) {
-								if(activeProfile.equals("navy")) {
-									param.put("userId",
-											ScpDbUtil.scpEnc(String.valueOf(param.get("userId")),cryptoModeKey1));
-								}
-								else {
-									param.put("userId",
-											ScpDbUtil.scpEnc(String.valueOf(param.get("userId")),cryptoModeKey2));
-								}
+						if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1) {
+							if (cryptoMode.equals("Y") && param.containsKey("userId")) {
+
+								param.put("userId",
+										ScpDbUtil.scpEnc(String.valueOf(param.get("userId")), cryptoModeKey));
 
 							}
 						}
@@ -176,24 +160,26 @@ public class ControllerAspect {
 		}
 
 	}
-    /*
-	private Object getValueFromField(Field field, Class<?> clazz, Object obj) {
-		for (Method method : clazz.getMethods()) {
-			String methodName = method.getName();
-			if ((methodName.startsWith("get") && methodName.length() == field.getName().length() + 3)
-					|| (methodName.startsWith("is") && methodName.length() == field.getName().length() + 2)) {
-				if (methodName.toLowerCase().endsWith(field.getName().toLowerCase())) {
-					try {
-						return method.invoke(obj);
-					} catch (Exception e) {
-						//e.printStackTrace();
-					}
-				}
-			}
-		}
-		return null;
-	}
-	*/
+	/*
+	 * private Object getValueFromField(Field field, Class<?> clazz, Object obj) {
+	 * for (Method method : clazz.getMethods()) {
+	 * String methodName = method.getName();
+	 * if ((methodName.startsWith("get") && methodName.length() ==
+	 * field.getName().length() + 3)
+	 * || (methodName.startsWith("is") && methodName.length() ==
+	 * field.getName().length() + 2)) {
+	 * if (methodName.toLowerCase().endsWith(field.getName().toLowerCase())) {
+	 * try {
+	 * return method.invoke(obj);
+	 * } catch (Exception e) {
+	 * //e.printStackTrace();
+	 * }
+	 * }
+	 * }
+	 * }
+	 * return null;
+	 * }
+	 */
 
 	@SuppressWarnings("unchecked")
 	@AfterReturning(pointcut = "commonPointcut()", returning = "returnValue")
@@ -259,8 +245,8 @@ public class ControllerAspect {
 						toDecList(m);
 					});
 				}
-				if(map.containsKey("appendData")) {
-					Map<String,Object> appendMap = (Map<String,Object>)map.get("appendData");
+				if (map.containsKey("appendData")) {
+					Map<String, Object> appendMap = (Map<String, Object>) map.get("appendData");
 					if (appendMap.containsKey("linkInfoList")) {
 						List<Map<String, Object>> list = (List<Map<String, Object>>) appendMap.get("linkInfoList");
 						list.forEach(m -> {
@@ -273,7 +259,7 @@ public class ControllerAspect {
 							toDecList(m);
 						});
 					}
-					//shipList
+					// shipList
 					if (appendMap.containsKey("topoList")) {
 						List<Map<String, Object>> list = (List<Map<String, Object>>) appendMap.get("topoList");
 						list.forEach(m -> {
@@ -300,7 +286,6 @@ public class ControllerAspect {
 					}
 				}
 
-
 				if (map.containsKey("info")) {
 					Map<String, Object> info = (Map<String, Object>) map.get("info");
 					toDecInfo(info);
@@ -314,8 +299,10 @@ public class ControllerAspect {
 
 			if (returnValue instanceof ModelAndView) {
 				isLog = true;
-				if(methodSignature.getName().equals("login") || methodSignature.getName().equals("sysInfo")  || methodSignature.getName().equals("ssoBusiness")
-						|| methodSignature.getName().equals("checkAuth") || methodSignature.getName().equals("agentProc")) {
+				if (methodSignature.getName().equals("login") || methodSignature.getName().equals("sysInfo")
+						|| methodSignature.getName().equals("ssoBusiness")
+						|| methodSignature.getName().equals("checkAuth")
+						|| methodSignature.getName().equals("agentProc")) {
 					isLog = false;
 					return;
 				}
@@ -360,9 +347,9 @@ public class ControllerAspect {
 					logVo.setWorkUiId("15");
 				} else {
 					log.debug("########################################");
-					log.debug("mv.getViewName():{}",mv.getViewName());
+					log.debug("mv.getViewName():{}", mv.getViewName());
 					log.debug("########################################");
-					 logVo.setWorkUiId("16");
+					logVo.setWorkUiId("16");
 				}
 
 				if (null == SessionData.getUserVo()) {
@@ -427,7 +414,7 @@ public class ControllerAspect {
 
 							} else if (methodSignature.getName().indexOf("UserAccount") > -1) {
 								logVo.setWorkUiId("11");
-							}else {
+							} else {
 								logVo.setWorkUiId("16");
 							}
 
@@ -447,18 +434,15 @@ public class ControllerAspect {
 						}
 				}
 
-
-
-
 			}
-			if(logVo.getWorkUiId() ==null || logVo.getWorkUiId().equals("")) {
-				logVo.setWorkUiId("16");//미지정
+			if (logVo.getWorkUiId() == null || logVo.getWorkUiId().equals("")) {
+				logVo.setWorkUiId("16");// 미지정
 			}
-			if(reportScan != null) {
+			if (reportScan != null) {
 				ResponseEntity<Map<String, Object>> res = (ResponseEntity<Map<String, Object>>) returnValue;
 				Map<String, Object> map = res.getBody();
-				log.debug("map:{}",map);
-				if(res.getStatusCodeValue() == 200) {
+				log.debug("map:{}", map);
+				if (res.getStatusCodeValue() == 200) {
 					cmmnService.setReportKey(map, req);
 				}
 
@@ -477,99 +461,63 @@ public class ControllerAspect {
 		}
 
 	}
+
 	private void toDecInfo(Map<String, Object> info) {
 		if (info.containsKey("srcIp") && info.get("srcIp") instanceof Boolean == false) {
-			if (cryptoMode.equals("Y")) {//암호화된 필드 복호화
-				if(activeProfile.equals("navy")) {
-					info.put("srcIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("srcIp")),cryptoModeKey1))));
-					info.put("dstIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("dstIp")),cryptoModeKey1))));
-				}
-				else {
-					info.put("srcIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("srcIp")),cryptoModeKey2))));
-					info.put("dstIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("dstIp")),cryptoModeKey2))));
-				}
+			if (cryptoMode.equals("Y")) {// 암호화된 필드 복호화
 
-			}else {
+				info.put("srcIp", StringUtil
+						.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("srcIp")), cryptoModeKey))));
+				info.put("dstIp", StringUtil
+						.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("dstIp")), cryptoModeKey))));
+
+			} else {
 				info.put("srcIp", StringUtil.longToIp(Long.parseLong(String.valueOf(info.get("srcIp")))));
 				info.put("dstIp", StringUtil.longToIp(Long.parseLong(String.valueOf(info.get("dstIp")))));
 			}
 		}
 		if (info.containsKey("ipAddress")) {
-			if (cryptoMode.equals("Y")) {//암호화된 필드 복호화
-				if(activeProfile.equals("navy")) {
-					info.put("ipAddress", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("ipAddress")),cryptoModeKey1))));
-				}
-				else {
-					info.put("ipAddress", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("ipAddress")),cryptoModeKey2))));
-				}
+			if (cryptoMode.equals("Y")) {// 암호화된 필드 복호화
 
-			}
-			else {
+				info.put("ipAddress", StringUtil.longToIp(
+						Long.parseLong(ScpDbUtil.scpDec(String.valueOf(info.get("ipAddress")), cryptoModeKey))));
+
+			} else {
 
 				info.put("ipAddress",
 						StringUtil.longToIp(Long.parseLong(String.valueOf(info.get("ipAddress")))));
 			}
 		}
 
-		if (cryptoMode.equals("Y")) {//암호화된 필드 복호화
-			if(activeProfile.equals("navy")) {
-				if (info.containsKey("assetName")) {
-					info.put("assetName", ScpDbUtil.scpDec(String.valueOf(info.get("assetName")),cryptoModeKey1));
-				}
-				if (info.containsKey("affiliation")) {
-					info.put("affiliation", ScpDbUtil.scpDec(String.valueOf(info.get("affiliation")),cryptoModeKey1));
-				}
-				if (info.containsKey("userId")) {
-					info.put("userId", ScpDbUtil.scpDec(String.valueOf(info.get("userId")),cryptoModeKey1));
-				}
-				if (info.containsKey("userName")) {
-					info.put("userName", ScpDbUtil.scpDec(String.valueOf(info.get("userName")),cryptoModeKey1));
-				}
-				if (info.containsKey("username")) {
-					info.put("username", ScpDbUtil.scpDec(String.valueOf(info.get("username")),cryptoModeKey1));
-				}
+		if (cryptoMode.equals("Y")) {// 암호화된 필드 복호화
+
+			if (info.containsKey("assetName")) {
+				info.put("assetName", ScpDbUtil.scpDec(String.valueOf(info.get("assetName")), cryptoModeKey));
 			}
-			else {
-				if (info.containsKey("assetName")) {
-					info.put("assetName", ScpDbUtil.scpDec(String.valueOf(info.get("assetName")),cryptoModeKey2));
-				}
-				if (info.containsKey("affiliation")) {
-					info.put("affiliation", ScpDbUtil.scpDec(String.valueOf(info.get("affiliation")),cryptoModeKey2));
-				}
-				if (info.containsKey("userId")) {
-					info.put("userId", ScpDbUtil.scpDec(String.valueOf(info.get("userId")),cryptoModeKey2));
-				}
-				if (info.containsKey("userName")) {
-					info.put("userName", ScpDbUtil.scpDec(String.valueOf(info.get("userName")),cryptoModeKey2));
-				}
-				if (info.containsKey("username")) {
-					info.put("username", ScpDbUtil.scpDec(String.valueOf(info.get("username")),cryptoModeKey2));
-				}
+			if (info.containsKey("affiliation")) {
+				info.put("affiliation", ScpDbUtil.scpDec(String.valueOf(info.get("affiliation")), cryptoModeKey));
+			}
+			if (info.containsKey("userId")) {
+				info.put("userId", ScpDbUtil.scpDec(String.valueOf(info.get("userId")), cryptoModeKey));
+			}
+			if (info.containsKey("userName")) {
+				info.put("userName", ScpDbUtil.scpDec(String.valueOf(info.get("userName")), cryptoModeKey));
+			}
+			if (info.containsKey("username")) {
+				info.put("username", ScpDbUtil.scpDec(String.valueOf(info.get("username")), cryptoModeKey));
 			}
 
 		}
 
-		if(activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 && cryptoMode.equals("Y")) {
-			if(activeProfile.equals("navy")) {
-				if (info.containsKey("userId") ) {
-					info.put("userId",
-							ScpDbUtil.scpDec(String.valueOf(info.get("userId")),cryptoModeKey1));
-				}
-				if (info.containsKey("username") ) {
-					info.put("username",
-							ScpDbUtil.scpDec(String.valueOf(info.get("username")),cryptoModeKey1));
-				}
-			}
-			else {
-				if (info.containsKey("userId") ) {
+		if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 && cryptoMode.equals("Y")) {
 
-					info.put("userId",
-							ScpDbUtil.scpDec(String.valueOf(info.get("userId")),cryptoModeKey2));
-				}
-				if (info.containsKey("username") ) {
-					info.put("username",
-							ScpDbUtil.scpDec(String.valueOf(info.get("username")),cryptoModeKey2));
-				}
+			if (info.containsKey("userId")) {
+				info.put("userId",
+						ScpDbUtil.scpDec(String.valueOf(info.get("userId")), cryptoModeKey));
+			}
+			if (info.containsKey("username")) {
+				info.put("username",
+						ScpDbUtil.scpDec(String.valueOf(info.get("username")), cryptoModeKey));
 			}
 
 		}
@@ -578,66 +526,46 @@ public class ControllerAspect {
 	private void toDecList(Map<String, Object> m) {
 		Map<String, Object> item = (Map<String, Object>) m;
 
-		if (cryptoMode.equals("Y")) {//암호화된 필드 복호화
+		if (cryptoMode.equals("Y")) {// 암호화된 필드 복호화
 			if (item.containsKey("assetName")) {
-				if(activeProfile.equals("navy")) {
-					item.put("assetName", ScpDbUtil.scpDec(String.valueOf(item.get("assetName")),cryptoModeKey1));
-				}
-				else {
-					item.put("assetName", ScpDbUtil.scpDec(String.valueOf(item.get("assetName")),cryptoModeKey2));
-				}
+
+				item.put("assetName", ScpDbUtil.scpDec(String.valueOf(item.get("assetName")), cryptoModeKey));
 
 			}
 			if (item.containsKey("affiliation")) {
-				if(activeProfile.equals("navy")) {
-					item.put("affiliation", ScpDbUtil.scpDec(String.valueOf(item.get("affiliation")),cryptoModeKey1));
-				}
-				else {
-					item.put("affiliation", ScpDbUtil.scpDec(String.valueOf(item.get("affiliation")),cryptoModeKey2));
-				}
+
+				item.put("affiliation", ScpDbUtil.scpDec(String.valueOf(item.get("affiliation")), cryptoModeKey));
 
 			}
 			if (item.containsKey("userId")) {
-				if(activeProfile.equals("navy")) {
-					item.put("userId", ScpDbUtil.scpDec(String.valueOf(item.get("userId")),cryptoModeKey1));
-				}
-				else {
-					item.put("userId", ScpDbUtil.scpDec(String.valueOf(item.get("userId")),cryptoModeKey2));
-				}
+
+				item.put("userId", ScpDbUtil.scpDec(String.valueOf(item.get("userId")), cryptoModeKey));
+
 			}
 			if (item.containsKey("userName")) {
-				if(activeProfile.equals("navy")) {
-						item.put("userName", ScpDbUtil.scpDec(String.valueOf(item.get("userName")),cryptoModeKey1));
-				}
-				else {
-					item.put("userName", ScpDbUtil.scpDec(String.valueOf(item.get("userName")),cryptoModeKey2));
 
-				}
+				item.put("userName", ScpDbUtil.scpDec(String.valueOf(item.get("userName")), cryptoModeKey));
+
 			}
 
 			if (item.containsKey("username")) {
-				if(activeProfile.equals("navy")) {
-						item.put("username", ScpDbUtil.scpDec(String.valueOf(item.get("username")),cryptoModeKey1));
-					}
-				else {
-						item.put("username", ScpDbUtil.scpDec(String.valueOf(item.get("username")),cryptoModeKey2));
-					}
-				}
+
+				item.put("username", ScpDbUtil.scpDec(String.valueOf(item.get("username")), cryptoModeKey));
+
 			}
+		}
 
 		if (item.containsKey("srcIp") && item.get("srcIp") instanceof Boolean == false) {
-			if (cryptoMode.equals("Y")) {//암호화된 필드 복호화
-			//if (methodSignature.getName().equals("getWhiteList") && cryptoMode.equals("Y")) {//암호화된 필드 복호화
-				if(activeProfile.equals("navy")) {
-					item.put("srcIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("srcIp")),cryptoModeKey1))));
-					item.put("dstIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("dstIp")),cryptoModeKey1))));
-				}
-				else {
-					item.put("srcIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("srcIp")),cryptoModeKey2))));
-					item.put("dstIp", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("dstIp")),cryptoModeKey2))));;
-				}
+			if (cryptoMode.equals("Y")) {// 암호화된 필드 복호화
+				// if (methodSignature.getName().equals("getWhiteList") &&
+				// cryptoMode.equals("Y")) {//암호화된 필드 복호화
 
-			}else {
+				item.put("srcIp", StringUtil.longToIp(
+						Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("srcIp")), cryptoModeKey))));
+				item.put("dstIp", StringUtil.longToIp(
+						Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("dstIp")), cryptoModeKey))));
+
+			} else {
 				item.put("srcIp", StringUtil.longToIp(Long.parseLong(String.valueOf(item.get("srcIp")))));
 				item.put("dstIp", StringUtil.longToIp(Long.parseLong(String.valueOf(item.get("dstIp")))));
 			}
@@ -649,22 +577,17 @@ public class ControllerAspect {
 					StringUtil.longToIp(Long.parseLong(String.valueOf(item.get("dstMask")))));
 		}
 		if (item.containsKey("ipAddress")) {
-			if (cryptoMode.equals("Y")) {//암호화된 필드 복호화
-				if(activeProfile.equals("navy")) {
-					item.put("ipAddress", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("ipAddress")),cryptoModeKey1))));
-				}
-				else {
-					item.put("ipAddress", StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("ipAddress")),cryptoModeKey2))));
-				}
+			if (cryptoMode.equals("Y")) {// 암호화된 필드 복호화
 
-			}
-			else {
+				item.put("ipAddress", StringUtil.longToIp(
+						Long.parseLong(ScpDbUtil.scpDec(String.valueOf(item.get("ipAddress")), cryptoModeKey))));
+
+			} else {
 				item.put("ipAddress",
 						StringUtil.longToIp(Long.parseLong(String.valueOf(item.get("ipAddress")))));
 			}
 
 		}
-
 
 	}
 
@@ -672,13 +595,13 @@ public class ControllerAspect {
 	@AfterThrowing(pointcut = "commonPointcut()", throwing = "ex")
 	public void errorInterceptor(JoinPoint joinPoint, Throwable ex) throws Exception {
 		ex.printStackTrace();
-		Map<String,Object> param = new HashMap();
+		Map<String, Object> param = new HashMap();
 		param.put("status", "1");
 		param.put("cscName", "3");
 		param.put("workType", "9");
 		param.put("reason", "화면 조회 실패");
 		funcService.saveFuncOperation(param);
-		//log.error(ex.getMessage());
+		// log.error(ex.getMessage());
 	}
 
 	@Around("@annotation(mil.ln.ncos.annotation.NoAuth) && @ annotation(target)")

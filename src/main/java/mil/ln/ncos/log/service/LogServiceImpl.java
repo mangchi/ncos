@@ -19,7 +19,7 @@ import mil.ln.ncos.dao.DAO;
 
 @RequiredArgsConstructor
 @Service
-public class LogServiceImpl implements LogService{
+public class LogServiceImpl implements LogService {
 
 	private final DAO dao;
 
@@ -28,44 +28,40 @@ public class LogServiceImpl implements LogService{
 
 	@Value("${cryptoMode}")
 	private String cryptoMode;
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, Object>> getUserAuditList(Map<String, Object> map) throws Exception {
-		return (List<Map<String,Object>>)dao.selectPage("Log.selectUserAuditCount","Log.selectUserAuditList",map);
+		return (List<Map<String, Object>>) dao.selectPage("Log.selectUserAuditCount", "Log.selectUserAuditList", map);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public int saveUserAction(LogVo vo) throws Exception {
-		if(cryptoMode.equals("N")) {
+		if (cryptoMode.equals("N")) {
 			return dao.update("Log.insertUserAction", vo);
-		}else {
+		} else {
 			Timestamp ts = new Timestamp(System.currentTimeMillis());
 			Date date = new Date(ts.getTime());
 			String collectionTime = DateUtil.formatDate(date, "yyyy-MM-dd HH:mm.ss");
 			vo.setCollectionTime(collectionTime);
-			Map<String, Object> salt = dao.selectMap("Cmmn.selectIntegritySalt", null).orElseGet(() -> new HashMap<String, Object>());
-			final String saltKey="userAction";
+			Map<String, Object> salt = dao.selectMap("Cmmn.selectIntegritySalt", null)
+					.orElseGet(() -> new HashMap<String, Object>());
+			final String saltKey = "userAction";
 			String integrityKey = vo.getWorkCodeId()
-					+vo.getAccountId()
-					+(vo.getResult()==1?"true":"false")
-					+(vo.getWorkContent())
-					+collectionTime.substring(0,10);//yyyy-mm-dd
-			if(activeProfile.equals("navy")) {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String)salt.get(saltKey),cryptoModeKey1);
-			}else {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String)salt.get(saltKey),cryptoModeKey2);
-			}
-			
+					+ vo.getAccountId()
+					+ (vo.getResult() == 1 ? "true" : "false")
+					+ (vo.getWorkContent())
+					+ collectionTime.substring(0, 10);// yyyy-mm-dd
+
+			integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey);
+
 			String integrity = ScpDbUtil.AgentCipherHashStringB64(integrityKey);
 			vo.setIntegrity(integrity);
 			return dao.update("Log.insertUserActionNcos", vo);
-			//return dao.update("Log.updateUserActionNcos", vo); action_id 가 포함 안되면 필요 없을듯.
+			// return dao.update("Log.updateUserActionNcos", vo); action_id 가 포함 안되면 필요 없을듯.
 		}
 
 	}

@@ -46,11 +46,8 @@ public class AuthController {
 	@Value("${cryptoMode}")
 	private String cryptoMode;
 
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	private final MessageSourceAccessor messageSource;
 	private final LogService logService;
@@ -91,11 +88,7 @@ public class AuthController {
 			// log.debug("enc 전 id:{}",loginId);
 			if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 && cryptoMode.equals("Y")) {
 				// log.debug("ENCODE start.........");
-				if (activeProfile.equals("navy")) {
-					loginId = ScpDbUtil.scpEnc(loginId, cryptoModeKey1);
-				} else {
-					loginId = ScpDbUtil.scpEnc(loginId, cryptoModeKey2);
-				}
+				loginId = ScpDbUtil.scpEnc(loginId, cryptoModeKey);
 
 				// log.debug("ENCODE finish.........");
 				// log.debug("enc후 id:{}",loginId);

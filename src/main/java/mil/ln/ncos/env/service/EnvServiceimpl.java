@@ -26,11 +26,8 @@ public class EnvServiceimpl implements EnvService {
 	@Value("${cryptoMode}")
 	private String cryptoMode;
 
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -64,11 +61,8 @@ public class EnvServiceimpl implements EnvService {
 					+ (map.get("sessionControlStatus") == null ? "false"
 							: (((String) map.get("sessionControlStatus")).equals("1") ? "true" : "false"))
 					+ accountSettingTime.substring(0, 10);// yyyy-mm-dd
-			if (activeProfile.equals("navy")) {
-				integrity = integrity + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey1);
-			} else {
-				integrity = integrity + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey2);
-			}
+
+			integrity = integrity + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey);
 
 			map.put("accountSettingTime", accountSettingTime);
 			map.put("integrity", integrity);

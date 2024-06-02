@@ -130,7 +130,6 @@
     }
     
     const paramView = () => {
-		console.log("paramView");
 		let manageId = document.getElementById('paramId').value;
 		if( manageId  != null && manageId != "") {
 			let trs = document.querySelector('.tBody').querySelectorAll('tr');
@@ -140,8 +139,6 @@
 			    let selectedData = gridClickedData(document.querySelector('.tablewrap'));
                 detailFunc(selectedData.row); 
 			}
-		
-			
 		}
 	}
     

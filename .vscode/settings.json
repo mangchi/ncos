@@ -1,4 +1,11 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "yaml.schemas": { 
+        "kubernetes": "*.yaml"
+        },
+    "files.associations": {
+        "*.html":"html"
+    }
+
 }

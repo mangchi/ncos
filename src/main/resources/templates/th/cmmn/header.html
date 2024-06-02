@@ -73,9 +73,11 @@
 			    <input id="id" name="id" type="hidden" value="">
 			</form>
 		</div>
-	</div>
+	 </div>
 	<div id="actTouch" style="display:none;"></div>
-	<div class="nav-item"> <span class="timer"></span> <a href="javascript:logout();" class="btn small red">로그아웃</a>&nbsp;&nbsp;<a href="https://act.ncos.mil.kr" class="btn small blue">체계관리</a></div>
+	<div class="nav-item"> <span class="timer"></span> <a href="javascript:logout();" class="btn small red">로그아웃</a>&nbsp;&nbsp;
+		<!--<a href="https://act.ncos.mil.kr" class="btn small blue">체계관리</a> -->
+   </div>
 </div>
 <div class="navbar-location">
 	<ul class="navigation">
@@ -99,14 +101,13 @@
 	let audio = document.createElement("AUDIO");
 	window.addEventListener('beforeunload', (e) => {
     	e.preventDefault();
+		//return true;
     	//gfn_removeStorage(ncos.storageKey);
     	//logout();
    	});
 	window.addEventListener('load', (e) => {
-
 		document.body.appendChild(audio);
 		audio.src = "/js/beep.wav";
-
 		let sessionData = /*[[${sessionData}]]*/"";
 
 		try {
@@ -115,8 +116,6 @@
 				watchSystem();
 				gfn_setStorage(ncos.storageKey, CryptoJS.AES.encrypt(sessionData, ncos.cryptKey));
 				gfn_setStorageItem("curUrl",'/');
-				//console.log("userId:",gfn_getStorageItem('userId',false));
-				//console.log("sessionTm:",gfn_getStorageItem('sessionTm',false));
 				sessionTime = gfn_getStorageItem('sessionTm',false);
 				if(sessionTime > -1){
 					setTimer();
@@ -129,7 +128,6 @@
 			}
 			else{
 				sessionData = gfn_getStorage(ncos.storageKey);
-				//console.log("userId:",gfn_getStorageItem('userId',false));
 				if(sessionData === null || sessionData === undefined){
 					logout();
 				}
@@ -144,8 +142,8 @@
 					document.querySelector('.footbar-nav').querySelector('.connectTime').textContent = gfn_getStorageItem('connectTime',false);
 
 				}
-			}
-			gfn_actTouch();//SW접근관리(아우토) 접속으로 인해 추가.
+			}		
+			//gfn_actTouch();//SW접근관리(아우토) 접속으로 인해 추가.
 			//gfn_formCall(document.sessionFrm); //통합로그인 서버 콜
 			navigator.mediaDevices.getUserMedia({ audio: true }).then(() => {
 		        AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -184,19 +182,15 @@
 				menuNm = document.querySelector(menuCls).innerHTML;
 			}
 			menuNm = '메인';
-			//console.log("menuNm:",menuNm);
 			let menuLi = document.createElement('LI');
 			menuLi.append(menuNm);
 			naviUl.appendChild(menuLi);
-
 		}
 
 	});
 
 	const watchSystem= () => {
-		//console.log("watchSystem");
 		let alarmStatus = gfn_getStorageItem('alarmStatus',false);
-		//console.log("alarmStatus:",alarmStatus);
 		let param = {sch:"watchList"};
 		if(alarmStatus === '') {
 			param.login = 'Y';
@@ -243,7 +237,6 @@
    	 	    if(assetData != null && assetData != undefined && assetData.length > 0){
    	 	    	//let assetMsgCnt = document.querySelectorAll('.asettMsg').length;
 	   	 	    for(let key in assetData){
-	 				//console.log("assetData:",assetData[key]);
 	 			    //threatMsgCnt ++;
 	 		     	let notice2 = document.createElement('DIV');
 	 		        notice2.classList.add('pop-layer-rb','assetMsg');
@@ -295,7 +288,6 @@
 	 			}
    	 	    }
    	 	    let reportData = data['reportList'];
-	 	    //console.log("reportData:",reportData);
 	        if(reportData != null && reportData != undefined && reportData.length > 0){
 	        	for(let key in reportData){
 			     	let notice1 = document.createElement('DIV');

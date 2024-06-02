@@ -26,10 +26,8 @@ public class ThreatServiceImpl implements ThreatService {
 
 	@Value("${cryptoMode}")
 	private String cryptoMode;
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -66,11 +64,9 @@ public class ThreatServiceImpl implements ThreatService {
 				StringBuffer sb = new StringBuffer();
 				String payloadPath = String.valueOf(m.get("payload"));
 				if (cryptoMode.equals("Y")) {
-					if (activeProfile.equals("navy")) {
-						payloadPath = ScpDbUtil.scpDec(payloadPath, cryptoModeKey1);
-					} else {
-						payloadPath = ScpDbUtil.scpDec(payloadPath, cryptoModeKey2);
-					}
+
+					payloadPath = ScpDbUtil.scpDec(payloadPath, cryptoModeKey);
+
 					m.put("payload", payloadPath);
 				}
 				reader = new BufferedReader(new FileReader(payloadPath));
@@ -113,11 +109,8 @@ public class ThreatServiceImpl implements ThreatService {
 					+ analysisTime.substring(0, 10)// yyyy-mm-dd
 					+ (String) map.get("analysisResult")
 					+ (String) map.get("actionResult");
-			if (activeProfile.equals("navy")) {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey1);
-			} else {
-				integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey2);
-			}
+
+			integrityKey = integrityKey + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey);
 
 			String integrity = ScpDbUtil.AgentCipherHashStringB64(integrityKey);
 			map.put("analysisTime", analysisTime);

@@ -51,11 +51,8 @@ public class OutboundServiceImpl implements OutboudService {
 	@Value("${cryptoMode}")
 	private String cryptoMode;
 
-	@Value("${crypto.key1}")
-	private String cryptoModeKey1;
-
-	@Value("${crypto.key2}")
-	private String cryptoModeKey2;
+	@Value("${crypto.key}")
+	private String cryptoModeKey;
 
 	@Value("${tcpClient}")
 	private String tcpClient;
@@ -352,25 +349,17 @@ public class OutboundServiceImpl implements OutboudService {
 						if (cryptoMode.equals("Y")) {
 							if (srDataMap.containsKey("src_ip")) {
 								log.debug("enc src_ip:{}", srDataMap.get("src_ip"));
-								if (activeProfile.equals("navy")) {
-									srDataMap.put("src_ip",
-											ScpDbUtil.scpDec(String.valueOf(srDataMap.get("src_ip")), cryptoModeKey1));
-								} else {
-									srDataMap.put("src_ip",
-											ScpDbUtil.scpDec(String.valueOf(srDataMap.get("src_ip")), cryptoModeKey2));
-								}
+
+								srDataMap.put("src_ip",
+										ScpDbUtil.scpDec(String.valueOf(srDataMap.get("src_ip")), cryptoModeKey));
 
 								log.debug("dec src_ip:{}", srDataMap.get("src_ip"));
 							}
 							if (srDataMap.containsKey("dst_ip")) {
 								log.debug("enc dst_ip:{}", srDataMap.get("dst_ip"));
-								if (activeProfile.equals("navy")) {
-									srDataMap.put("dst_ip",
-											ScpDbUtil.scpDec(String.valueOf(srDataMap.get("dst_ip")), cryptoModeKey1));
-								} else {
-									srDataMap.put("dst_ip",
-											ScpDbUtil.scpDec(String.valueOf(srDataMap.get("dst_ip")), cryptoModeKey2));
-								}
+
+								srDataMap.put("dst_ip",
+										ScpDbUtil.scpDec(String.valueOf(srDataMap.get("dst_ip")), cryptoModeKey));
 
 								log.debug("dec dst_ip:{}", srDataMap.get("dst_ip"));
 							}

@@ -143,18 +143,27 @@ spring:
 ---
 
 spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
   mvc:
     view:
       prefix: /WEB-INF/
       suffix: .jsp
   thymeleaf:
     cache: false
-    prefix: classpath:/templates/
+    prefix: file:src/main/resources/templates/
+    #prefix: classpath:/templates/
     suffix: .html
     view-names: th/*
   cache:
     jcache:
       config: classpath:ehcache.xml
+  web:
+    resources:
+      static-locations: file:./src/main/resources/static/
   
 mybatis:
   mapper-locations: /mapper/**/*.xml

@@ -31,6 +31,11 @@
 ### Spring Boot Dashboard에서 application 실행
 <img src="./dashboard.png" width="1300" height="500" alt="spring boot dashboard 실행">
 
+### Git 초기 설정
+#### VS Coded에서 소스 제어에서 Git 작업을 수행할려고 할 때 사용자명 및 email설정을 하라는 메시지가 니올 경우에 터미널 창을 아래와 같이 입력한다.
+#### git config --global user.name "username"
+#### git config --global user.email "username@gmail.com" 
+
 ### 파일 수정 후 Git에 반영
 #### 파일을 수정한다.
 #### 파일을 수정하면 소스제어에 수정된 파일이 표시된다.

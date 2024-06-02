@@ -37,4 +37,4 @@ out/
 #.vscode/
 logs/logfile.log
 logs/rollingfile.log
-logs/archive/
+logs/archive/*

@@ -16,11 +16,29 @@
 <img src="./extension_setting.png" width="1300" height="500" alt="spring boot 확장팩 설치">
 <!-- ![spring boot 확장팩 설치](./extension_setting.png) -->
 
+### Java 환경설정 및 그 외 확장팩 설치
+#### Java 17 설치 후 환경설정(구글링)
+#### Lombok Annotations Support for VS Code
+#### ...
+
 ### Git Clone 프로젝트 생성
 #### https://mangchinas.synology.me/thesys/ncos 접속
 #### 상단의 페이지에 접속시 회원이 아닐 경우 회원 가입을 하고 로그인합니다.
 #### 회원가입을 완료하고 로그인하면 thesys/nocs 프로젝트 인트로 화면이 전시됩니다.
 #### 오른쪽 상단의 ... 아이콘을 클릭하여 <span style="color:green">Clone in VS Code</span>를 클릭합니다.
+#### 로컬 레파지토리를 설정하고 저장을 하면 VS Code가 실행되고 ncos 프로젝트 생성됩니다.
+
+### Spring Boot Dashboard에서 application 실행
+<img src="./dashboard.png" width="1300" height="500" alt="spring boot dashboard 실행">
+
+### 파일 수정 후 Git에 반영
+#### 파일을 수정한다.
+#### 파일을 수정하면 소스제어에 수정된 파일이 표시된다.
+#### 1. 변경된 파일리스트에서 오른쪽 +아이콘을 클릭하여 변경 대상에 추가한다. git add {파일명}
+#### 2. 변경된 파일을 커밋한다. git commit -m "commt msg"
+#### 3. git 서버에 반영한다. git push -u origin main 
+<img src="./git.png" width="1300" height="500" alt="git server 반영">
+
 
 
 

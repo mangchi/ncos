@@ -17,9 +17,7 @@ public class SqlLogPrinter {
 	public static void logPrint(BoundSql boundSql, String sql, String queryId)
 			throws NoSuchFieldException, IllegalAccessException {
 		log.debug("Query Id : {}", queryId);
-		if(!"".equals(queryId)) {
-			//return;
-		}
+
 		Object param = boundSql.getParameterObject();
 		if (param == null) {
 			sql = sql.replaceFirst("\\?", "''");

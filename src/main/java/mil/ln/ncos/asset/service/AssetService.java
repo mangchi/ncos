@@ -7,23 +7,13 @@ public interface AssetService {
 	
 	List<Map<String,Object>> getAssetList(Map<String,Object> param) throws Exception;
 	
-	List<Map<String,Object>> getAssetAllList(Map<String,Object> param) throws Exception;
-	
-	List<Map<String,Object>> getAssetDispList(Map<String,Object> param) throws Exception;
-	
 	List<Map<String,Object>> getAssetDispoList(Map<String,Object> param) throws Exception;
 	
 	Map<String,Object> getAssetStatus(Map<String,Object> param) throws Exception;
 	
 	List<Map<String,Object>> getAssetAffair(Map<String,Object> param) throws Exception;
 	
-	Map<String,Object> getListAssetStatus(Map<String,Object> param) throws Exception;
-	
-	List<Map<String,Object>> getListAssetAffair(Map<String,Object> param) throws Exception;
-	
 	List<Map<String,Object>> getZoneLocationList(Map<String,Object> param) throws Exception;
-	
-	List<Map<String,Object>> getAssetHmList(Map<String,Object> param) throws Exception;
 	
 	List<Map<String,Object>> getAssetDispoZoneList(Map<String,Object> param) throws Exception;
 	

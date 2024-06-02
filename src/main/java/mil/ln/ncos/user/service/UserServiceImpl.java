@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import mil.ln.ncos.auth.service.AuthService;
 import mil.ln.ncos.cmmn.util.CryptoUtil;
 import mil.ln.ncos.dao.DAO;
 import mil.ln.ncos.user.vo.UserVo;
@@ -16,8 +15,9 @@ import mil.ln.ncos.user.vo.UserVo;
 public class UserServiceImpl implements UserService {
 	
 	private final DAO dao;
-	private final AuthService authService;
-
+	//private final CacheService cacheService;
+	//private final AuthService authService;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, Object>> getUserAccountList(Map<String, Object> map) throws Exception {
@@ -27,8 +27,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int saveUserAccount(UserVo vo) throws Exception {
 		int rtn = 0;
-		vo.setSalt(CryptoUtil.getSalt());
-		vo.setPassword(CryptoUtil.encode(vo.getPassword(),vo.getSalt().getBytes()));
+		vo.setPassword(CryptoUtil.encode(vo.getPassword()));
 		//log.debug("vo:{}",vo);
 	    if(vo.getAccountId() == null || vo.getAccountId().trim().equals("")) {
 	    	rtn += dao.update("User.insertUserAccount", vo);
@@ -57,33 +56,8 @@ public class UserServiceImpl implements UserService {
 		rtn += dao.delete("User.deleteUserAccount", map);
 		return rtn;
 	}
+	
 
-	@Override
-	public int modUserPwd(UserVo vo) throws Exception {
-		return dao.update("User.updateUserPwd", vo);
-	}
-
-	@Override
-	public int saveMyAccount(UserVo vo) throws Exception {
-		int rtn = 0;
-		rtn += dao.update("User.updateUserAccount", vo);
-		return rtn;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public int modPwdInit(Map<String, Object> map) throws Exception {
-		int rtn = 0;
-		List<Map<String,Object>> list = (List<Map<String,Object>>)map.get("list");
-		for(Map<String,Object> item:list) {
-			String salt = authService.getUserAccountSalt(String.valueOf(item.get("userId")));
-			UserVo vo = new UserVo();
-			vo.setAccountId(String.valueOf(item.get("id")));
-			vo.setPassword( CryptoUtil.encode("1234",salt.getBytes()));
-			rtn += dao.update("User.updateUserPwd", vo);
-		}
-		return rtn;
-	}
-
+	
 
 }

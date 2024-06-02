@@ -23,12 +23,17 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-
-		if(activeProfile.startsWith("lnsystem") || activeProfile.startsWith("hmm")){
+		/*
+		 * registry.addInterceptor(new LogInterceptor()) // LogInterceptor 등록 .order(1)
+		 * // 적용할 필터 순서 설정 .addPathPatterns("/**") .excludePathPatterns("/error"); //
+		 * 인터셉터에서 제외할 패턴
+		 */
+		
+		if(activeProfile.startsWith("hmm")){
 			registry.addInterceptor(new LoginInterceptor(activeProfile,ssoMode)) //LoginCheckInterceptor 등록
 			.order(1)
 			.addPathPatterns("/**")
-			.excludePathPatterns("/js/**","/css/**","/font/**","/img/**","/report/**","/sysInfo","/makeJsonStr","/login","/codes","/sessionChk","/saveUserAccount");
+			.excludePathPatterns("/js/**","/css/**","/font/**","/img/**","/report/**","/sso/**","/sysInfo","/makeJsonStr","/login","/codes","/sessionChk");
 		}
 		else {
 			

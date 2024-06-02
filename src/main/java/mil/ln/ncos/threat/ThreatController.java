@@ -38,25 +38,11 @@ public class ThreatController {
 	@PostMapping("/getThreatList")
 	public ResponseEntity<Map<String,Object>> getThreatList(@RequestBody Map<String,Object> param,HttpServletRequest req) throws Exception{
 		Map<String,Object> result = new HashMap<>();
-		if(param.get("schMode").equals("auto")) {
-			Map<String,Object> appendData = new HashMap<>();
-			appendData.put("detectPriorList", threatService.getDetectPriorStatus(param));
-			appendData.put("eventStatusInfo", threatService.getEventStatus(param));
-			result.put("appendData", appendData);
-		}
-		
-		result.put("list", threatService.getThreatList(param));
-		return ResponseEntity.ok().body(result);
-	}
-	
-	//@Page
-	@PostMapping("/getThreatAllList")
-	public ResponseEntity<Map<String,Object>> getThreatAllList(@RequestBody Map<String,Object> param,HttpServletRequest req) throws Exception{
-		Map<String,Object> result = new HashMap<>();
 		Map<String,Object> appendData = new HashMap<>();
-		result.put("list", threatService.getThreatAllList(param));
-		appendData.put("listEventStatusInfo", threatService.getListEventStatus(param));
+		appendData.put("detectPriorList", threatService.getDetectPriorStatus(param));
+		appendData.put("eventStatusInfo", threatService.getEventStatus(param));
 		result.put("appendData", appendData);
+		result.put("list", threatService.getThreatList(param));
 		return ResponseEntity.ok().body(result);
 	}
 	
@@ -80,28 +66,31 @@ public class ThreatController {
 	    		result.put("fail_msg", messageSource.getMessage("msg.fail"));
 	    	}
 		}catch(Exception e) {
+			//e.printStackTrace();
 		    result.put("fail_msg", e.getMessage());
 		}
 		return ResponseEntity.ok().body(result);
 	}
-	
-	@PostMapping("/saveMultiThreatAnalysis")
-	public ResponseEntity<Map<String,Object>> saveMultiThreatAnalysis(@RequestBody Map<String,Object> param,HttpServletRequest req) throws Exception{
+	/*
+	@PostMapping("/saveWatchThreat")
+	public ResponseEntity<Map<String,Object>> saveWatchThreat(@RequestBody Map<String,Object> param,HttpServletRequest req) throws Exception{
 		Map<String,Object> result = new HashMap<>();
 		try {
 			param.put("analyst",SessionData.getUserVo().getAccountId());
-			int cnt = threatService.saveMultiThreatAnalysis(param);
+			int cnt = threatService.saveThreatAnalysis(param);
 			if(cnt > 0) {
 	    		result.put("success_msg", messageSource.getMessage("msg.success"));
 	    	}
 	    	else {
 	    		result.put("fail_msg", messageSource.getMessage("msg.fail"));
 	    	}
-		}catch(Exception e) {
+		}catch(NoSuchMessageException e) {
+			//e.printStackTrace();
 		    result.put("fail_msg", e.getMessage());
 		}
 		return ResponseEntity.ok().body(result);
 	}
+	*/
 	
 
 }

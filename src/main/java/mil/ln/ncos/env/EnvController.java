@@ -52,7 +52,7 @@ public class EnvController {
 	    		result.put("fail_msg", messageSource.getMessage("msg.fail"));
 	    	}
 		}catch(NoSuchMessageException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		    result.put("fail_msg", e.getMessage());
 		}
 		return ResponseEntity.ok().body(result);

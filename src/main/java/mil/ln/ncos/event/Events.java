@@ -10,10 +10,12 @@ public class Events {
     private static ThreadLocal<ApplicationEventPublisher> publisherLocal = new ThreadLocal<>();
    
     public static void raise(AppEvent event) {
+    	log.debug("raise............................");
         if (event == null) {
         	return;
         }
         if (publisherLocal.get() != null) {
+        	log.debug("publishEvent..........");
             publisherLocal.get().publishEvent(event);
         }
         else {

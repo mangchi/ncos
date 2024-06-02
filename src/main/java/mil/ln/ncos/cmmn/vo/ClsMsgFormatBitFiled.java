@@ -21,5 +21,38 @@ public class ClsMsgFormatBitFiled {
 		}
 	}
 
+	public void PrintMsgFormatBitField() {
+		//System.out.println("bit 0: " + ((msg_format & 0x0001) != 0));
+		//System.out.println("bit 1: " + ((msg_format & 0x0002) != 0));
+		//System.out.println("bit 2: " + ((msg_format & 0x0004) != 0));
+		//System.out.println("bit 3: " + ((msg_format & 0x0008) != 0));
+		//System.out.println("bit 4: " + ((msg_format & 0x0010) != 0));
+		//System.out.println("bit 5: " + ((msg_format & 0x0020) != 0));
+		//System.out.println("bit 6: " + ((msg_format & 0x0040) != 0));
+		//System.out.println("bit 7: " + ((msg_format & 0x0080) != 0));
+		//System.out.println("bit 8: " + ((msg_format & 0x0100) != 0));
+		//System.out.println("bit 9: " + ((msg_format & 0x0200) != 0));
+		//System.out.println("bit 10: " + ((msg_format & 0x0400) != 0));
+		//System.out.println("bit 11: " + ((msg_format & 0x0800) != 0));
+		//System.out.println("bit 12: " + ((msg_format & 0x1000) != 0));
+		//System.out.println("bit 13: " + ((msg_format & 0x2000) != 0));
+		//System.out.println("bit 14: " + ((msg_format & 0x4000) != 0));
+		//System.out.println("bit 15: " + ((msg_format & 0x8000) != 0));
+	}
+	/*
+	public static void main(String[] args) {
+
+		ClsMsgFormatBitFiled msgformat = new ClsMsgFormatBitFiled();
+		msgformat.PrintMsgFormatBitField();
+		
+		msgformat.setBitFieldValue(1, true);
+		
+		msgformat.PrintMsgFormatBitField();
+		
+		msgformat.setBitFieldValue(3, true);
+		
+		msgformat.PrintMsgFormatBitField();
+	}
+	*/
 
 }

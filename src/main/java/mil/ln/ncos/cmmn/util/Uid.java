@@ -46,5 +46,13 @@ public class Uid {
 		long l = ByteBuffer.wrap(uuid.getBytes()).getLong();
 		return Long.toString(l, LENGTH_20_LONG_RADIX);
 	}
+	/*
+	public static void main(String args[]) {
+		//System.out.println(makeUUID());
+		//System.out.println(makeLongUUID());
+		//28452848562110773285
+		//System.out.println(makeShortUUID());
+	}
+	*/
 
 }

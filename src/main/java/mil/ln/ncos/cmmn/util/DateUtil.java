@@ -19,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DateUtil {
-	
-	private static final SecureRandom r = new SecureRandom();
 
 	/**
 	 * <p>
@@ -542,7 +540,7 @@ public class DateUtil {
 			throw new IllegalArgumentException("Invalid input date : " + sDate1 + "~" + sDate2);
 		}
 
-		
+		SecureRandom r = new SecureRandom();
 
 		long rand = ((r.nextLong() >>> 1) % (endDate.getTimeInMillis() - beginDate.getTimeInMillis() + 1))
 				+ beginDate.getTimeInMillis();

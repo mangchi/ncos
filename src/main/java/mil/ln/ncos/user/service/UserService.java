@@ -14,12 +14,6 @@ public interface UserService {
 	
 	int saveUserAccount(UserVo vo) throws Exception;
 	
-	int saveMyAccount(UserVo vo) throws Exception;
-	
-	int modUserPwd(UserVo vo) throws Exception;
-	
-	int modPwdInit(Map<String, Object> map) throws Exception;
-	
 	int delUserAccount(Map<String, Object> map) throws Exception;
 
 

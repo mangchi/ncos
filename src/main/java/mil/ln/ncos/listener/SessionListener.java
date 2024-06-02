@@ -30,8 +30,16 @@ public class SessionListener implements HttpSessionListener {
 				}
 			}
 		}
+		//removeSessionForDoubleLogin(result);
 		return result;
 	}
+//	private static void removeSessionForDoubleLogin(String userId) {
+//		log.debug("removeSessionForDoubleLogin :{} ",userId);
+//		if (userId != null && userId.length() > 0) {
+//			sessions.get(userId).invalidate();
+//			sessions.remove(userId);
+//		}
+//	}
 
 	@Override
 	public void sessionCreated(HttpSessionEvent hse) {

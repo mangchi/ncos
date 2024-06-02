@@ -4,9 +4,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
 import mil.ln.ncos.client.service.OutboudService;
 
-
+@Slf4j
 @ConditionalOnProperty(
 	    value="tcpClient", 
 	    havingValue = "true", 
@@ -20,26 +21,26 @@ public class MessageJobScheduler {
         this.messageService = messageService;
     }
     
-    @Scheduled(fixedDelay = 5000, initialDelay = 5000)
+    @Scheduled(fixedDelay = 1000, initialDelay = 5000)
     public void saveTransmitData() throws Exception {
+    	
     	messageService.saveTransmitData();
     }
 
-    @Scheduled(fixedDelay = 5000, initialDelay = 5000)
+    @Scheduled(fixedDelay = 1000, initialDelay = 5000)
     public void sendHeartBeatJob() throws Exception {
+    	log.debug("sendHeartBeatJob");
     	messageService.sendHeartBeat();
     }
     
-    @Scheduled(fixedDelay = 5000, initialDelay = 5000)
+    @Scheduled(fixedDelay = 1000, initialDelay = 5000)
     public void sendThreatInfo() throws Exception {
     	messageService.sendThreatInfo();
     }
     
-    @Scheduled(fixedDelay = 5000, initialDelay = 5000)
+    @Scheduled(fixedDelay = 1000, initialDelay = 5000)
     public void sendAssertInfo() throws Exception {
     	messageService.sendAssertInfo();
     }
-   
-    
    
 }

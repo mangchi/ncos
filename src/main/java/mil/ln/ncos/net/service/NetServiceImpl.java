@@ -14,6 +14,13 @@ public class NetServiceImpl implements NetService {
 	
 	private final DAO dao;
 
+	/*
+	 * @SuppressWarnings("unchecked")
+	 * 
+	 * @Override public List<Map<String, Object>> getEventList(Map<String, Object>
+	 * param) { return (List<Map<String,
+	 * Object>>)dao.selectList("Net.selectEventList", param); }
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Override

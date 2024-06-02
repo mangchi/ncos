@@ -14,9 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Configuration
 @EnableTransactionManagement
 public class DBConfig {
@@ -28,26 +25,25 @@ public class DBConfig {
 	private String jdbcUrl;
 	@Value("${spring.datasource.driverClassName}")
 	private String driverClassName;
-	
+
 	@Value("${spring.datasource.hikari.maximum-pool-size}")
 	private int maximumPoolSize;
 	@Value("${spring.datasource.hikari.connection-timeout}")
 	private long connectionTimeout;
 	@Value("${spring.datasource.hikari.connection-init-sql}")
 	private String connectionInitSql;
-	
+
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
-	
+
 	@Value("${dbUser}")
 	private String dbUser;
-	
+
 	@Value("${dbPwd}")
 	private String dbPwd;
-	
+
 	@Value("${appendUrl}")
 	private String appendUrl;
-
 
 	@Bean
 	@Qualifier("dataSource")
@@ -64,13 +60,10 @@ public class DBConfig {
 		hikariConfig.setConnectionInitSql(connectionInitSql);
 		return new HikariDataSource(hikariConfig);
 	}
-	
-	
+
 	@Bean
 	PlatformTransactionManager transactionManager() {
 		return new DataSourceTransactionManager(dataSource());
 	}
-	
-
 
 }

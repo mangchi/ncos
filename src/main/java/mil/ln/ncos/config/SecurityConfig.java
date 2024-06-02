@@ -11,15 +11,18 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf
-            .ignoringAntMatchers("/sso/**", "/reportViewPopup", "/reportServer")  //csrf예외처리
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-		    .headers(headers -> headers.xssProtection())
-		;
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		return http.build();
-	}
+        http
+                // .addFilter(new
+                // org.springframework.web.multipart.support.MultipartFilter().setMultipartResolverBeanName("multipartResolver"))
+                .csrf(csrf -> csrf
+                        .ignoringAntMatchers("/sso/**", "/reportViewPopup", "/reportServer")// csrf예외처리
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .headers(headers -> headers.xssProtection());
+
+        return http.build();
+    }
 
 }

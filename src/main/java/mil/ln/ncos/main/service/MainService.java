@@ -14,7 +14,7 @@ public interface MainService {
 	
 	List<Map<String,Object>> getDataTransList(Map<String,Object> map) throws Exception;
 	
-	Map<String, Object> getTotDataTrans(Map<String,Object> map) throws Exception;
+	long getTotDataTrans(Map<String,Object> map) throws Exception;
 	
 	Map<String,Object> getStatus(Map<String,Object> map) throws Exception;
 	

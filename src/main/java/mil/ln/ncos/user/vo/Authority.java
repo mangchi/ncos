@@ -1,4 +1,5 @@
 package mil.ln.ncos.user.vo;
+
 import java.util.Arrays;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -22,7 +23,6 @@ public enum Authority {
     public String getDesc() {
         return desc;
     }
-	
 	
     @JsonCreator()
     static Authority findDes(String desc){

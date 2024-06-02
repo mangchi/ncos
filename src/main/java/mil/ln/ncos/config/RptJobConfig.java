@@ -55,5 +55,5 @@ public class RptJobConfig {
 
 		return JobBuilder.newJob(job).usingJobData(jobDataMap).build();
 	}
-    
+
 }

@@ -79,6 +79,19 @@ public class QueryInterceptor implements Interceptor {
 	 * @return
 	 * @Description : 최종적으로 return할 PagableResponse 생성
 	 */
+	/*
+	 * private Map<String,Object> createPagableResponse(List<Object> list, PageInfo
+	 * pageInfo) {
+	 * 
+	 * PagableResponse<Object> pagableResponse = new PagableResponse<>();
+	 * pagableResponse.setList(list);
+	 * pagableResponse.getPageInfo().setPage(pageInfo.getPage());
+	 * pagableResponse.getPageInfo().setSize(pageInfo.getSize());
+	 * pagableResponse.getPageInfo().setTotalCount(pageInfo.getTotalCount());
+	 * 
+	 * return pagableResponse; }
+	 */
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -99,15 +112,26 @@ public class QueryInterceptor implements Interceptor {
 				}
 				
 				pageInfo.setIsFirstPage(pageInfo.getPageNo()==1?true:false);
-				pageInfo.setIsLastPage(pageInfo.getPageNo().equals(pageInfo.getTotPage())?true:false);
-
+				pageInfo.setIsLastPage(pageInfo.getPageNo()==pageInfo.getTotPage()?true:false);
+	
 				// LIST 구하기
 				List<Object> list = new ArrayList<>();
 				if(pageInfo.getTotCount() == 0) {
 					return list;
 				}
 				invocation.getArgs()[0] = originalMappedStatement;
+				//log.debug("originalMappedStatement:{}",originalMappedStatement.getBoundSql(invocation.getArgs()[1]));
 				list = (List<Object>) invocation.proceed();
+				// return createPagableResponse(list, pageInfo);
+	            /*
+				Map<String, Object> pageList = new HashMap<String, Object>();
+				pageList.put("list", list);
+				pageList.put("pageNum", pageInfo.getPageNum());
+				pageList.put("rowPerPage", pageInfo.getRowPerPage());
+				pageList.put("totCnt", pageInfo.getTotalCount());
+			 
+				return pageList;
+				*/
 	            return list;
 			}
 		} catch (ClassCastException e) {

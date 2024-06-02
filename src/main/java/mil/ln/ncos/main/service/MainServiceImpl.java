@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import mil.ln.ncos.cmmn.service.CmmnService;
 import mil.ln.ncos.dao.DAO;
 
 
@@ -17,9 +16,6 @@ public class MainServiceImpl implements MainService{
 
     private final DAO dao;
     
-    private final CmmnService cmmnService;
-
-
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -44,8 +40,8 @@ public class MainServiceImpl implements MainService{
 	}
 
 	@Override
-	public Map<String, Object>  getTotDataTrans(Map<String, Object> map) throws Exception {
-		return dao.selectMap("Main.selectTotDataTransStatus", map).orElseGet(() -> new HashMap<String, Object>());
+	public long getTotDataTrans(Map<String, Object> map) throws Exception {
+		return dao.selectCountByJob("Main.selectTotDataTransStatus",map);
 
 
 	}
@@ -53,7 +49,6 @@ public class MainServiceImpl implements MainService{
 
 	@Override
 	public Map<String, Object> getStatus(Map<String, Object> map) throws Exception {
-		map.put("day", cmmnService.selectAggregationStandard());
 		return dao.selectMap("Main.selectStatus", map).orElseGet(() -> new HashMap<String, Object>());
 	}
 

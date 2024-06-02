@@ -30,6 +30,7 @@ public class RptGenerator {
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
 	public void genReport() throws Exception {
 		if(prodMode.equals("Y")) {
+			log.debug("genReport...............");
 			List<Map<String, Object>> rptJobList = (List<Map<String, Object>>) dao.selectList("Rpt.selectRptJob", new HashMap<>());
 			for (Map<String, Object> rptJob : rptJobList) {
 				log.debug("rptJob:{}", rptJob);

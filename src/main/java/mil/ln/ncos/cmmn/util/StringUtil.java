@@ -1,6 +1,5 @@
 package mil.ln.ncos.cmmn.util;
 
-
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.InetAddress;
@@ -23,38 +22,41 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StringUtil {
 
-
-
 	/**
 	 * 빈 문자열 <code>""</code>.
 	 */
 	public static final String EMPTY = "";
-	
-	private static final SecureRandom rnd = new SecureRandom();
-	private static final Random rand = new Random();
-
 
 	/**
-	 * <p>Padding을 할 수 있는 최대 수치</p>
+	 * <p>
+	 * Padding을 할 수 있는 최대 수치
+	 * </p>
 	 */
 	// private static final int PAD_LIMIT = 8192;
 	/**
-	 * <p>An array of <code>String</code>s used for padding.</p>
-	 * <p>Used for efficient space padding. The length of each String expands as needed.</p>
+	 * <p>
+	 * An array of <code>String</code>s used for padding.
+	 * </p>
+	 * <p>
+	 * Used for efficient space padding. The length of each String expands as
+	 * needed.
+	 * </p>
 	 */
 	/*
-	private static final String[] PADDING = new String[Character.MAX_VALUE];
-
-	static {
-		// space padding is most common, start with 64 chars
-		PADDING[32] = "                                                                ";
-	}
+	 * private static final String[] PADDING = new String[Character.MAX_VALUE];
+	 * 
+	 * static {
+	 * // space padding is most common, start with 64 chars
+	 * PADDING[32] =
+	 * "                                                                ";
+	 * }
 	 */
 
 	/**
 	 * 문자열이 지정한 길이를 초과했을때 지정한길이에다가 해당 문자열을 붙여주는 메서드.
-	 * @param source 원본 문자열 배열
-	 * @param output 더할문자열
+	 * 
+	 * @param source  원본 문자열 배열
+	 * @param output  더할문자열
 	 * @param slength 지정길이
 	 * @return 지정길이로 잘라서 더할분자열 합친 문자열
 	 */
@@ -71,7 +73,8 @@ public class StringUtil {
 
 	/**
 	 * 문자열이 지정한 길이를 초과했을때 해당 문자열을 삭제하는 메서드
-	 * @param source 원본 문자열 배열
+	 * 
+	 * @param source  원본 문자열 배열
 	 * @param slength 지정길이
 	 * @return 지정길이로 잘라서 더할분자열 합친 문자열
 	 */
@@ -107,7 +110,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>기준 문자열에 포함된 모든 대상 문자(char)를 제거한다.</p>
+	 * <p>
+	 * 기준 문자열에 포함된 모든 대상 문자(char)를 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.remove(null, *)       = null
@@ -116,8 +121,8 @@ public class StringUtil {
 	 * StringUtil.remove("queued", 'z') = "queued"
 	 * </pre>
 	 *
-	 * @param str  입력받는 기준 문자열
-	 * @param remove  입력받는 문자열에서 제거할 대상 문자열
+	 * @param str    입력받는 기준 문자열
+	 * @param remove 입력받는 문자열에서 제거할 대상 문자열
 	 * @return 제거대상 문자열이 제거된 입력문자열. 입력문자열이 null인 경우 출력문자열은 null
 	 */
 	public static String remove(String str, char remove) {
@@ -135,7 +140,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>문자열 내부의 콤마 character(,)를 모두 제거한다.</p>
+	 * <p>
+	 * 문자열 내부의 콤마 character(,)를 모두 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.removeCommaChar(null)       = null
@@ -145,14 +152,16 @@ public class StringUtil {
 	 *
 	 * @param str 입력받는 기준 문자열
 	 * @return " , "가 제거된 입력문자열
-	 *  입력문자열이 null인 경우 출력문자열은 null
+	 *         입력문자열이 null인 경우 출력문자열은 null
 	 */
 	public static String removeCommaChar(String str) {
 		return remove(str, ',');
 	}
 
 	/**
-	 * <p>문자열 내부의 마이너스 character(-)를 모두 제거한다.</p>
+	 * <p>
+	 * 문자열 내부의 마이너스 character(-)를 모두 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.removeMinusChar(null)       = null
@@ -160,9 +169,9 @@ public class StringUtil {
 	 * StringUtil.removeMinusChar("a-sdfg-qweqe") = "asdfgqweqe"
 	 * </pre>
 	 *
-	 * @param str  입력받는 기준 문자열
+	 * @param str 입력받는 기준 문자열
 	 * @return " - "가 제거된 입력문자열
-	 *  입력문자열이 null인 경우 출력문자열은 null
+	 *         입력문자열이 null인 경우 출력문자열은 null
 	 */
 	public static String removeMinusChar(String str) {
 		return remove(str, '-');
@@ -170,9 +179,10 @@ public class StringUtil {
 
 	/**
 	 * 원본 문자열의 포함된 특정 문자열을 새로운 문자열로 변환하는 메서드
-	 * @param source 원본 문자열
+	 * 
+	 * @param source  원본 문자열
 	 * @param subject 원본 문자열에 포함된 특정 문자열
-	 * @param object 변환할 문자열
+	 * @param object  변환할 문자열
 	 * @return sb.toString() 새로운 문자열로 변환된 문자열
 	 */
 	public static String replace(String source, String subject, String object) {
@@ -193,9 +203,10 @@ public class StringUtil {
 
 	/**
 	 * 원본 문자열의 포함된 특정 문자열 첫번째 한개만 새로운 문자열로 변환하는 메서드
-	 * @param source 원본 문자열
+	 * 
+	 * @param source  원본 문자열
 	 * @param subject 원본 문자열에 포함된 특정 문자열
-	 * @param object 변환할 문자열
+	 * @param object  변환할 문자열
 	 * @return sb.toString() 새로운 문자열로 변환된 문자열 / source 특정문자열이 없는 경우 원본 문자열
 	 */
 	public static String replaceOnce(String source, String subject, String object) {
@@ -215,9 +226,9 @@ public class StringUtil {
 	/**
 	 * <code>subject</code>에 포함된 각각의 문자를 object로 변환한다.
 	 *
-	 * @param source 원본 문자열
+	 * @param source  원본 문자열
 	 * @param subject 원본 문자열에 포함된 특정 문자열
-	 * @param object 변환할 문자열
+	 * @param object  변환할 문자열
 	 * @return sb.toString() 새로운 문자열로 변환된 문자열
 	 */
 	public static String replaceChar(String source, String subject, String object) {
@@ -242,9 +253,13 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p><code>str</code> 중 <code>searchStr</code>의 시작(index) 위치를 반환.</p>
+	 * <p>
+	 * <code>str</code> 중 <code>searchStr</code>의 시작(index) 위치를 반환.
+	 * </p>
 	 *
-	 * <p>입력값 중 <code>null</code>이 있을 경우 <code>-1</code>을 반환.</p>
+	 * <p>
+	 * 입력값 중 <code>null</code>이 있을 경우 <code>-1</code>을 반환.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.indexOf(null, *)          = -1
@@ -256,8 +271,8 @@ public class StringUtil {
 	 * StringUtil.indexOf("aabaabaa", "")   = 0
 	 * </pre>
 	 *
-	 * @param str  검색 문자열
-	 * @param searchStr  검색 대상문자열
+	 * @param str       검색 문자열
+	 * @param searchStr 검색 대상문자열
 	 * @return 검색 문자열 중 검색 대상문자열이 있는 시작 위치 검색대상 문자열이 없거나 null인 경우 -1
 	 */
 	public static int indexOf(String str, String searchStr) {
@@ -268,9 +283,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>오라클의 decode 함수와 동일한 기능을 가진 메서드이다.
+	 * <p>
+	 * 오라클의 decode 함수와 동일한 기능을 가진 메서드이다.
 	 * <code>sourStr</code>과 <code>compareStr</code>의 값이 같으면
-	 * <code>returStr</code>을 반환하며, 다르면  <code>defaultStr</code>을 반환한다.
+	 * <code>returStr</code>을 반환하며, 다르면 <code>defaultStr</code>을 반환한다.
 	 * </p>
 	 *
 	 * <pre>
@@ -283,12 +299,13 @@ public class StringUtil {
 	 * StringUtil.decode("하이", "하이  ", "foo", "bar") = "bar"
 	 * </pre>
 	 *
-	 * @param sourceStr 비교할 문자열
+	 * @param sourceStr  비교할 문자열
 	 * @param compareStr 비교 대상 문자열
-	 * @param returnStr sourceStr와 compareStr의 값이 같을 때 반환할 문자열
+	 * @param returnStr  sourceStr와 compareStr의 값이 같을 때 반환할 문자열
 	 * @param defaultStr sourceStr와 compareStr의 값이 다를 때 반환할 문자열
 	 * @return sourceStr과 compareStr의 값이 동일(equal)할 때 returnStr을 반환하며,
-	 *         <br/>다르면 defaultStr을 반환한다.
+	 *         <br/>
+	 *         다르면 defaultStr을 반환한다.
 	 */
 	public static String decode(String sourceStr, String compareStr, String returnStr, String defaultStr) {
 		if (sourceStr == null && compareStr == null) {
@@ -307,9 +324,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>오라클의 decode 함수와 동일한 기능을 가진 메서드이다.
+	 * <p>
+	 * 오라클의 decode 함수와 동일한 기능을 가진 메서드이다.
 	 * <code>sourStr</code>과 <code>compareStr</code>의 값이 같으면
-	 * <code>returStr</code>을 반환하며, 다르면  <code>sourceStr</code>을 반환한다.
+	 * <code>returStr</code>을 반환하며, 다르면 <code>sourceStr</code>을 반환한다.
 	 * </p>
 	 *
 	 * <pre>
@@ -321,11 +339,12 @@ public class StringUtil {
 	 * StringUtil.decode("하이", "바이", "foo") = "하이"
 	 * </pre>
 	 *
-	 * @param sourceStr 비교할 문자열
+	 * @param sourceStr  비교할 문자열
 	 * @param compareStr 비교 대상 문자열
-	 * @param returnStr sourceStr와 compareStr의 값이 같을 때 반환할 문자열
+	 * @param returnStr  sourceStr와 compareStr의 값이 같을 때 반환할 문자열
 	 * @return sourceStr과 compareStr의 값이 동일(equal)할 때 returnStr을 반환하며,
-	 *         <br/>다르면 sourceStr을 반환한다.
+	 *         <br/>
+	 *         다르면 sourceStr을 반환한다.
 	 */
 	public static String decode(String sourceStr, String compareStr, String returnStr) {
 		return decode(sourceStr, compareStr, returnStr, sourceStr);
@@ -333,6 +352,7 @@ public class StringUtil {
 
 	/**
 	 * 객체가 null인지 확인하고 null인 경우 "" 로 바꾸는 메서드
+	 * 
 	 * @param object 원본 객체
 	 * @return resultVal 문자열
 	 */
@@ -347,14 +367,14 @@ public class StringUtil {
 	}
 
 	/**
-	 *<pre>
+	 * <pre>
 	 * 인자로 받은 String이 null일 경우 &quot;&quot;로 리턴한다.
 	 * &#064;param src null값일 가능성이 있는 String 값.
 	 * &#064;return 만약 String이 null 값일 경우 &quot;&quot;로 바꾼 String 값.
-	 *</pre>
+	 * </pre>
 	 */
 	public static String nullConvert(Object src) {
-		//if (src != null && src.getClass().getName().equals("java.math.BigDecimal")) {
+		// if (src != null && src.getClass().getName().equals("java.math.BigDecimal")) {
 		if (src != null && src instanceof java.math.BigDecimal) {
 			return ((BigDecimal) src).toString();
 		}
@@ -367,11 +387,11 @@ public class StringUtil {
 	}
 
 	/**
-	 *<pre>
+	 * <pre>
 	 * 인자로 받은 String이 null일 경우 &quot;&quot;로 리턴한다.
 	 * &#064;param src null값일 가능성이 있는 String 값.
 	 * &#064;return 만약 String이 null 값일 경우 &quot;&quot;로 바꾼 String 값.
-	 *</pre>
+	 * </pre>
 	 */
 	public static String nullConvert(String src) {
 
@@ -383,11 +403,11 @@ public class StringUtil {
 	}
 
 	/**
-	 *<pre>
+	 * <pre>
 	 * 인자로 받은 String이 null일 경우 &quot;0&quot;로 리턴한다.
 	 * &#064;param src null값일 가능성이 있는 String 값.
 	 * &#064;return 만약 String이 null 값일 경우 &quot;0&quot;로 바꾼 String 값.
-	 *</pre>
+	 * </pre>
 	 */
 	public static int zeroConvert(Object src) {
 
@@ -399,11 +419,11 @@ public class StringUtil {
 	}
 
 	/**
-	 *<pre>
+	 * <pre>
 	 * 인자로 받은 String이 null일 경우 &quot;&quot;로 리턴한다.
 	 * &#064;param src null값일 가능성이 있는 String 값.
 	 * &#064;return 만약 String이 null 값일 경우 &quot;&quot;로 바꾼 String 값.
-	 *</pre>
+	 * </pre>
 	 */
 	public static int zeroConvert(String src) {
 
@@ -415,8 +435,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>문자열에서 {@link Character#isWhitespace(char)}에 정의된
-	 * 모든 공백문자를 제거한다.</p>
+	 * <p>
+	 * 문자열에서 {@link Character#isWhitespace(char)}에 정의된
+	 * 모든 공백문자를 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.removeWhitespace(null)         = null
@@ -425,7 +447,7 @@ public class StringUtil {
 	 * StringUtil.removeWhitespace("   ab  c  ") = "abc"
 	 * </pre>
 	 *
-	 * @param str  공백문자가 제거도어야 할 문자열
+	 * @param str 공백문자가 제거도어야 할 문자열
 	 * @return the 공백문자가 제거된 문자열, null이 입력되면 <code>null</code>이 리턴
 	 */
 	public static String removeWhitespace(String str) {
@@ -480,9 +502,9 @@ public class StringUtil {
 				case ' ':
 					strTxt.append("&nbsp;");
 					break;
-				//case '&' :
-				//strTxt.append("&amp;");
-				//break;
+				// case '&' :
+				// strTxt.append("&amp;");
+				// break;
 				default:
 					strTxt.append(chrBuff);
 			}
@@ -495,7 +517,8 @@ public class StringUtil {
 
 	/**
 	 * 문자열을 지정한 분리자에 의해 배열로 리턴하는 메서드.
-	 * @param source 원본 문자열
+	 * 
+	 * @param source    원본 문자열
 	 * @param separator 분리자
 	 * @return result 분리자로 나뉘어진 문자열 배열
 	 */
@@ -524,7 +547,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>{@link String#toLowerCase()}를 이용하여 소문자로 변환한다.</p>
+	 * <p>
+	 * {@link String#toLowerCase()}를 이용하여 소문자로 변환한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.lowerCase(null)  = null
@@ -544,7 +569,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>{@link String#toUpperCase()}를 이용하여 대문자로 변환한다.</p>
+	 * <p>
+	 * {@link String#toUpperCase()}를 이용하여 대문자로 변환한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.upperCase(null)  = null
@@ -564,7 +591,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>입력된 String의 앞쪽에서 두번째 인자로 전달된 문자(stripChars)를 모두 제거한다.</p>
+	 * <p>
+	 * 입력된 String의 앞쪽에서 두번째 인자로 전달된 문자(stripChars)를 모두 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.stripStart(null, *)          = null
@@ -577,17 +606,17 @@ public class StringUtil {
 	 * StringUtil.stripStart("yxabc  ", "xyz") = "abc  "
 	 * </pre>
 	 *
-	 * @param str 지정된 문자가 제거되어야 할 문자열
+	 * @param str        지정된 문자가 제거되어야 할 문자열
 	 * @param stripChars 제거대상 문자열
 	 * @return 지정된 문자가 제거된 문자열, null이 입력되면 <code>null</code> 리턴
 	 */
 	public static String stripStart(String str, String stripChars) {
 		int strLen;
-		if (str == null ) {
+		if (str == null) {
 			return str;
 		}
 		strLen = str.length();
-		if (strLen  == 0) {
+		if (strLen == 0) {
 			return str;
 		}
 		int start = 0;
@@ -607,7 +636,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>입력된 String의 뒤쪽에서 두번째 인자로 전달된 문자(stripChars)를 모두 제거한다.</p>
+	 * <p>
+	 * 입력된 String의 뒤쪽에서 두번째 인자로 전달된 문자(stripChars)를 모두 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.stripEnd(null, *)          = null
@@ -620,13 +651,13 @@ public class StringUtil {
 	 * StringUtil.stripEnd("  abcyx", "xyz") = "  abc"
 	 * </pre>
 	 *
-	 * @param str 지정된 문자가 제거되어야 할 문자열
+	 * @param str        지정된 문자가 제거되어야 할 문자열
 	 * @param stripChars 제거대상 문자열
 	 * @return 지정된 문자가 제거된 문자열, null이 입력되면 <code>null</code> 리턴
 	 */
 	public static String stripEnd(String str, String stripChars) {
 		int end;
-		if (str == null ) {
+		if (str == null) {
 			return str;
 		}
 		end = str.length();
@@ -650,7 +681,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>입력된 String의 앞, 뒤에서 두번째 인자로 전달된 문자(stripChars)를 모두 제거한다.</p>
+	 * <p>
+	 * 입력된 String의 앞, 뒤에서 두번째 인자로 전달된 문자(stripChars)를 모두 제거한다.
+	 * </p>
 	 *
 	 * <pre>
 	 * StringUtil.strip(null, *)          = null
@@ -662,7 +695,7 @@ public class StringUtil {
 	 * StringUtil.strip("  abcyx", "xyz") = "  abc"
 	 * </pre>
 	 *
-	 * @param str 지정된 문자가 제거되어야 할 문자열
+	 * @param str        지정된 문자가 제거되어야 할 문자열
 	 * @param stripChars 제거대상 문자열
 	 * @return 지정된 문자가 제거된 문자열, null이 입력되면 <code>null</code> 리턴
 	 */
@@ -679,8 +712,9 @@ public class StringUtil {
 
 	/**
 	 * 문자열을 지정한 분리자에 의해 지정된 길이의 배열로 리턴하는 메서드.
-	 * @param source 원본 문자열
-	 * @param separator 분리자
+	 * 
+	 * @param source      원본 문자열
+	 * @param separator   분리자
 	 * @param arraylength 배열 길이
 	 * @return 분리자로 나뉘어진 문자열 배열
 	 */
@@ -709,9 +743,9 @@ public class StringUtil {
 	 * 문자열 A에서 Z사이의 랜덤 문자열을 구하는 기능을 제공 시작문자열과 종료문자열 사이의 랜덤 문자열을 구하는 기능
 	 *
 	 * @param startChr
-	 *            - 첫 문자
+	 *                 - 첫 문자
 	 * @param endChr
-	 *            - 마지막문자
+	 *                 - 마지막문자
 	 * @return 랜덤문자
 	 * @exception MyException
 	 * @see
@@ -731,7 +765,8 @@ public class StringUtil {
 		}
 
 		// 랜덤 객체 생성
-		
+		SecureRandom rnd = new SecureRandom();
+
 		do {
 			// 시작문자 및 종료문자 중에서 랜덤 숫자를 발생시킨다.
 			randomInt = rnd.nextInt(endInt + 1);
@@ -751,11 +786,11 @@ public class StringUtil {
 	 * EUC-KR
 	 *
 	 * @param srcString
-	 *            - 문자열
+	 *                     - 문자열
 	 * @param srcCharsetNm
-	 *            - 원래 CharsetNm
+	 *                     - 원래 CharsetNm
 	 * @param charsetNm
-	 *            - CharsetNm
+	 *                     - CharsetNm
 	 * @return 인(디)코딩 문자열
 	 * @exception MyException
 	 * @see
@@ -777,12 +812,13 @@ public class StringUtil {
 	}
 
 	/**
-	     * 특수문자를 웹 브라우저에서 정상적으로 보이기 위해 특수문자를 처리('<' -> & lT)하는 기능이다
-	     * @param 	srcString 		- '<'
-	     * @return 	변환문자열('<' -> "&lt"
-	     * @exception MyException
-	     * @see
-	     */
+	 * 특수문자를 웹 브라우저에서 정상적으로 보이기 위해 특수문자를 처리('<' -> & lT)하는 기능이다
+	 * 
+	 * @param srcString - '<'
+	 * @return 변환문자열('<' -> "&lt"
+	 * @exception MyException
+	 * @see
+	 */
 	public static String getSpclStrCnvr(String srcString) {
 
 		String rtnStr = null;
@@ -813,8 +849,7 @@ public class StringUtil {
 
 			rtnStr = strTxt.toString();
 
-		}
-		catch (IndexOutOfBoundsException ne) {
+		} catch (IndexOutOfBoundsException ne) {
 			log.error("IndexOutOfBoundsException:{}", ne.getMessage());
 		}
 
@@ -868,18 +903,21 @@ public class StringUtil {
 	}
 
 	/**
-	 * <p>날짜 형식의 문자열 내부에 마이너스 character(-)를 추가한다.</p>
+	 * <p>
+	 * 날짜 형식의 문자열 내부에 마이너스 character(-)를 추가한다.
+	 * </p>
 	 *
 	 * <pre>
-	 *   StringUtil.addMinusChar("20100901") = "2010-09-01"
+	 * StringUtil.addMinusChar("20100901") = "2010-09-01"
 	 * </pre>
 	 *
-	 * @param date  입력받는 문자열
+	 * @param date 입력받는 문자열
 	 * @return " - "가 추가된 입력문자열
 	 */
 	public static String addMinusChar(String date) {
 		if (date.length() == 8)
-			return date.substring(0, 4).concat("-").concat(date.substring(4, 6)).concat("-").concat(date.substring(6, 8));
+			return date.substring(0, 4).concat("-").concat(date.substring(4, 6)).concat("-")
+					.concat(date.substring(6, 8));
 		else
 			return "";
 	}
@@ -888,7 +926,7 @@ public class StringUtil {
 	 * 문자열 왼쪽으로 빈값(스페이스)채워 요청 길이 만큼의 문자열을 리턴한다.
 	 *
 	 * @param String srcStr 대상 문자열
-	 * @param int padLen 요청 문자열 길이
+	 * @param int    padLen 요청 문자열 길이
 	 * @return String padResult 결과 문자열
 	 * @exception Exception
 	 */
@@ -900,7 +938,7 @@ public class StringUtil {
 	 * 문자열 왼쪽으로 요청 문자로 채워 요청 길이 만큼의 문자열을 리턴한다.
 	 *
 	 * @param String srcStr 대상 문자열
-	 * @param int padLen 요청 문자열 길이
+	 * @param int    padLen 요청 문자열 길이
 	 * @param String trgtStr 요청 문자
 	 * @return String padResult 결과 문자열
 	 * @exception Exception
@@ -909,8 +947,9 @@ public class StringUtil {
 		String padResult = "";
 		boolean endChk = false;
 
-		if (srcStr != null ) {
-			if (trgtStr == null) trgtStr = " ";
+		if (srcStr != null) {
+			if (trgtStr == null)
+				trgtStr = " ";
 
 			if (srcStr.length() >= padLen) {
 				padResult = srcStr.substring(0, padLen);
@@ -918,7 +957,8 @@ public class StringUtil {
 				for (int i = 0; i < padLen - srcStr.length(); i++) {
 					if (!endChk) {
 						padResult += trgtStr;
-						if (padResult.length() + srcStr.length() >= padLen) endChk = true;
+						if (padResult.length() + srcStr.length() >= padLen)
+							endChk = true;
 					}
 				}
 
@@ -935,7 +975,7 @@ public class StringUtil {
 	 * 문자열 오른쪽으로 빈값(스페이스)채워 요청 길이 만큼의 문자열을 리턴한다.
 	 *
 	 * @param String srcStr 대상 문자열
-	 * @param int padLen 요청 문자열 길이
+	 * @param int    padLen 요청 문자열 길이
 	 * @return String padResult 결과 문자열
 	 * @exception Exception
 	 */
@@ -947,7 +987,7 @@ public class StringUtil {
 	 * 문자열 오른쪽으로 요청 문자로 채워 요청 길이 만큼의 문자열을 리턴한다.
 	 *
 	 * @param String srcStr 대상 문자열
-	 * @param int padLen 요청 문자열 길이
+	 * @param int    padLen 요청 문자열 길이
 	 * @param String trgtStr 요청 문자
 	 * @return String padResult 결과 문자열
 	 * @exception Exception
@@ -956,8 +996,9 @@ public class StringUtil {
 		String padResult = "";
 		boolean endChk = false;
 
-		if (srcStr != null ) {
-			if (trgtStr == null) trgtStr = " ";
+		if (srcStr != null) {
+			if (trgtStr == null)
+				trgtStr = " ";
 
 			if (srcStr.length() >= padLen) {
 				padResult = srcStr.substring(0, padLen);
@@ -965,7 +1006,8 @@ public class StringUtil {
 				for (int i = 0; i < padLen - srcStr.length(); i++) {
 					if (!endChk) {
 						padResult += trgtStr;
-						if (padResult.length() + srcStr.length() >= padLen) endChk = true;
+						if (padResult.length() + srcStr.length() >= padLen)
+							endChk = true;
 					}
 				}
 
@@ -986,7 +1028,7 @@ public class StringUtil {
 	 * @exception Exception
 	 */
 	public static String stringToNumFormat(String str) {
-		if(isNullToString(str).equals("")) {
+		if (isNullToString(str).equals("")) {
 			str = "0";
 		}
 
@@ -1011,99 +1053,102 @@ public class StringUtil {
 
 	/**
 	 *
-	  * @Method Name	: lengthLimit
-	  * @author			: kdh
-	  * @Date			: 2019. 12. 26.
-	  * @Description	: 한글 포함 문자열, 특정 길이만큼 자르기
-	  * @History		:
-	  * @param inputStr
-	  * @param limit
-	  * @param fixStr
-	  * @return
+	 * @Method Name : lengthLimit
+	 * @author : kdh
+	 * @Date : 2019. 12. 26.
+	 * @Description : 한글 포함 문자열, 특정 길이만큼 자르기
+	 * @History :
+	 * @param inputStr
+	 * @param limit
+	 * @param fixStr
+	 * @return
 	 */
 	public static String lengthLimit(String inputStr, int limit, String fixStr) {
-		if (inputStr == null) {return "";}
-		if (limit <= 0) { return inputStr;}
+		if (inputStr == null) {
+			return "";
+		}
+		if (limit <= 0) {
+			return inputStr;
+		}
 
 		byte[] strbyte = null;
-        strbyte = inputStr.getBytes();
+		strbyte = inputStr.getBytes();
 
-        //System.out.println("len:"+strbyte.length);
+		// System.out.println("len:"+strbyte.length);
 
-        if (strbyte.length <= limit) {
-            return inputStr;
-        }
-        char[] charArray = inputStr.toCharArray();
-        int checkLimit = limit;
-        for ( int i = 0 ; i < charArray.length ; i++ ) {
-            if (charArray[i] < 256) {
-                checkLimit -= 1;
-            }
-            else {
-                checkLimit -= 2;
-            }
-            if (checkLimit <= 0) {
-                break;
-            }
-        }
-        //대상 문자열 마지막 자리가 2바이트의 중간일 경우 제거함
-        byte[] newByte = new byte[limit + checkLimit];
-        for ( int i = 0 ; i < newByte.length ; i++ ) {
-        	if(i < strbyte.length) {
-        		newByte[i] = strbyte[i];
-        	}
+		if (strbyte.length <= limit) {
+			return inputStr;
+		}
+		char[] charArray = inputStr.toCharArray();
+		int checkLimit = limit;
+		for (int i = 0; i < charArray.length; i++) {
+			if (charArray[i] < 256) {
+				checkLimit -= 1;
+			} else {
+				checkLimit -= 2;
+			}
+			if (checkLimit <= 0) {
+				break;
+			}
+		}
+		// 대상 문자열 마지막 자리가 2바이트의 중간일 경우 제거함
+		byte[] newByte = new byte[limit + checkLimit];
+		for (int i = 0; i < newByte.length; i++) {
+			if (i < strbyte.length) {
+				newByte[i] = strbyte[i];
+			}
 
-        }
-        if (fixStr == null) {
-            return new String(newByte);
-        }
-        else {
-            return new String(newByte) + fixStr;
-        }
-    }
-
-
-	public static String subStringBytes(String str, int byteLength, int sizePerLetter) {
-		  int retLength = 0;
-		  int tempSize = 0;
-		  int asc;
-		  if (str == null || "".equals(str) || "null".equals(str)) {
-		    str = "";
-		  }
-
-		  int length = str.length();
-
-		  for (int i = 1; i <= length; i++) {
-		    asc = str.charAt(i - 1);
-		    if (asc > 127) {
-		      if (byteLength >= tempSize + sizePerLetter) {
-		        tempSize += sizePerLetter;
-		        retLength++;
-		      }
-		    } else {
-		      if (byteLength > tempSize) {
-		        tempSize++;
-		        retLength++;
-		      }
-		    }
-		  }
-
-		  return str.substring(0, retLength);
+		}
+		if (fixStr == null) {
+			return new String(newByte);
+		} else {
+			return new String(newByte) + fixStr;
+		}
 	}
 
+	public static String subStringBytes(String str, int byteLength, int sizePerLetter) {
+		int retLength = 0;
+		int tempSize = 0;
+		int asc;
+		if (str == null || "".equals(str) || "null".equals(str)) {
+			str = "";
+		}
 
-	public static String byteCuter(String inputStr, int cutLeng,String append){
-		if (inputStr == null) {return "";}
-		if(inputStr.toString().getBytes().length > cutLeng){
+		int length = str.length();
+
+		for (int i = 1; i <= length; i++) {
+			asc = str.charAt(i - 1);
+			if (asc > 127) {
+				if (byteLength >= tempSize + sizePerLetter) {
+					tempSize += sizePerLetter;
+					retLength++;
+				}
+			} else {
+				if (byteLength > tempSize) {
+					tempSize++;
+					retLength++;
+				}
+			}
+		}
+
+		return str.substring(0, retLength);
+	}
+
+	public static String byteCuter(String inputStr, int cutLeng, String append) {
+		if (inputStr == null) {
+			return "";
+		}
+		if (inputStr.toString().getBytes().length > cutLeng) {
 			StringBuilder stringBuilder = new StringBuilder(cutLeng);
 			int nCnt = 0;
-			for(char ch:inputStr.toString().toCharArray()){
+			for (char ch : inputStr.toString().toCharArray()) {
 				nCnt += String.valueOf(ch).getBytes().length;
-				if(nCnt > cutLeng) break;
+				if (nCnt > cutLeng)
+					break;
 				stringBuilder.append(ch);
 			}
 			return stringBuilder.toString() + append;
-		}else{
+		} else {
 			return inputStr;
 		}
 
@@ -1111,105 +1156,101 @@ public class StringUtil {
 
 	/**
 	 *
-	  * @Method Name	: getRandomStr
-	  * @author			: kdh
-	  * @Date			: 2019. 10. 30.
-	  * @Description	: 무작위 문자열 생성
-	  * @History		:
-	  * @param len      : 문자열 사이즈
-	  * @return
+	 * @Method Name : getRandomStr
+	 * @author : kdh
+	 * @Date : 2019. 10. 30.
+	 * @Description : 무작위 문자열 생성
+	 * @History :
+	 * @param len : 문자열 사이즈
+	 * @return
 	 */
-	public static String getRandomStr(int len)
-    {
+	public static String getRandomStr(int len) {
 		String capitalChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String smallChars = "abcdefghijklmnopqrstuvwxyz";
-        String numbers = "0123456789";
-        String symbols = "!@%~*_=+-/.<>)";
+		String smallChars = "abcdefghijklmnopqrstuvwxyz";
+		String numbers = "0123456789";
+		String symbols = "!@%~*_=+-/.<>)";
 
-        String values = capitalChars + smallChars + numbers + symbols;
+		String values = capitalChars + smallChars + numbers + symbols;
+		Random rand = new Random();
+		rand.setSeed(System.currentTimeMillis());
+		char[] randomStr = new char[len];
 
-        rand.setSeed(System.currentTimeMillis());
-        char[] randomStr = new char[len];
+		for (int i = 0; i < len; i++) {
+			randomStr[i] = values.charAt(rand.nextInt(values.length()));
+		}
+		return String.valueOf(randomStr);
+	}
 
-        for (int i = 0; i < len; i++)
-        {
-        	randomStr[i] = values.charAt(rand.nextInt(values.length()));
-        }
-        return String.valueOf(randomStr);
-    }
+	public static String convertUnderScore(String camelStr) {
 
-	public static String convertUnderScore(String camelStr)
-    {
+		String result = "";
+		char c = camelStr.charAt(0);
+		result = result + Character.toLowerCase(c);
 
-        String result = "";
-        char c = camelStr.charAt(0);
-        result = result + Character.toLowerCase(c);
+		for (int i = 1; i < camelStr.length(); i++) {
 
-        for (int i = 1; i < camelStr.length(); i++) {
+			char ch = camelStr.charAt(i);
 
-            char ch = camelStr.charAt(i);
+			if (Character.isUpperCase(ch)) {
+				result = result + '_';
+				result = result
+						+ Character.toLowerCase(ch);
+			}
 
-            if (Character.isUpperCase(ch)) {
-                result = result + '_';
-                result
-                    = result
-                    + Character.toLowerCase(ch);
-            }
+			else {
+				result = result + ch;
+			}
+		}
 
-            else {
-                result = result + ch;
-            }
-        }
-
-        return result.toUpperCase();
-    }
+		return result.toUpperCase();
+	}
 
 	public static String convertCamelCase(String underScore) {
-		 if (underScore.indexOf('_') < 0 && Character.isLowerCase(underScore.charAt(0))) {
-			 return underScore;
-		 }
-		 StringBuilder result = new StringBuilder();
-		 boolean nextUpper = false;
-		 int len = underScore.length();
-		 for (int i = 0; i < len; i++) {
-			 char currentChar = underScore.charAt(i);
-			 if (currentChar == '_') {
-				 nextUpper = true;
-			 } else {
-				 if (nextUpper) {
-					 result.append(Character.toUpperCase(currentChar));
-					 nextUpper = false;
-               } else {
-              	 result.append(Character.toLowerCase(currentChar));
-               }
+		if (underScore.indexOf('_') < 0 && Character.isLowerCase(underScore.charAt(0))) {
+			return underScore;
+		}
+		StringBuilder result = new StringBuilder();
+		boolean nextUpper = false;
+		int len = underScore.length();
+		for (int i = 0; i < len; i++) {
+			char currentChar = underScore.charAt(i);
+			if (currentChar == '_') {
+				nextUpper = true;
+			} else {
+				if (nextUpper) {
+					result.append(Character.toUpperCase(currentChar));
+					nextUpper = false;
+				} else {
+					result.append(Character.toLowerCase(currentChar));
+				}
 
-	         }
+			}
 
-	     }
-		 return result.toString();
+		}
+		return result.toString();
 
 	}
 
 	/**
 	 *
-	  * @Method Name	: convertPrivacyStr
-	  * @author			: mangchi
-	  * @Date			: 2022. 2. 4.
-	  * @History		:
-	  * @param privacyStr 주민번호 포함 문자열
-	  * @param idx  변경할려는 문자열의 시작 인덱스
-	  * @return
+	 * @Method Name : convertPrivacyStr
+	 * @author : mangchi
+	 * @Date : 2022. 2. 4.
+	 * @History :
+	 * @param privacyStr 주민번호 포함 문자열
+	 * @param idx        변경할려는 문자열의 시작 인덱스
+	 * @return
 	 */
-	public static String convertPrivacyStr(String privacyStr,int idx) {
-		if(privacyStr == null || privacyStr.length() == 0){
+	public static String convertPrivacyStr(String privacyStr, int idx) {
+		if (privacyStr == null || privacyStr.length() == 0) {
 			return "";
 		}
 		String switchStr = "******-*******";
-		switchStr = switchStr.substring(idx,14);
+		switchStr = switchStr.substring(idx, 14);
 
-		int[] validInt = {11,12,13,14,15,21,22,31};
-		int[] milInt = {3,4,7,8};
-		int[] nonMilInt = {1,2,5,6};
+		int[] validInt = { 11, 12, 13, 14, 15, 21, 22, 31 };
+		int[] milInt = { 3, 4, 7, 8 };
+		int[] nonMilInt = { 1, 2, 5, 6 };
 
 		String patternStr = "\\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])\\-[1-8][0-9]{6}";
 		Pattern pattern = Pattern.compile(patternStr);
@@ -1217,14 +1258,19 @@ public class StringUtil {
 		while (matcher.find()) {
 			String str = matcher.group().replace("-", "");
 			int strInt = 0;
-			for(int i=0;i<12;i++) {
-				strInt += Integer.parseInt(str.substring(i,i+1))*(i%2+1);
+			for (int i = 0; i < 12; i++) {
+				strInt += Integer.parseInt(str.substring(i, i + 1)) * (i % 2 + 1);
 			}
 			int chkInt = 10 - (strInt % 10);
-			if (chkInt == 10) {chkInt = 0;}
-			if(!(chkInt == Integer.parseInt(str.substring(12,13)) && IntStream.of(validInt).anyMatch(x -> x == Integer.parseInt(str.substring(4,6))))) {
-				if((!str.substring(0,1).equals("0") && IntStream.of(nonMilInt).anyMatch(x -> x == Integer.parseInt(str.substring(6,7))))
-						|| (str.substring(0,1).equals("0") && IntStream.of(milInt).anyMatch(x -> x == Integer.parseInt(str.substring(6,7))))){
+			if (chkInt == 10) {
+				chkInt = 0;
+			}
+			if (!(chkInt == Integer.parseInt(str.substring(12, 13))
+					&& IntStream.of(validInt).anyMatch(x -> x == Integer.parseInt(str.substring(4, 6))))) {
+				if ((!str.substring(0, 1).equals("0")
+						&& IntStream.of(nonMilInt).anyMatch(x -> x == Integer.parseInt(str.substring(6, 7))))
+						|| (str.substring(0, 1).equals("0")
+								&& IntStream.of(milInt).anyMatch(x -> x == Integer.parseInt(str.substring(6, 7))))) {
 					privacyStr = privacyStr.replaceAll(matcher.group(), matcher.group().substring(0, idx) + switchStr);
 				}
 			}
@@ -1242,31 +1288,31 @@ public class StringUtil {
 
 	/**
 	 *
-	  * @Method Name	: checkOrdStr
-	  * @author			: mangchi
-	  * @Date			: 2022. 4. 26.
-	  * @Description	: 연속적인 오름,내림차순 체크 ex)연속 세자리 오름/내림 차순  checkOrdStr("123egw,3)
-	  * @History		:
-	  * @param str
-	  * @param limit
-	  * @return
+	 * @Method Name : checkOrdStr
+	 * @author : mangchi
+	 * @Date : 2022. 4. 26.
+	 * @Description : 연속적인 오름,내림차순 체크 ex)연속 세자리 오름/내림 차순 checkOrdStr("123egw,3)
+	 * @History :
+	 * @param str
+	 * @param limit
+	 * @return
 	 */
-	public static boolean checkOrdStr(String str,Integer limit) {
-		int l = limit==null?3:limit;
-		if(l > 3) {
+	public static boolean checkOrdStr(String str, Integer limit) {
+		int l = limit == null ? 3 : limit;
+		if (l > 3) {
 			int o = 0;
 			int d = 0;
 			int p = 0;
 			int n = 0;
-			for (int i = 0; i < str.length(); i++ ) {
+			for (int i = 0; i < str.length(); i++) {
 				char tmpVal = str.charAt(i);
-				if (i > 0 && (p = o - tmpVal) > -2 && (n = p == d ? n + 1 : 0 ) > l - 3 ) {
+				if (i > 0 && (p = o - tmpVal) > -2 && (n = p == d ? n + 1 : 0) > l - 3) {
 					return true;
 				}
 				d = p;
 				o = tmpVal;
 			}
-		}else {
+		} else {
 
 			String tmpStr = str.toUpperCase();
 			int strLen = tmpStr.length();
@@ -1277,8 +1323,10 @@ public class StringUtil {
 			}
 			for (int i = 0; i < strLen - 2; i++) {
 				if ((tmpArray[i] > 47 && tmpArray[i + 2] < 58) || (tmpArray[i] > 64 && tmpArray[i + 2] < 91)) {
-					if (Math.abs(tmpArray[i + 2] - tmpArray[i + 1]) == 1 && Math.abs(tmpArray[i + 2] - tmpArray[i]) == 2) {
-						//char c1 = (char) tmpArray[i]; char c2 = (char) tmpArray[i + 1]; char c3 = (char) tmpArray[i + 2];
+					if (Math.abs(tmpArray[i + 2] - tmpArray[i + 1]) == 1
+							&& Math.abs(tmpArray[i + 2] - tmpArray[i]) == 2) {
+						// char c1 = (char) tmpArray[i]; char c2 = (char) tmpArray[i + 1]; char c3 =
+						// (char) tmpArray[i + 2];
 						return true;
 					}
 				}
@@ -1289,33 +1337,33 @@ public class StringUtil {
 
 	/**
 	 *
-	  * @Method Name	: checkSerialDupStr
-	  * @author			: mangchi
-	  * @Date			: 2022. 4. 26.
-	  * @Description	: 동일한 문자가 연속으로 있는 경우
-	  * @History		:
-	  * @param str
-	  * @param limit
-	  * @return
+	 * @Method Name : checkSerialDupStr
+	 * @author : mangchi
+	 * @Date : 2022. 4. 26.
+	 * @Description : 동일한 문자가 연속으로 있는 경우
+	 * @History :
+	 * @param str
+	 * @param limit
+	 * @return
 	 */
-	public static boolean checkSerialDupStr(String str,Integer limit) {
+	public static boolean checkSerialDupStr(String str, Integer limit) {
 		try {
-			log.debug("str:{}",str);
-			log.debug("limit:{}",limit);
-		Integer l = limit==null?3:limit;
-		String patternStr = "(\\w)";
+			log.debug("str:{}", str);
+			log.debug("limit:{}", limit);
+			Integer l = limit == null ? 3 : limit;
+			String patternStr = "(\\w)";
 
-		for(int i=0;i<l-1;i++) {
-			patternStr += "\\1";
-		}
+			for (int i = 0; i < l - 1; i++) {
+				patternStr += "\\1";
+			}
 
-		Pattern passPattern = Pattern.compile(patternStr);
-		Matcher passMatcher = passPattern.matcher(str);
-		if (passMatcher.find()) {
-			return true;
-		}
-		}catch(PatternSyntaxException e) {
-			log.error("error:", e );
+			Pattern passPattern = Pattern.compile(patternStr);
+			Matcher passMatcher = passPattern.matcher(str);
+			if (passMatcher.find()) {
+				return true;
+			}
+		} catch (PatternSyntaxException e) {
+			log.error("error:", e);
 		}
 		return false;
 	}
@@ -1330,50 +1378,55 @@ public class StringUtil {
 		return false;
 	}
 
-	public static final long[] IP_RANGE = {16777216L,65536L,256L};
+	public static final long[] IP_RANGE = { 16777216L, 65536L, 256L };
 
 	public static String longToIp(long addr) {
 		String ip = "";
-		for(int i=0;i<4;i++) {
-			if(i<3) {
-				ip += (addr/IP_RANGE[i])%256+".";
-			}else {
-				ip += addr%256;
+		for (int i = 0; i < 4; i++) {
+			if (i < 3) {
+				ip += (addr / IP_RANGE[i]) % 256 + ".";
+			} else {
+				ip += addr % 256;
 			}
 		}
 		return ip;
 	}
 
+	public static long ipToLong(String[] addr) {
+		if (addr == null || addr.length < 4) {
+			return 0L;
+		}
+		long ip = 0L;
+		for (int i = 0; i < 4; i++) {
+			// if(addr[i]) {
+			if (i < 3) {
+				ip += IP_RANGE[i] * Long.parseLong(addr[i]);
+			} else {
+				ip += Long.parseLong(addr[i]);
+			}
+			// else {
+			// return 0L;
 
-	 public static long ipToLong(String[] addr) {
-		 if(addr == null || addr.length <4) { return 0L; }
-		 long ip = 0L;
-		 for(int i=0;i<4;i++) {
-	     //if(addr[i]) {
-	    	 if(i<3) {
-	    		 ip += IP_RANGE[i]*Long.parseLong(addr[i]);
-	    	 }
-	    	 else{
-	    		 ip += Long.parseLong(addr[i]);
-	    	 }
-		 //else {
-			 //return 0L;
-
-		// }
-         }
-		 return ip;
+			// }
+		}
+		return ip;
 	}
 
 	public static long ipToLong(String ip) {
-		 return ipToLong(getBytesByInetAddress(ip));
+		return ipToLong(getBytesByInetAddress(ip));
 	}
+
 	public static long ipToLong(byte[] address) {
-		if (address == null || address.length < 4) { return 0L; }
+		if (address == null || address.length < 4) {
+			return 0L;
+		}
 		long ip = 0L;
 		for (int i = 0; i < 4; ++i) {
 			long y = address[i];
-		    if (y < 0) { y += 256; }
-		    ip += y << ((3 - i) * 8);
+			if (y < 0) {
+				y += 256;
+			}
+			ip += y << ((3 - i) * 8);
 		}
 		return ip;
 
@@ -1383,62 +1436,70 @@ public class StringUtil {
 		InetAddress addr = null;
 		try {
 			addr = InetAddress.getByName(ip);
+		} catch (UnknownHostException e) {
+			return new byte[0];
 		}
-		catch (UnknownHostException e) { return new byte[0]; }
 		return addr.getAddress();
 	}
 
 	public static long ByteArrayToLong(byte[] bytes) {
 		ByteBuffer byteBuf = ByteBuffer.allocate(8);
-        final byte[] change = new byte[8];
+		final byte[] change = new byte[8];
 
-        for (int i = 0; i < 8; i++) {
-        	change[i] = (byte) 0x00;
-        }
-        for (int i = 0; i < bytes.length; i++) {
-        	change[7 - i] = bytes[bytes.length - 1 - i];
-        }
+		for (int i = 0; i < 8; i++) {
+			change[i] = (byte) 0x00;
+		}
+		for (int i = 0; i < bytes.length; i++) {
+			change[7 - i] = bytes[bytes.length - 1 - i];
+		}
 
-        byteBuf = ByteBuffer.wrap(change);
-        byteBuf.order(ByteOrder.BIG_ENDIAN);
+		byteBuf = ByteBuffer.wrap(change);
+		byteBuf.order(ByteOrder.BIG_ENDIAN);
 
-       return byteBuf.getLong();
+		return byteBuf.getLong();
 	}
+
 	public static boolean isOnlyNumber(String s) {
 		return s != null && s.matches("\\d*");
 	}
+
 	public static boolean isTenIpNumber(String s) {
-		if(isOnlyNumber(s)) {
-			if(s.length() == 10) {
+		if (isOnlyNumber(s)) {
+			if (s.length() == 10) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
-		}else {
+		} else {
 			return false;
 		}
 	}
+
 	public static String decryptTenNumberToIp(String s, String key) {
-		if(StringUtil.isTenIpNumber(s)) {
+		if (StringUtil.isTenIpNumber(s)) {
 			return s;
-		}else {
-			if(s == null || s.trim().equals("")) {
+		} else {
+			if (s == null || s.trim().equals("")) {
 				return null;
-			}else {
+			} else {
 				return StringUtil.longToIp(Long.parseLong(ScpDbUtil.scpDec(s, key)));
 			}
 		}
 	}
-	
-	public static String getBoolean(String boolStr) {
-		String rBoolStr = "false";
-		if(boolStr == null || boolStr.trim().equals("")) {
-			return rBoolStr;
-		}
-		if(boolStr.trim().equals("1")) {
-			rBoolStr = "true";
-		}
-		return rBoolStr;
-	}
+
+	/*
+	 * public static void main(String args[]) {
+	 * String a =
+	 * "2~1~1~1684693280~3232289298~3232289281~22~58025~1~~0~0~Whitelist policy violation~1~5~ "
+	 * ;
+	 * //System.out.println(a.getBytes().length);
+	 * String[] as = a.split("~");
+	 * //System.out.println(as.length);
+	 * for(int i=0;i<as.length;i++) {
+	 * //System.out.println("byte"+i+":"+as[i]);
+	 * }
+	 * 
+	 * }
+	 */
 
 }

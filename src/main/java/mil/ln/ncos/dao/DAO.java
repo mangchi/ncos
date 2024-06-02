@@ -178,10 +178,6 @@ public class DAO {
 	 */
 	public Optional<Object> selectOptionalObject(String queryId, Object params) {
 		if(null != SessionData.getUserVo()) SessionData.getUserVo().setSqlId(queryId);
-		
-		if(params == null) {
-			return Optional.ofNullable(sqlSession.selectOne(queryId));
-		}
 		return Optional.ofNullable(sqlSession.selectOne(queryId, params));
 	}
 	
@@ -202,11 +198,6 @@ public class DAO {
 		if(null != SessionData.getUserVo()) SessionData.getUserVo().setSqlId(queryId);
 		return Optional.ofNullable(sqlSession.selectOne(queryId, params));
 	}
-	
-	public Optional<Map<String, Object>> selectMapByJob(String queryId, Object params) {
-		return Optional.ofNullable(sqlSession.selectOne(queryId, params));
-	}
-
 
 	/**
 	 * Select list.

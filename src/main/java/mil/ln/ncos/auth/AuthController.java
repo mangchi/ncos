@@ -1,49 +1,21 @@
 package mil.ln.ncos.auth;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.SessionFlashMapManager;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.google.gson.JsonObject;
 
@@ -70,12 +42,15 @@ public class AuthController {
 
 	@Value("${ssoMode}")
 	private String ssoMode;
-	
+
 	@Value("${cryptoMode}")
 	private String cryptoMode;
-	
+
 	@Value("${crypto.key1}")
 	private String cryptoModeKey1;
+
+	@Value("${crypto.key2}")
+	private String cryptoModeKey2;
 
 	private final MessageSourceAccessor messageSource;
 	private final LogService logService;
@@ -84,9 +59,10 @@ public class AuthController {
 	@GetMapping("/login")
 	public ModelAndView login(Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		if (ssoMode.equals("Y")) {
+		if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 && ssoMode.equals("Y")) {
 			res.sendRedirect("/sso/business");
 		}
+
 		ModelAndView mv = new ModelAndView("th/auth/login");
 		UserVo vo = new UserVo();
 		mv.addObject("user", vo);
@@ -96,13 +72,13 @@ public class AuthController {
 	@PostMapping("/login")
 	public void login(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		final FlashMap flashMap = new FlashMap();
-		//LogVo logVo = new LogVo();
+		LogVo logVo = new LogVo();
 		JsonObject json = new JsonObject();
 		final FlashMapManager flashMapManager = new SessionFlashMapManager();
 		UserVo param = new UserVo();
 		try {
-			//logVo.setWorkCodeId("1");
-			//logVo.setWorkUiId("7");
+			logVo.setWorkCodeId("1");
+			logVo.setWorkUiId("7");
 			Field[] fields = UserVo.class.getDeclaredFields();
 			for (Field f : fields) {
 				f.setAccessible(true);
@@ -112,30 +88,45 @@ public class AuthController {
 
 			}
 			String loginId = param.getLoginUserId();
-			if(cryptoMode.equals("Y")) {
-				loginId = ScpDbUtil.scpEnc(loginId,cryptoModeKey1);
-				
-			}
-
-			param.setUserId(loginId);
-			if(activeProfile.indexOf("hmm") > -1 || activeProfile.indexOf("Hmm") > -1) {
-				String salt = authService.getUserAccountSalt(param.getUserId());
-				if(null == salt || "null".equals(salt)) {
-					throw new BizException(ErrorCode.USER_NOT_FOUND);
+			// log.debug("enc 전 id:{}",loginId);
+			if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 && cryptoMode.equals("Y")) {
+				// log.debug("ENCODE start.........");
+				if (activeProfile.equals("navy")) {
+					loginId = ScpDbUtil.scpEnc(loginId, cryptoModeKey1);
+				} else {
+					loginId = ScpDbUtil.scpEnc(loginId, cryptoModeKey2);
 				}
-				param.setPassword(CryptoUtil.encode(param.getCurPassword(),salt.getBytes()));
-			}
-			
 
+				// log.debug("ENCODE finish.........");
+				// log.debug("enc후 id:{}",loginId);
+			}
+			/*
+			 * String testId = "azv6Rn4ISzGmmA==";
+			 * log.debug("dec전 id:{}",testId);
+			 * log.debug("dec후 id:{}",ScpDbUtil.scpDec(testId));
+			 * log.debug("loginId:{}",loginId);
+			 */
+			param.setUserId(loginId);
+			param.setPassword(CryptoUtil.encode(param.getCurPassword()));
+			log.debug("param:{}", param);
+			/*
+			 * if (errors.hasErrors()) { // 유효성 통과 못한 필드와 메시지를 핸들링 Map<String,String> errMsg
+			 * = new HashMap(); this.validateHandling(errMsg,errors); Set<String> keys =
+			 * errMsg.keySet(); Iterator iter = keys.iterator(); while(iter.hasNext()) {
+			 * String key = (String)iter.next(); json.addProperty(key, errMsg.get(key)); }
+			 * flashMap.put("errMsg", json.toString());
+			 * flashMapManager.saveOutputFlashMap(flashMap, req, res);
+			 * req.getRequestDispatcher("/login").forward(req, res);
+			 * 
+			 * }
+			 */
 			UserVo user = authService.getUserAccount(param, req);
-			//logVo.setAccountId(user.getAccountId());
+			logVo.setAccountId(user.getAccountId());
+			log.debug("user:{}", user);
 			json.addProperty("accountId", user.getAccountId());
 			json.addProperty("userId", user.getUserId());
 			json.addProperty("username", user.getUsername());
 			json.addProperty("auth", user.getAuthorization());
-			json.addProperty("affiliationId", user.getAffiliationId());
-			json.addProperty("phoneNo", user.getPhoneNo());
-			json.addProperty("classId", user.getClassId());
 			json.addProperty("alarmStatus", user.getAlarmStatus());
 			json.addProperty("alarmLevel", user.getAlarmLevel());
 			json.addProperty("warningStatus", user.getWarningStatus());
@@ -143,26 +134,17 @@ public class AuthController {
 			if (user.getSessionControlStatus() == 0) {
 				json.addProperty("sessionTm", -1);
 			} else {
-				if(activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 ) {
-					json.addProperty("sessionTm", 5 * 60);
-				}
-				else {
-					json.addProperty("sessionTm", 60 * 60);
-				}
-				
+				json.addProperty("sessionTm", 60 * 60);
 			}
-			if(null != user.getLastSuccessAccessDate()) {
+			if (null != user.getLastSuccessAccessDate()) {
 				json.addProperty("connectTime", DateUtil.formatDate(user.getLastSuccessAccessDate(), "HH:mm:ss"));
-			}
-			else {
+			} else {
 				json.addProperty("connectTime", DateUtil.getFrmtDate(null, "HH:mm:ss"));
 			}
 
-			
 			flashMap.put("sessionData", json.toString());
 
 			flashMapManager.saveOutputFlashMap(flashMap, req, res);
-			/*
 			if (user.getAuthorization().equals("3")) {
 				logVo.setWorkContent("관리자 로그인");
 			} else if (user.getAuthorization().equals("2")) {
@@ -170,12 +152,11 @@ public class AuthController {
 			} else {
 				logVo.setWorkContent("사용자 로그인");
 			}
-			logVo.setAccountId(user.getAccountId());
 			logVo.setWorkCodeId("1");
 			logVo.setWorkUiId("7");
 			logVo.setResult(1);
 			logService.saveUserAction(logVo);
-            */
+
 			res.sendRedirect("/");
 
 		} catch (BizException e) {
@@ -188,12 +169,18 @@ public class AuthController {
 			} else if (e.getErrorCode().equals(ErrorCode.USER_NOT_FOUND)) {
 				flashMap.put("errMsg", messageSource.getMessage("error.userNotMatch"));
 			}
-
+			// json.addProperty("exceptionMsg", e.getMessage());
+			logVo.setWorkContent("사용자 아이디:" + param.getUserId() + ", " + String.valueOf(flashMap.get("errMsg")));
+			logVo.setResult(0);
+			logService.saveUserAction(logVo);
 			flashMapManager.saveOutputFlashMap(flashMap, req, res);
 			res.sendRedirect("/login");
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
+			logVo.setWorkContent("사용자 아이디:" + param.getUserId() + ", " + e.getMessage());
+			logVo.setResult(0);
+			logService.saveUserAction(logVo);
 			json.addProperty("exceptionMsg", e.getMessage());
 			flashMap.put("errMsg", json.toString());
 			flashMapManager.saveOutputFlashMap(flashMap, req, res);
@@ -201,36 +188,28 @@ public class AuthController {
 			throw e;
 		}
 	}
-  
 
 	@GetMapping("/logout")
-	public ModelAndView logout(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		if (ssoMode.equals("Y")) {
-			mv.setViewName("sso/logout");
-			return mv;
-		}
-		else {
-			/*
-			LogVo logVo = new LogVo();
-			logVo.setWorkCodeId("2");
+	public String logout(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		LogVo logVo = new LogVo();
+		logVo.setWorkCodeId("2");
 
-			logVo.setAccountId(SessionData.getUserVo().getAccountId());
-			authService.setUdateLogout(SessionData.getUserVo());
-			String refer = req.getHeader("Referer");
-			logVo.setWorkContent("페이지:" + refer + "에서 로그 아웃");
-			logVo.setAccountId(SessionData.getUserVo().getAccountId());
-			logService.saveUserAction(logVo);
-			*/
-			HttpSession session = req.getSession();
-			session.invalidate();
-			RedirectView redirectView = new RedirectView(); // redirect url 설정
-			redirectView.setUrl("/login");
-			mv.setView(redirectView);
-			return mv;
+		logVo.setAccountId(SessionData.getUserVo().getAccountId());
+		authService.setUdateLogout(SessionData.getUserVo());
+		String refer = req.getHeader("Referer");
+		log.debug("logout refer:{}", refer);
+		// logVo.setWorkUiId("7");
+		logVo.setWorkContent("페이지:" + refer + "에서 로그 아웃");
+		logService.saveUserAction(logVo);
+		HttpSession session = req.getSession();
+		session.invalidate();
+		if (activeProfile.indexOf("hmm") == -1 && activeProfile.indexOf("Hmm") == -1 && ssoMode.equals("Y")) {
+			return "redirect:/sso/logout?activeProfile=" + activeProfile;
+		} else {
+			return "redirect:/login";
 		}
-		// 
-		
+		//
+
 	}
 
 }

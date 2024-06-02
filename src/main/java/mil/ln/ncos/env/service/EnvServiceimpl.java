@@ -1,7 +1,6 @@
 package mil.ln.ncos.env.service;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,52 +25,59 @@ public class EnvServiceimpl implements EnvService {
 
 	@Value("${cryptoMode}")
 	private String cryptoMode;
-	
+
 	@Value("${crypto.key1}")
 	private String cryptoModeKey1;
+
+	@Value("${crypto.key2}")
+	private String cryptoModeKey2;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, Object>> getConfList(Map<String, Object> map) throws Exception {
-		return (List<Map<String,Object>>)dao.selectPage("Env.selectConfCount","Env.selectConfList", map);
+		return (List<Map<String, Object>>) dao.selectPage("Env.selectConfCount", "Env.selectConfList", map);
 	}
 
 	@Override
 	public int saveEnvConf(Map<String, Object> map) throws Exception {
-		if(cryptoMode.equals("N")) {
-			if(map.containsKey("settingId") && map.get("settingId") != null && !map.get("settingId").toString().trim().equals("")) {
+		if (cryptoMode.equals("N")) {
+			if (map.containsKey("settingId") && map.get("settingId") != null
+					&& !map.get("settingId").toString().trim().equals("")) {
 				return dao.update("Env.updateAccountSetting", map);
-			}else {
+			} else {
 				return dao.update("Env.insertAccountSetting", map);
 			}
-		}else{
-			int rtn = 0;
+		} else {// ncos 무결성검증.
 			Timestamp ts = new Timestamp(System.currentTimeMillis());
 			Date date = new Date(ts.getTime());
 			String accountSettingTime = DateUtil.formatDate(date, "yyyy-MM-dd HH:mm.ss");
-			Map<String, Object> salt = dao.selectMapByJob("Cmmn.selectIntegritySalt", null).orElseGet(() -> new HashMap<String, Object>());
-			final String saltKey="accountSettings";
-			
-			map.put("accountSettingTime", accountSettingTime);
-			
-			if(map.containsKey("settingId") && map.get("settingId") != null && !map.get("settingId").toString().trim().equals("")) {
-				rtn = dao.update("Env.updateAccountSettingNcos", map);
-			}else {
-				map.put("integrity", "temp");
-				rtn = dao.update("Env.insertAccountSettingNcos", map);
+			Map<String, Object> salt = dao.selectMap("Cmmn.selectIntegritySalt", null)
+					.orElseGet(() -> new HashMap<String, Object>());
+			final String saltKey = "accountSettings";
+			String integrity = (String) map.get("accountId")
+					+ (String) map.get("alarmLevel")
+					+ (String) map.get("warningLevel")
+					+ (map.get("alarmStatus") == null ? "false"
+							: (((String) map.get("alarmStatus")).equals("1") ? "true" : "false"))
+					+ (map.get("warningStatus") == null ? "false"
+							: (((String) map.get("warningStatus")).equals("1") ? "true" : "false"))
+					+ (map.get("sessionControlStatus") == null ? "false"
+							: (((String) map.get("sessionControlStatus")).equals("1") ? "true" : "false"))
+					+ accountSettingTime.substring(0, 10);// yyyy-mm-dd
+			if (activeProfile.equals("navy")) {
+				integrity = integrity + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey1);
+			} else {
+				integrity = integrity + ScpDbUtil.scpDec((String) salt.get(saltKey), cryptoModeKey2);
 			}
-			
-			String integrity = (String)map.get("accountId")
-					+(String)map.get("alarmLevel")
-					+(String)map.get("warningLevel")
-					+(map.get("alarmStatus")==null?"false":( ((String)map.get("alarmStatus")).equals("1")?"true":"false" ) )
-					+(map.get("warningStatus")==null?"false":( ((String)map.get("warningStatus")).equals("1")?"true":"false" ) )
-					+(map.get("sessionControlStatus")==null?"false":( ((String)map.get("sessionControlStatus")).equals("1")?"true":"false" ) )
-					+accountSettingTime.substring(0,10);
-			integrity = integrity + ScpDbUtil.scpDec((String)salt.get(saltKey),cryptoModeKey1);
+
+			map.put("accountSettingTime", accountSettingTime);
 			map.put("integrity", integrity);
-			rtn = dao.update("Env.updateAccountSettingIntegrity", map);
-			return rtn;
+			if (map.containsKey("settingId") && map.get("settingId") != null
+					&& !map.get("settingId").toString().trim().equals("")) {
+				return dao.update("Env.updateAccountSettingNcos", map);
+			} else {
+				return dao.update("Env.insertAccountSettingNcos", map);
+			}
 		}
 	}
 }

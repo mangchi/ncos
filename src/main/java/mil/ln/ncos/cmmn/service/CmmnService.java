@@ -34,8 +34,6 @@ public interface CmmnService {
 	
 	List<Map<String, Object>> getZoneList(Map<String, Object> map) throws Exception;
 	
-	List<Map<String, Object>> getUserCodeList(Map<String, Object> map) throws Exception;
-	
 	List<Map<String, Object>> getNetworkEquipementStatus(Map<String, Object> map) throws Exception;
 	
 	
@@ -72,10 +70,6 @@ public interface CmmnService {
 	int saveAlarmCheck(Map<String, Object> map) throws Exception;
 	
 	int saveLinkInfo(Map<String, Object> map) throws Exception;
-	
-	int selectAggregationStandard() throws Exception;
-	
-	int saveAggregationStandard(Map<String, Object> map) throws Exception;
 	
 	void setReportKey(Map<String, Object> map, HttpServletRequest request);
 	

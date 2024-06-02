@@ -17,15 +17,15 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 @Configuration
 public class TranConfig {
 
-    private static final String AOP_TRANSACTION_METHOD_NAME="*";
-    private static final String AOP_TRANSACTION_EXPRESSION="execution(* *..*ServiceImpl.*(..))";
+    private static final String AOP_TRANSACTION_METHOD_NAME = "*";
+    private static final String AOP_TRANSACTION_EXPRESSION = "execution(* *..*ServiceImpl.*(..))";
 
     @Autowired
     private PlatformTransactionManager transactionManager;
 
     @SuppressWarnings("deprecation")
-	@Bean
-    TransactionInterceptor transactionAdvice(){
+    @Bean
+    TransactionInterceptor transactionAdvice() {
         MatchAlwaysTransactionAttributeSource source = new MatchAlwaysTransactionAttributeSource();
         RuleBasedTransactionAttribute transactionAttribute = new RuleBasedTransactionAttribute();
         transactionAttribute.setName(AOP_TRANSACTION_METHOD_NAME);
@@ -36,10 +36,9 @@ public class TranConfig {
     }
 
     @Bean
-    Advisor transactionAdviceAdvisor(){
+    Advisor transactionAdviceAdvisor() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
         pointcut.setExpression(AOP_TRANSACTION_EXPRESSION);
         return new DefaultPointcutAdvisor(pointcut, transactionAdvice());
     }
 }
-

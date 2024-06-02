@@ -14,9 +14,13 @@ import org.springframework.integration.ip.tcp.connection.CachingClientConnection
 import org.springframework.integration.ip.tcp.connection.TcpNioClientConnectionFactory;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
+@EnableScheduling
 @ConditionalOnProperty(
 	    value="tcpClient", 
 	    havingValue = "true", 
@@ -42,6 +46,7 @@ public class TcpClientConfig implements ApplicationEventPublisherAware {
 
 	@Bean
 	AbstractClientConnectionFactory clientConnectionFactory() {
+        log.debug("tcp client...............");
 		TcpNioClientConnectionFactory tcpNioClientConnectionFactory = new TcpNioClientConnectionFactory(host, port);
 		tcpNioClientConnectionFactory.setUsingDirectBuffers(true);
 		tcpNioClientConnectionFactory.setApplicationEventPublisher(applicationEventPublisher);

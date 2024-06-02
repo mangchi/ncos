@@ -11,6 +11,9 @@ import mil.ln.ncos.user.vo.UserVo;
 
 @Component
 public class SessionData {
+	
+	//private static UserVo userVo = null;
+	
 
 	public static UserVo getUserVo() {
 		 ServletRequestAttributes servletRequestAttribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -18,6 +21,14 @@ public class SessionData {
 		 return( (UserVo)session.getAttribute("user"));
 
 	}
+
+	/*
+	public static void setUserVo(UserVo vo) {
+	    userVo = vo;
+	}
+	*/
+	
+
 
 
 }

@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NcosApplication<ncos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "mil.ln.ncos.NcosApplication",
+            "projectName": "ncos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": [
+                "-Djava.net.preferIPv4Stack=true",
+                "-Djasypt.encryptor.password=1245",
+                "-Dspring.profiles.active=navy",
+                "-Dlog4j.configurationFile=log4j2.xml",
+                "-Dcmd=/home/user/ncos/train_run.sh",
+                "-Dudp.server.host=localhost",
+                "-Dudp.server.port=31000",
+                "-Dtcp.server.host=localhost",
+                "-Dtcp.server.port=31000",
+                "-DtcpServer=false",
+                "-DudpServer=false",
+                "-DtcpClient=false",
+                "-DudpClient=false",
+                "-DssoMode=N",
+                "-DprodMode=N",
+                "-DcryptoMode=N",
+                "-DappendUrl=13306/ncos",
+                "-DdbUser=thesys",
+                "-DdbPwd=1234"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ScpDbSampleCode_Total<ncos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "mil.ln.ncos.ScpDbSampleCode_Total",
+            "projectName": "ncos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

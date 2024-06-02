@@ -30,7 +30,7 @@ spring:
       on-profile: navy
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mariadb://localhost:appendUrl
+    url: jdbc:mariadb://thesys.biz:appendUrl
     #url: ENC(9vixZr3Y0U1u5Sw3ux7EP6hc+s3zXRes+B1RAps/nsWeyEZGxpNNM74DEem8yWGe)
     #url: jdbc:mariadb://localhost:3306/ncos
     #username: ENC(s/9zhfHSWVrLIuqyjGQ8Kg==)
@@ -170,3 +170,16 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     
+
+    
+#vm argument
+#add last line in tomcat/conf/catalina.properties 
+# if run eclipse then under params -D attatch
+# -Djava.net.preferIPv4Stack=true
+# -Djasypt.encryptor.password=1245
+# ship : tcpClient or udpClient = true and others false
+# land : tcpServer or udpServer = true and others false
+# tcpServer=false
+# udpServer=true
+# tcpClient=false
+# udpClient=false    

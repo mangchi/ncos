@@ -20,7 +20,7 @@
 #### https://mangchinas.synology.me/thesys/ncos 접속
 #### 상단의 페이지에 접속시 회원이 아닐 경우 회원 가입을 하고 로그인합니다.
 #### 회원가입을 완료하고 로그인하면 thesys/nocs 프로젝트 인트로 화면이 전시됩니다.
-#### 오른쪽 상단의 ... 아이콘을 클릭하여 <span sytle="color:yellow">Clone in VS Code</span>를 클릭합니다.
+#### 오른쪽 상단의 ... 아이콘을 클릭하여 <span style="color:yellow">Clone in VS Code</span>를 클릭합니다.
 
 
 

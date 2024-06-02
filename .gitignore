@@ -38,3 +38,4 @@ out/
 logs/logfile.log
 logs/rollingfile.log
 logs/archive/
+logs/archive/rollingfile.log_2024-06-02.gz

@@ -1,7 +1,7 @@
 ## 해군 NCOS 
 ### 해당 프로젝트는 VSCODE,Git 작업환경으로 구성되어 있습니다.
 
-### VSCODE 설치
+### VS CODE 설치
 #### VS Code 다운로드 👉 https://code.visualstudio.com/
 
 ### Git 설치

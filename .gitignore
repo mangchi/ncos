@@ -38,4 +38,4 @@ out/
 logs/logfile.log
 logs/rollingfile.log
 logs/archive/
-
+*.log

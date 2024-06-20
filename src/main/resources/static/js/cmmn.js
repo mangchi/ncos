@@ -29,7 +29,7 @@ const gfn_formToJson = (form) => {
 
 const gfn_asyncTranDataCall = async (url,method,jsonParam,callBackFn,msgYn) => {
 	try{
-        sessionTime = gfn_getStorageItem('sessionTm',false);
+        let sessionTime = gfn_getStorageItem('sessionTm',false);
 		if(sessionTime > -1){
 			setTimer();
 		}
@@ -43,6 +43,33 @@ const gfn_asyncTranDataCall = async (url,method,jsonParam,callBackFn,msgYn) => {
 								 .catch((error) => {
 									 console.error("gfn_asyncRemoveCall errorr:",error);
 								});
+
+		// let sendData = {
+        //     method: _method,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'X-XSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+        //     }
+        // };
+
+        // if (_method === 'POST') {
+        //     sendData.body = JSON.stringify(jsonParam);
+        // } else if (_method === 'GET' && jsonParam) {
+        //     const urlParams = new URLSearchParams(jsonParam).toString();
+        //     url = `${url}?${urlParams}`;
+        // }
+
+        // const data = await fetch(url, sendData).then((result) => {
+        //     if (!result.ok) {
+        //         throw new Error('Network response was not ok');
+        //     }
+        //     return result.json();
+        // }).catch((error) => {
+        //     console.error("gfn_asyncTranDataCall error:", error);
+        //     throw error;
+        // });
+
+
 		if(msgYn != undefined){
 			if(data["success_msg"] != undefined){
 				msgCall(data["success_msg"],true,false,callBackFn);
@@ -85,7 +112,7 @@ const gfn_asyncTranCall = async (url,method,requiredParams,comp,callBackFn,msgYn
 									 return result.json();
 								 })
 								 .catch((error) => {
-									 console.error("gfn_asyncTranCall errorr:",error);
+									 console.error("gfn_asyncTranCall error:",error);
 								});
 		if(msgYn != undefined){
 			if(data["success_msg"] != undefined){
@@ -1454,7 +1481,8 @@ const setCheckValue = (lis,selectedValue,data) => {
 const setMultiImpCheckValue = (multiObj,labels,data) => {
 	let selectedValue = multiObj.parentNode.querySelector('.selected-value');
 	labels.forEach((label) => {
-		let checkbox = label.querySelector('#'+label.getAttribute('for'));
+		//let checkbox = label.querySelector('#'+label.getAttribute('for'));
+		let checkbox = label.childNodes[0];
 		if(data === '9'){
 			checkbox.checked = true;
 			selectedValue.textContent = '하, 중, 상';
@@ -1490,7 +1518,7 @@ const setMultiImpCheckValue = (multiObj,labels,data) => {
 			}
 		}
 		else if(data === '1'){
-			selectedValue.textContent ='하';
+			selectedValue.textContent = '하';
 			if(checkbox.value === '1'){
 				checkbox.checked = true;
 			}
